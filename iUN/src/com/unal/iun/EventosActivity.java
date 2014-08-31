@@ -107,9 +107,10 @@ public class EventosActivity extends Activity {
 	public boolean onTouchEvent(MotionEvent event) {
 		if (recargable) {
 			recargarLista();
+		} else {
+			Toast.makeText(getApplicationContext(), "Aun no se puede recargar",
+					1).show();
 		}
-		Toast.makeText(getApplicationContext(), "Aun no se puede recargar", 1)
-		.show();
 		return super.onTouchEvent(event);
 	}
 

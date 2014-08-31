@@ -862,22 +862,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
-        android:gravity="bottom|center" >
-
-        <SearchView
-            android:id="@+id/searchViewMenuWeb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1" >
-        </SearchView>
+        android:layout_weight="1"
+        android:gravity="bottom|right" >
 
         <ImageView
             android:id="@+id/imageHome"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_weight="1"
-            android:gravity="right"
+            android:layout_marginRight="10dp"
             android:onClick="home"
             android:src="@drawable/homeun" />
     </TableRow>

@@ -62,7 +62,8 @@
         <activity
             android:name=".MenuWEBActivity"
             android:label="@string/title_activity_menu_web"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance"
+             android:logo="@drawable/logo" >
         </activity>
         <activity
             android:name=".WebActivity"

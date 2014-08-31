@@ -55,6 +55,13 @@ public class MainActivity extends Activity {
 	public static String dataBaseName = "DataStore.sqlite";
 	public Timer tim;
 	public static String sede = "Bogotá";
+	public static boolean pausado = false;
+
+	@Override
+	public void onBackPressed() {
+		this.finish();
+		super.onBackPressed();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +89,9 @@ public class MainActivity extends Activity {
 		 */
 		Typeface fuente = Typeface
 				.createFromAsset(getAssets(), "Helvetica.ttf");
-		int ids[] = { R.id.SOnlineButton, R.id.eventosButton,
-				R.id.sedesButton, R.id.textSede, R.id.textLatitud,
-				R.id.textLongitud, R.id.textLugar };
+		int ids[] = { R.id.SOnlineButton, R.id.eventosButton, R.id.sedesButton,
+				R.id.textSede, R.id.textLatitud, R.id.textLongitud,
+				R.id.textLugar };
 		for (int i = 0; i < ids.length; i++) {
 			TextView prueba = (TextView) findViewById(ids[i]);
 			prueba.setTypeface(fuente);
@@ -95,10 +102,12 @@ public class MainActivity extends Activity {
 		iniciarLocalService();
 
 	}
+
 	public void eventos(View v) {
 		startActivity(new Intent(getApplicationContext(), EventosActivity.class));
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
+
 	public static Drawable resizeImage(Context ctx, int resId, int w, int h) {
 
 		// cargamos la imagen de origen
@@ -152,6 +161,18 @@ public class MainActivity extends Activity {
 					0, 0, milocListener);
 		}
 
+	}
+
+	@Override
+	protected void onPause() {
+		pausado = true;
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		pausado = false;
+		super.onResume();
 	}
 
 	public void directorio(View v) {

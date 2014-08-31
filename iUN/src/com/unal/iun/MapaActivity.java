@@ -111,11 +111,11 @@ public class MapaActivity extends FragmentActivity {
 											.build();
 									CameraUpdate camUpd3 = CameraUpdateFactory
 											.newCameraPosition(camPos);
-
+									mapa.animateCamera(camUpd3);
 									String cad = "http://www.unal.edu.co";
 									deta.putExtra("paginaWeb", cad);
 									startActivity(deta);
-									mapa.animateCamera(camUpd3);
+									
 								}
 							}
 						});

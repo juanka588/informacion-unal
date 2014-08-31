@@ -50,6 +50,7 @@ public class DirectorioActivity extends Activity {
 	String tableName2 = "Edificios";
 	String tableName3 = "ENLACE";
 	String sql = "";
+	String path = "";
 	MenuItem item;
 	SearchView sv;
 	int current = 2, idFondo = R.drawable.fondo2,
@@ -146,17 +147,16 @@ public class DirectorioActivity extends Activity {
 		MenuItem menuItem = menu.getItem(1);
 		sv = (SearchView) menuItem.getActionView();
 		sv.setQueryHint("Inicia una Busqueda...");
-		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
-				MODE_WORLD_READABLE, null);
-		Cursor c = db.rawQuery("select " + columnas[6] + " from " + tableName,
-				null);
-		String[][] mat = imprimirLista(c);
-		int[] to = { R.id.listViewDirectorio };
-		CursorAdapter ca = new SimpleCursorAdapter(this,
-				android.R.layout.simple_list_item_1, null, getcolumn(mat, 0),
-				to);
-		Log.e("Columna 0",toString( getcolumn(mat, 0)) + "");
-		sv.setSuggestionsAdapter(ca);
+		/*
+		 * SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+		 * MODE_WORLD_READABLE, null); Cursor c = db.rawQuery("select " +
+		 * columnas[6] + " from " + tableName, null); String[][] mat =
+		 * imprimirLista(c); int[] to = { R.id.listViewDirectorio };
+		 * CursorAdapter ca = new SimpleCursorAdapter(this,
+		 * android.R.layout.simple_list_item_1, null, getcolumn(mat, 0), to);
+		 * Log.e("Columna 0",toString( getcolumn(mat, 0)) + "");
+		 * sv.setSuggestionsAdapter(ca);
+		 */
 		sv.setOnQueryTextListener(new OnQueryTextListener() {
 
 			@Override
@@ -167,19 +167,22 @@ public class DirectorioActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				// recargar(newText);
+				if (newText.length() > 3) {
+					recargar(newText);
+				}
 				return false;
 			}
 		});
-		c.close();
-		db.close();
+		/*
+		 * c.close(); db.close();
+		 */
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	private String toString(String[] getcolumn) {
-		String cad="";
+		String cad = "";
 		for (int i = 0; i < getcolumn.length; i++) {
-			cad+=getcolumn[i]+" ";
+			cad += getcolumn[i] + " ";
 		}
 		return cad;
 	}
@@ -193,11 +196,6 @@ public class DirectorioActivity extends Activity {
 				BitmapFactory.decodeResource(getResources(),
 						R.drawable.fondoinf));
 		this.getActionBar().setBackgroundDrawable(background2);
-		/*
-		 * EditText texto = (EditText) findViewById(R.id.editText1);
-		 * texto.setVisibility(1); texto.setActivated(false);
-		 * texto.setEnabled(false);c
-		 */
 		tl = (TableLayout) findViewById(R.id.TableLayoutDirectorio);
 		ListView lv = (ListView) findViewById(R.id.listViewDirectorio);
 		Space sp = (Space) findViewById(R.id.SpaceDirectorio);
@@ -244,7 +242,8 @@ public class DirectorioActivity extends Activity {
 						int posicion, long arg3) {
 					try {
 						seleccion = mat[posicion][0];
-						item.setTitle(seleccion);
+						path = seleccion;
+						item.setTitleCondensed(path);
 						current++;
 						animarFondo(mat[posicion][0], true);
 						if (condicion.equals("")) {
@@ -402,10 +401,11 @@ public class DirectorioActivity extends Activity {
 
 	private void erase(String condicion2, boolean cond) {
 		String conds[] = condicion2.split("and");
-		String textos[] = item.getTitle().toString().split(">");
+		String textos[] = path.split(">");
 
 		if (conds.length == 1) {
-			item.setTitle("");
+			item.setTitleCondensed("");
+			path = "";
 			condicion = "";
 			sql = "select  distinct " + columnas[2] + ", " + columnas[2]
 					+ " from " + tableName;
@@ -423,7 +423,8 @@ public class DirectorioActivity extends Activity {
 				cad2 += textos[i];
 			}
 		}
-		item.setTitle(cad2);
+		item.setTitleCondensed(cad2);
+		path = cad2;
 		condicion = cad;
 		sql = "select distinct " + columnas[current - 1] + ", " + columnas[2]
 				+ " from " + tableName + " where " + condicion;
@@ -448,8 +449,35 @@ public class DirectorioActivity extends Activity {
 		Log.e("buscado", sql);
 		current = 1;
 		recargar(true, true);
-		animarFondo("", false);
+		// animarFondo("", false);
 
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putInt("current",current);
+		outState.putBoolean("nacional",nacional);
+		outState.putString("sql",sql);
+		outState.putString("path",path);
+		outState.putInt("idFondo",idFondo);
+		outState.putInt("idFondoTras",idFondoTras);
+		recargar(current==6, false);
+		super.onSaveInstanceState(outState);
+	}
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		if (savedInstanceState != null) {
+			current=savedInstanceState.getInt("current");
+			nacional=savedInstanceState.getBoolean("nacional");
+			sql=savedInstanceState.getString("sql");
+			path=savedInstanceState.getString("path");
+			idFondo=savedInstanceState.getInt("idFondo");
+			idFondoTras=savedInstanceState.getInt("idFondoTras");
+			animarFondo(path, false);
+			recargar(current==6, false);
+			item.setTitleCondensed(path);
+		}
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	public void recargar(final boolean cond, final boolean cond2) {
@@ -476,11 +504,13 @@ public class DirectorioActivity extends Activity {
 					if (current == 2) {
 						animarFondo(mat[posicion][1], true);
 					}
-					if (item.getTitle() == "") {
-						item.setTitle(seleccion.toUpperCase());
+					if (path == "") {
+						path = seleccion;
+						item.setTitleCondensed(path.toUpperCase().trim());
 					} else {
-						item.setTitle(item.getTitle() + ">"
-								+ seleccion.toUpperCase());
+						path = path + ">" + seleccion.toUpperCase().trim();
+						item.setTitleCondensed(path);
+						Log.e("disminuyo ", "" + item.collapseActionView());
 					}
 					if (cond) {
 						if (cond2) {

@@ -3,10 +3,14 @@ package com.unal.iun;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,18 +30,22 @@ public class MenuWEBActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_menu_web);
 		ScrollView sc = (ScrollView) findViewById(R.id.scrollViewMenuWeb);
 		Space sp = (Space) findViewById(R.id.spaceMenuWebGeneral);
+		BitmapDrawable background2 = new BitmapDrawable(
+				BitmapFactory.decodeResource(getResources(),
+						R.drawable.fondoinf));
+		this.getActionBar().setBackgroundDrawable(background2);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
-		double factor = screenHeight / 2000.0 + 0.35;
-		double factor2 = 3.0 * screenHeight / 20000.0 + 0.1;
-		if (factor > 0.7) {
-			factor = 0.7;
+		double factor = screenHeight / 2000.0 + 0.25;
+		double factor2 = 3.0 * screenHeight / 20000.0 + 0.09;
+		if (factor > 0.60) {
+			factor = 0.60;
 		}
 		if (factor2 > 0.2) {
 			factor2 = 0.2;
@@ -67,11 +75,12 @@ public class MenuWEBActivity extends Activity {
 				R.id.spaceMenuWeb142, R.id.spaceMenuWeb150,
 				R.id.spaceMenuWeb151, R.id.spaceMenuWeb160,
 				R.id.spaceMenuWeb161 };
+		Log.e("ancho de pantalla",screenWidth+"");
 		for (int i = 0; i < ids.length; i++) {
 			Space im = (Space) findViewById(ids[i]);
 			ViewGroup.LayoutParams iv_params_b = im.getLayoutParams();
-			iv_params_b.height = 0;
-			iv_params_b.width = (int) ((screenWidth) * 0.08);
+			iv_params_b.height = 0;			
+			iv_params_b.width = (int) ((screenWidth) * (0.04+screenWidth*3/10000));
 			im.setLayoutParams(iv_params_b);
 		}
 		int ids2[] = new int[] { R.id.textTituloMenuWeb, R.id.textMP,
@@ -88,24 +97,7 @@ public class MenuWEBActivity extends Activity {
 			TextView tx = (TextView) findViewById(ids2[i]);
 			tx.setTypeface(fuente);
 		}
-		sv = (SearchView) findViewById(R.id.searchViewMenuWeb);
-		sv.setOnQueryTextListener(new OnQueryTextListener() {
-
-			@Override
-			public boolean onQueryTextSubmit(String arg0) {
-				String cad = "http://unal.edu.co/resultados-de-la-busqueda/?q="
-						+ arg0;
-				navegar(cad);
-				return false;
-			}
-
-			@Override
-			public boolean onQueryTextChange(String arg0) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		});
-		sv.setSoundEffectsEnabled(true);
+		
 		
 
 	}
@@ -130,6 +122,31 @@ public class MenuWEBActivity extends Activity {
 		startActivity(new Intent(getApplicationContext(), MainActivity.class));
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		this.finish();
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_web, menu);
+		MenuItem menuItem = menu.getItem(0);
+		sv = (SearchView) menuItem.getActionView();
+		sv.setQueryHint("Inicia una Busqueda...");
+		sv.setOnQueryTextListener(new OnQueryTextListener() {
+
+			@Override
+			public boolean onQueryTextSubmit(String arg0) {
+				String cad = "http://unal.edu.co/resultados-de-la-busqueda/?q="
+						+ arg0;
+				navegar(cad);
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String arg0) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
+		sv.setSoundEffectsEnabled(true);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	public void irA(View v) {
@@ -195,6 +212,7 @@ public class MenuWEBActivity extends Activity {
 		default:
 			break;
 		}
+		navegar(cad);
 
 	}
 }

@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_tipo_mapa"
         android:showAsAction="ifRoom|withText"
-        android:icon="@drawable/ic_mapa"
+        android:icon="@drawable/ic_tipomapa"
         android:title="@string/tipo_mapa"/>
        <item
         android:id="@+id/menu_trafico"
