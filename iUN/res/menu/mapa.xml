@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.unal.iun.MapaActivity" >
+
+    <item
+        android:id="@+id/menu_tipo_mapa"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_mapa"
+        android:title="@string/tipo_mapa"/>
+       <item
+        android:id="@+id/menu_trafico"
+        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_trafico"
+        android:title="@string/trafico"/>
+
+</menu>

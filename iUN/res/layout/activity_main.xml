@@ -1,0 +1,140 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/TableLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:shrinkColumns="*"
+    tools:context=".MainActivity" >
+
+    <Space
+        android:id="@+id/SpaceMain"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_gravity="fill_horizontal" />
+
+    <TableRow
+        android:id="@+id/tableRow11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textLugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:shrinkColumns="true"
+                android:text="Mi Sede"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/textSede"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:maxLength="16"
+                android:text="Amazonia "
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageUNPrincipal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="19dp"
+            android:layout_weight="0"
+            android:src="@drawable/persona" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textLongitud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:maxLength="16"
+                android:text="Longitud: "
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/textLatitud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:maxLength="16"
+                android:text="Latitud: "
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="bottom" >
+
+        <TextView
+            android:id="@+id/SOnlineButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/fondoboton"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="servicios"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="Servicios en linea"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/sedesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/fondointermedio"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="directorio"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="Nivel Sedes"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/eventosButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/fondoboton"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="eventos"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="Eventos"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+    </TableRow>
+
+</TableLayout>

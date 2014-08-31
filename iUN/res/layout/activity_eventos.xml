@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo2"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.unal.iun.EventosActivity" >
+
+    <Space
+        android:id="@+id/spaceEventos"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/tituloEventosAct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Eventos"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/listView2"
+        android:layout_width="match_parent"
+        android:layout_height="243dp"
+        android:layout_marginTop="15dp" >
+    </ListView>
+
+    <TableRow
+        android:id="@+id/tableRow20"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:gravity="bottom|right" >
+
+        <ImageView
+            android:id="@+id/imageHomeEventos"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:gravity="right"
+            android:onClick="home"
+            android:src="@drawable/homeun" />
+    </TableRow>
+
+</LinearLayout>

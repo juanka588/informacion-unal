@@ -1,0 +1,217 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableLayoutDetalles"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo2"
+    android:screenOrientation="landscape"
+    tools:context="com.unal.iun.DetailsActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <Space
+        android:id="@+id/spaceDetalles"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:gravity="center"
+                android:text="Titulo"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp" />
+
+    <ScrollView
+        android:id="@+id/scrollViewDetalles"
+        android:layout_width="match_parent"
+        android:layout_height="280dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow
+                    android:id="@+id/tableRow10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:onClick="llamar" >
+
+                    <ImageView
+                        android:id="@+id/imageSINAB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_celular" />
+
+                    <TextView
+                        android:id="@+id/textPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fondolista"
+                        android:gravity="bottom|clip_vertical|start"
+                        android:text="Telefono"
+                        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRowFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:onClick="addEventToCalendar" >
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_celular" />
+
+                    <TextView
+                        android:id="@+id/textExtension"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fondolista"
+                        android:gravity="bottom"
+                        android:text="Extension"
+                        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:onClick="correo" >
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_email" />
+
+                    <TextView
+                        android:id="@+id/textEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fondolista"
+                        android:gravity="bottom"
+                        android:text="Correo Electronico"
+                        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:onClick="ubicar" >
+
+                    <ImageView
+                        android:id="@+id/ImageView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_edificio" />
+
+                    <TextView
+                        android:id="@+id/textEdificios"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fondolista"
+                        android:gravity="bottom"
+                        android:text="Edificio"
+                        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:onClick="irA" >
+
+                    <ImageView
+                        android:id="@+id/ImageView05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_web" />
+
+                    <TextView
+                        android:id="@+id/textWebSite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fondolista"
+                        android:gravity="bottom"
+                        android:text="Sitio Web"
+                        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp">
+
+                    <ImageView
+                        android:id="@+id/ImageView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_phone" />
+
+                    <TextView
+                        android:id="@+id/textServicio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:singleLine="false"
+                        android:text="Servicios"
+                        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:gravity="bottom|right" >
+
+
+
+        <ImageView
+            android:id="@+id/imageHomeDetails"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:onClick="home"
+            android:src="@drawable/homeun" />
+    </TableRow>
+
+</TableLayout>

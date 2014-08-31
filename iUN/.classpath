@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="lib" path="D:/adt-bundle-windows-x86_64-20140702/sdk/add-ons/addon-google_apis-google-14/libs/maps.jar"/>
+	<classpathentry kind="lib" path="D:/adt-bundle-windows-x86_64-20140702/sdk/add-ons/addon-google_apis-google-14/libs/usb.jar"/>
+	<classpathentry kind="lib" path="D:/adt-bundle-windows-x86_64-20140702/sdk/platforms/android-14/android.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://developer.android.com/reference/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="/google-play-services_lib/bin/google-play-services_lib.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/JuanCamilo/workspace/iUN/libs/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/JuanCamilo/workspace/google-play-services_lib/libs/google-play-services.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
