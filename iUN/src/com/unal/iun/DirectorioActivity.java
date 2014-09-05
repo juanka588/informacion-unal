@@ -461,11 +461,13 @@ public class DirectorioActivity extends Activity {
 		outState.putString("path",path);
 		outState.putInt("idFondo",idFondo);
 		outState.putInt("idFondoTras",idFondoTras);
+		outState.putString("condicion",condicion);
 		recargar(current==6, false);
 		super.onSaveInstanceState(outState);
 	}
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		try{
 		if (savedInstanceState != null) {
 			current=savedInstanceState.getInt("current");
 			nacional=savedInstanceState.getBoolean("nacional");
@@ -473,9 +475,13 @@ public class DirectorioActivity extends Activity {
 			path=savedInstanceState.getString("path");
 			idFondo=savedInstanceState.getInt("idFondo");
 			idFondoTras=savedInstanceState.getInt("idFondoTras");
+			condicion=savedInstanceState.getString("condicion");
 			animarFondo(path, false);
 			recargar(current==6, false);
-			item.setTitleCondensed(path);
+			//item.setTitleCondensed(path);
+		}
+		}catch(Exception e){
+			Log.e("Error de restauracion",e.toString());
 		}
 		super.onRestoreInstanceState(savedInstanceState);
 	}

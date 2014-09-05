@@ -44,7 +44,8 @@ public class DetailsActivity extends Activity {
 	String titulos[], descripciones[];
 	TableLayout tl;
 	boolean evento = false;
-	String data[] ;
+	String data[];
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,9 +93,11 @@ public class DetailsActivity extends Activity {
 											getResources(),
 											R.drawable.ic_calendario));
 							ImageView im = (ImageView) findViewById(R.id.ImageView01);
-							/*image = MainActivity.resizeImage(
-									getApplicationContext(),
-									R.drawable.calendario, 35, 35);*/
+							/*
+							 * image = MainActivity.resizeImage(
+							 * getApplicationContext(), R.drawable.calendario,
+							 * 35, 35);
+							 */
 							im.setImageDrawable(image);
 							tx.setText(data[i].trim());
 						} else {
@@ -131,6 +134,9 @@ public class DetailsActivity extends Activity {
 		try {
 			if (evento) {
 				addEventToCalendar(getParent());
+			} else {
+				llamar("3165000;" + data[6]);
+
 			}
 		} catch (Exception e) {
 			Log.e("Error Detalles", e.toString());
@@ -201,16 +207,15 @@ public class DetailsActivity extends Activity {
 	}
 
 	public void llamar(View v) {
-
 		TextView tx = (TextView) findViewById(R.id.textPhone);
-		TextView tx2 = (TextView) findViewById(R.id.textExtension);
 		if (tx.getText().toString().contains("ele")) {
 			return;
 		}
-		Uri numero = Uri.parse("tel: +571" + tx.getText().toString());
-		if(!evento){
-			numero = Uri.parse("tel: +571" + tx.getText().toString()+";"+data[6]);
-		}
+		llamar(tx.getText().toString());
+	}
+
+	public void llamar(String number) {
+		Uri numero = Uri.parse("tel: +571"+ number);
 		Intent intent = new Intent(Intent.ACTION_CALL, numero);
 		startActivity(intent);
 	}
@@ -251,8 +256,8 @@ public class DetailsActivity extends Activity {
 			mapa.putExtra("lon", lon);
 			mapa.putExtra("titulos", titulos);
 			mapa.putExtra("descripciones", descripciones);
-			mapa.putExtra("zoom",18);
-			mapa.putExtra("tipo",1);
+			mapa.putExtra("zoom", 18);
+			mapa.putExtra("tipo", 1);
 			startActivity(mapa);
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		} catch (Exception ex) {

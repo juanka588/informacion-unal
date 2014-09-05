@@ -42,10 +42,10 @@ public class MenuWEBActivity extends Activity {
 				.getDefaultDisplay();
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
-		double factor = screenHeight / 2000.0 + 0.25;
+		double factor = screenHeight / 2000.0 + 0.35;
 		double factor2 = 3.0 * screenHeight / 20000.0 + 0.09;
-		if (factor > 0.60) {
-			factor = 0.60;
+		if (factor > 0.65) {
+			factor = 0.65;
 		}
 		if (factor2 > 0.2) {
 			factor2 = 0.2;

@@ -33,10 +33,11 @@ public class MapaActivity extends FragmentActivity {
 	String titulos[];
 	String descripciones[];
 	int tipo = 1, count = 0, zoom = 19;
-	boolean traffic = true;	
+	boolean traffic = true;
 	String urlRutas = "http://maps.googleapis.com/maps/api/directions/json?origin=4.6382023,-74.0840434&destination=6.26261,-75.57775&sensor=true";
 	String urlClima = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=4.53&lon=-74.07&units=metric&mode=JSON&cnt=7";
 	Intent deta;
+	Marker focus;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,7 @@ public class MapaActivity extends FragmentActivity {
 									String cad = "http://www.unal.edu.co";
 									deta.putExtra("paginaWeb", cad);
 									startActivity(deta);
-									
+
 								}
 							}
 						});
@@ -134,6 +135,7 @@ public class MapaActivity extends FragmentActivity {
 
 		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(Marker marker) {
+				focus=marker;
 				return false;
 			}
 		});
@@ -165,7 +167,7 @@ public class MapaActivity extends FragmentActivity {
 		float a = 0;
 		switch (count) {
 		case 0:
-			a = BitmapDescriptorFactory.HUE_GREEN;
+			a = BitmapDescriptorFactory.HUE_BLUE;
 			break;
 		case 1:
 			a = BitmapDescriptorFactory.HUE_ORANGE;
