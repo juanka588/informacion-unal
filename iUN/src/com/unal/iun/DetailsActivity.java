@@ -1,6 +1,8 @@
 package com.unal.iun;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -26,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -39,34 +42,37 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 
 public class DetailsActivity extends Activity {
-	double lat[];
-	double lon[];
-	String titulos[], descripciones[];
-	TableLayout tl;
+	public static double lat[];
+	public static double lon[];
+	public static String titulos[], descripciones[];
+	LinearLayout tl;
 	boolean evento = false;
-	String data[];
+	ArrayList<String[]> data = new ArrayList<String[]>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_details);
+		BitmapDrawable background2 = new BitmapDrawable(
+				BitmapFactory.decodeResource(getResources(),
+						R.drawable.fondoinf));
+		this.getActionBar().setBackgroundDrawable(background2);
+		this.getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 		Bundle b = getIntent().getExtras();
-		tl = (TableLayout) findViewById(R.id.tableLayoutDetalles);
-		int ids[] = { R.id.textPhone, R.id.textEmail, R.id.textEdificios,
-				R.id.textWebSite, R.id.textServicio, R.id.textTitle,
-				R.id.textExtension };
+		tl = (LinearLayout) findViewById(R.id.linearLayoutDetalles);
 
-		ScrollView sc = (ScrollView) findViewById(R.id.scrollViewDetalles);
+		ExpandableListView sc = (ExpandableListView) findViewById(R.id.expandableListDestails);
 		Space sp = (Space) findViewById(R.id.spaceDetalles);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
-		double factor = screenHeight / 2000.0 + 0.33;
+		double factor = screenHeight / 2000.0 + 0.35;
 		double factor2 = 3.0 * screenHeight / 20000.0 + 0.09;
-		if (factor > 0.6) {
-			factor = 0.6;
+		if (factor > 0.65) {
+			factor = 0.65;
 		}
 		if (factor2 > 0.2) {
 			factor2 = 0.2;
@@ -77,46 +83,11 @@ public class DetailsActivity extends Activity {
 		sc.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				(int) (screenHeight * (factor))));
-		try {
-			data = b.getStringArray("datos");
-			Typeface fuente = Typeface.createFromAsset(getAssets(),
-					"Helvetica.ttf");
-			evento = b.getBoolean("evento");
-			for (int i = 0; i < ids.length; i++) {
-				TextView tx = (TextView) findViewById(ids[i]);
-				tx.setTypeface(fuente);
-				if (data[i] != null) {
-					if (i == 6) {
-						if (evento) {
-							Drawable image = new BitmapDrawable(
-									BitmapFactory.decodeResource(
-											getResources(),
-											R.drawable.ic_calendario));
-							ImageView im = (ImageView) findViewById(R.id.ImageView01);
-							/*
-							 * image = MainActivity.resizeImage(
-							 * getApplicationContext(), R.drawable.calendario,
-							 * 35, 35);
-							 */
-							im.setImageDrawable(image);
-							tx.setText(data[i].trim());
-						} else {
-							tx.setText("Extension: " + data[i].trim());
-						}
-					} else {
-						tx.setText(data[i].trim());
-					}
-				}
-				// Log.e("los datos son: ", data[i]);
-			}
-			lat = new double[1];
-			lon = new double[1];
-			titulos = new String[1];
-			descripciones = new String[1];
-			titulos[0] = data[5];
-			descripciones[0] = data[3];
-			lat[0] = b.getDouble("lat");
-			lon[0] = b.getDouble("lon");
+		//try {
+			data = (ArrayList<String[]>) b.get("datos");
+			TextView tx = (TextView) findViewById(R.id.tituloDetallesDtos);
+			tx.setText(data.get(0)[0]);
+
 			int id = R.drawable.fondo2;
 			if (b.getInt("fondo") != 0) {
 				id = b.getInt("fondo");
@@ -124,9 +95,52 @@ public class DetailsActivity extends Activity {
 			Drawable background = new BitmapDrawable(
 					BitmapFactory.decodeResource(getResources(), id));
 			tl.setBackgroundDrawable(background);
-		} catch (Exception e) {
-			Log.e("error de Detalles ", e.toString());
-		}
+			// sc.setDividerHeight(2);
+			// sc.setGroupIndicator(null);
+			sc.setClickable(true);
+			ArrayList<String> parentItems = new ArrayList<String>();
+			ArrayList<Object> childItems = new ArrayList<Object>();
+			for (int i = 0; i < data.size(); i++) {
+				parentItems.add(data.get(i)[1]);
+
+			}
+
+			lat = new double[data.size()];
+			lon = new double[data.size()];
+			titulos = new String[data.size()];
+			descripciones = new String[data.size()];
+
+		
+			for (int k = 0; k < data.size(); k++) {
+				ArrayList<String> child = new ArrayList<String>();
+				String[] datos = data.get(k);
+				for (int i = 2; i < datos.length; i++) {
+					if (datos[i] == null) {
+						child.add("");
+					} else {
+						if (i == datos.length - 1) {
+							titulos[k] = datos[5];
+							descripciones[k] = datos[6];
+							lat[k] = Double.parseDouble(datos[8].split(" ")[0]);
+							lon[k] = Double.parseDouble(datos[8].split(" ")[1]);
+						} else {
+							child.add(datos[i]);
+						}
+					}
+				}
+				childItems.add(child);
+			}
+
+			MiAdaptadorExpandible adapter = new MiAdaptadorExpandible(
+					parentItems, childItems);
+			adapter.setInflater(
+					(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),
+					this);
+			sc.setAdapter(adapter);
+			// sc.setOnChildClickListener(this);
+		//} catch (Exception e) {
+		//	Log.e("error de Detalles ", e.toString());
+		//}
 
 	}
 
@@ -135,12 +149,25 @@ public class DetailsActivity extends Activity {
 			if (evento) {
 				addEventToCalendar(getParent());
 			} else {
-				llamar("3165000;" + data[6]);
+				// llamar("3165000;" + data[6]);
 
 			}
 		} catch (Exception e) {
 			Log.e("Error Detalles", e.toString());
 		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			home();
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void addEventToCalendar(Activity activity) {
@@ -178,16 +205,6 @@ public class DetailsActivity extends Activity {
 		this.startActivity(intent);
 	}
 
-	public void irA(View v) {
-		Intent deta = new Intent(this, WebActivity.class);
-		TextView tx = (TextView) findViewById(R.id.textWebSite);
-		if (tx.getText().toString().contains("Sitio Web")) {
-			return;
-		}
-		deta.putExtra("paginaWeb", tx.getText());
-		startActivity(deta);
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -198,70 +215,15 @@ public class DetailsActivity extends Activity {
 				e.printStackTrace();
 			}
 			this.finish();
-			/*
-			 * Toast.makeText(getApplicationContext(), "Estas intentando Salir",
-			 * 1) .show();
-			 */
+
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 
-	public void llamar(View v) {
-		TextView tx = (TextView) findViewById(R.id.textPhone);
-		if (tx.getText().toString().contains("ele")) {
-			return;
-		}
-		llamar(tx.getText().toString());
-	}
-
-	public void llamar(String number) {
-		Uri numero = Uri.parse("tel: +571"+ number);
-		Intent intent = new Intent(Intent.ACTION_CALL, numero);
-		startActivity(intent);
-	}
-
-	public void correo(View v) {
-		TextView tx = (TextView) findViewById(R.id.textEmail);
-		if (tx.getText().toString().contains("Correo")) {
-			return;
-		}
-		enviar(tx.getText().toString().split(" "), null, "", "");
-	}
-
-	private void enviar(String[] to, String[] cc, String asunto, String mensaje) {
-		Intent emailIntent = new Intent(Intent.ACTION_SEND);
-		emailIntent.setData(Uri.parse("mailto:"));
-		emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
-		emailIntent.putExtra(Intent.EXTRA_CC, cc);
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, asunto);
-		emailIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
-		emailIntent.setType("message/rfc822");
-		startActivity(Intent.createChooser(emailIntent, "Email "));
-	}
-
-	public void home(View v) {
+	public void home() {
 		startActivity(new Intent(getApplicationContext(), MainActivity.class));
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		this.finish();
-	}
-
-	public void ubicar(View v) {
-		try {
-			TextView tx = (TextView) findViewById(R.id.textEdificios);
-			if (tx.getText().toString().equals("Edificio")) {
-				return;
-			}
-			Intent mapa = new Intent(this, MapaActivity.class);
-			mapa.putExtra("lat", lat);
-			mapa.putExtra("lon", lon);
-			mapa.putExtra("titulos", titulos);
-			mapa.putExtra("descripciones", descripciones);
-			mapa.putExtra("zoom", 18);
-			mapa.putExtra("tipo", 1);
-			startActivity(mapa);
-			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-		} catch (Exception ex) {
-		}
 	}
 
 }

@@ -18,22 +18,27 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ConfigurationInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -41,8 +46,11 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnHoverListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -55,7 +63,7 @@ public class MainActivity extends Activity {
 	public static String dataBaseName = "DataStore.sqlite";
 	public Timer tim;
 	public static String sede = "Bogotá";
-	public static boolean pausado = false;
+	public boolean pausado = false;
 
 	@Override
 	public void onBackPressed() {
@@ -69,14 +77,17 @@ public class MainActivity extends Activity {
 		addShortcut();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		if (savedInstanceState != null) {
+			sede = savedInstanceState.getString("sede");
+		}
 		Space sp = (Space) findViewById(R.id.SpaceMain);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
-		double factor = screenHeight / 2000.0 + 0.35;
-		if (factor > 0.8) {
-			factor = 0.8;
+		double factor = screenHeight / 2000.0 + 0.30;
+		if (factor > 0.75) {
+			factor = 0.75;
 		}
 
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
@@ -90,8 +101,7 @@ public class MainActivity extends Activity {
 		Typeface fuente = Typeface
 				.createFromAsset(getAssets(), "Helvetica.ttf");
 		int ids[] = { R.id.SOnlineButton, R.id.eventosButton, R.id.sedesButton,
-				R.id.textSede, R.id.textLatitud, R.id.textLongitud,
-				R.id.textLugar };
+				R.id.textLatitud, R.id.textLongitud, R.id.textLugar };
 		for (int i = 0; i < ids.length; i++) {
 			TextView prueba = (TextView) findViewById(ids[i]);
 			prueba.setTypeface(fuente);
@@ -100,46 +110,42 @@ public class MainActivity extends Activity {
 			}
 		}
 		iniciarLocalService();
+		if (!Util.isOnline(this)) {
+			Toast.makeText(getApplicationContext(),
+					"No estas conectado a internet", 1).show();
+			// notificarRed();
+		}
 
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		sede = savedInstanceState.getString("sede");
+		TextView tx = (TextView) findViewById(R.id.textSede);
+		tx.setText(sede);
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+
+	public void notificarRed() {
+		AlertDialog.Builder dialog = new AlertDialog.Builder(
+				getApplicationContext());
+		LayoutInflater inflater = (LayoutInflater) getApplicationContext()
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		dialog.setView(inflater.inflate(R.layout.dialogo_mapa, null))
+				.setPositiveButton("Aceptar",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+							}
+						});
+		dialog.show();
 	}
 
 	public void eventos(View v) {
 		startActivity(new Intent(getApplicationContext(), EventosActivity.class));
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
-
-	public static Drawable resizeImage(Context ctx, int resId, int w, int h) {
-
-		// cargamos la imagen de origen
-		Bitmap BitmapOrg = BitmapFactory.decodeResource(ctx.getResources(),
-				resId);
-
-		int width = BitmapOrg.getWidth();
-		int height = BitmapOrg.getHeight();
-		int newWidth = w;
-		int newHeight = h;
-
-		// calculamos el escalado de la imagen destino
-		float scaleWidth = ((float) newWidth) / width;
-		float scaleHeight = ((float) newHeight) / height;
-
-		// para poder manipular la imagen
-		// debemos crear una matriz
-
-		Matrix matrix = new Matrix();
-		// resize the Bitmap
-		matrix.postScale(scaleWidth, scaleHeight);
-
-		// volvemos a crear la imagen con los nuevos valores
-		Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0, width,
-				height, matrix, true);
-
-		// si queremos poder mostrar nuestra imagen tenemos que crear un
-		// objeto drawable y así asignarlo a un botón, imageview...
-		return new BitmapDrawable(resizedBitmap);
-
-	}
-
 	private void iniciarLocalService() {
 		LocationManager milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener milocListener = new MiLocationListener();
@@ -175,16 +181,36 @@ public class MainActivity extends Activity {
 		super.onResume();
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString("sede", sede);
+		super.onSaveInstanceState(outState);
+	}
+
 	public void directorio(View v) {
+		directorio(false);
+	}
+
+	public void irSede(View v) {
+		directorio(true);
+	}
+
+	private void directorio(boolean cond) {
 		try {
 			Intent directorio = new Intent(getApplicationContext(),
 					DirectorioActivity.class);
+			if (cond) {
+				directorio.putExtra("current", 3);
+				directorio.putExtra("sede", sede);
+			}
+			directorio.putExtra("salto", cond);
 			startActivity(directorio);
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			// this.finish();
 		} catch (Exception e) {
 			Log.e("error", e.toString());
 		}
+
 	}
 
 	public void servicios(View v) {
@@ -226,7 +252,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		return false;
 	}
 

@@ -61,6 +61,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/un" />
 
@@ -71,15 +72,14 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imageUNradio"
+                    android:id="@+id/imageLeonG"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="left"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/radio1" />
+                    android:src="@drawable/leon" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb03"
@@ -88,14 +88,14 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imagePrisma"
+                    android:id="@+id/imageLibreria"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="left"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/prisma" />
+                    android:src="@drawable/librerias" />
             </TableRow>
 
             <TableRow
@@ -117,8 +117,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Pagina principal"
@@ -131,17 +131,17 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textUNradio"
+                    android:id="@+id/textLeon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="UN Radio"
+                    android:text="Leon de Greiff"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
 
                 <Space
@@ -151,17 +151,17 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textPrisma"
+                    android:id="@+id/textLibreria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="Prisma TV"
+                    android:text="Libreria"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
             </TableRow>
 
@@ -178,13 +178,16 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imageLeonG"
+                    android:id="@+id/imageUNradio"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:gravity="left"
                     android:onClick="irA"
-                    android:src="@drawable/leon" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/radio1" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb21"
@@ -193,13 +196,16 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imageAnimales"
+                    android:id="@+id/imageUNperiodico"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:gravity="left"
                     android:onClick="irA"
-                    android:src="@drawable/animales" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/un" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb22"
@@ -208,13 +214,15 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imageSicologia"
+                    android:id="@+id/imagePrisma"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:gravity="left"
                     android:onClick="irA"
-                    android:src="@drawable/sicologia" />
+                    android:src="@drawable/prisma" />
             </TableRow>
 
             <TableRow
@@ -230,17 +238,17 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textLeon"
+                    android:id="@+id/textUNradio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="Leon de Greiff"
+                    android:text="UN Radio"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
 
                 <Space
@@ -250,17 +258,17 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textAnimales"
+                    android:id="@+id/textUNperidico"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="Clinica de Animales"
+                    android:text="UN periodico"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
 
                 <Space
@@ -270,17 +278,17 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textSicologia"
+                    android:id="@+id/textPrisma"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:lines="3"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="Atención Sicologica"
+                    android:text="Prisma TV"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
             </TableRow>
 
@@ -297,14 +305,14 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imageJuridico"
+                    android:id="@+id/imageAnimales"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
-                    android:gravity="left"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/juridico" />
+                    android:src="@drawable/animales" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb41"
@@ -313,19 +321,31 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imageLibreria"
+                    android:id="@+id/imageSicologia"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/librerias" />
+                    android:src="@drawable/sicologia" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb42"
                     android:layout_width="0px"
                     android:layout_height="0px"
                     android:layout_gravity="fill_horizontal" />
+
+                <ImageView
+                    android:id="@+id/imageJuridico"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:gravity="left"
+                    android:onClick="irA"
+                    android:src="@drawable/juridico" />
             </TableRow>
 
             <TableRow
@@ -341,17 +361,17 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textJuridico"
+                    android:id="@+id/textAnimales"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:lines="3"
-                    android:maxLines="2"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="Oficina Juridica"
+                    android:text="Clinica de Animales"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
 
                 <Space
@@ -361,21 +381,133 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textLibreria"
+                    android:id="@+id/textSicologia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="Libreria"
+                    android:text="Atención Sicologica"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb52"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:id="@+id/textJuridico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:maxWidth="5dp"
+                    android:singleLine="false"
+                    android:text="Oficina Juridica"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left" >
+
+                <Space
+                    android:id="@+id/spaceMenuWeb200"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <ImageView
+                    android:id="@+id/imagePatrimonio"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:onClick="irA"
+                    android:src="@drawable/un" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb201"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <ImageView
+                    android:id="@+id/imageAdmisiones"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:onClick="irA"
+                    android:src="@drawable/un" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb202"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left" >
+
+                <Space
+                    android:id="@+id/spaceMenuWeb210"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:id="@+id/textPatrimonio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:maxWidth="5dp"
+                    android:singleLine="false"
+                    android:text="Sistema de Patrimonio y Museos"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb211"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:id="@+id/textAdmisiones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:maxWidth="5dp"
+                    android:singleLine="false"
+                    android:text="Admisiones"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb212"
                     android:layout_width="0px"
                     android:layout_height="0px"
                     android:layout_gravity="fill_horizontal" />
@@ -417,8 +549,9 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/mensaje" />
+                    android:src="@drawable/correo_circulo" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb61"
@@ -432,6 +565,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/comedor" />
 
@@ -447,6 +581,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/medico" />
             </TableRow>
@@ -470,8 +605,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Correo Institucional"
@@ -490,8 +625,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Comedores"
@@ -510,8 +645,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Servicio medico estudiantil"
@@ -536,6 +671,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/unisalud" />
 
@@ -551,6 +687,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/black" />
             </TableRow>
@@ -574,8 +711,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Unisalud"
@@ -594,8 +731,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Black Board"
@@ -636,6 +773,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:gravity="left"
                     android:onClick="irA"
                     android:src="@drawable/sia" />
@@ -652,6 +790,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/sinab" />
 
@@ -667,6 +806,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/hermes" />
             </TableRow>
@@ -710,8 +850,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Librerias UN"
@@ -730,8 +870,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="HERMES"
@@ -755,6 +895,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/dre" />
 
@@ -770,8 +911,9 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/sara" />
+                    android:src="@drawable/talento" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb132"
@@ -785,6 +927,7 @@
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
                     android:src="@drawable/webddocente" />
             </TableRow>
@@ -807,8 +950,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="3"
-                    android:maxLines="3"
+                    android:lines="4"
+                    android:maxLines="4"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Dirección de Relaciones Exteriores"
@@ -827,8 +970,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="SARA"
@@ -847,8 +990,8 @@
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:lines="2"
-                    android:maxLines="2"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
                     android:text="Web Docentes"
@@ -856,22 +999,5 @@
             </TableRow>
         </TableLayout>
     </ScrollView>
-
-    <TableRow
-        android:id="@+id/tableRow14"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="1"
-        android:gravity="bottom|right" >
-
-        <ImageView
-            android:id="@+id/imageHome"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="10dp"
-            android:onClick="home"
-            android:src="@drawable/homeun" />
-    </TableRow>
 
 </LinearLayout>

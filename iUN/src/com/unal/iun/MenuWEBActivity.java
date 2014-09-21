@@ -30,7 +30,7 @@ public class MenuWEBActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_menu_web);
 		ScrollView sc = (ScrollView) findViewById(R.id.scrollViewMenuWeb);
 		Space sp = (Space) findViewById(R.id.spaceMenuWebGeneral);
@@ -38,6 +38,8 @@ public class MenuWEBActivity extends Activity {
 				BitmapFactory.decodeResource(getResources(),
 						R.drawable.fondoinf));
 		this.getActionBar().setBackgroundDrawable(background2);
+		this.getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		int screenWidth = display.getWidth();
@@ -56,8 +58,6 @@ public class MenuWEBActivity extends Activity {
 		sc.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				(int) (screenHeight * (factor))));
-		Log.e("factor 1", factor + " " + (int) (screenHeight * (factor)));
-		Log.e("factor 2", factor2 + " " + (int) (screenHeight * (factor2)));
 		int ids[] = new int[] { R.id.spaceMenuWeb01, R.id.spaceMenuWeb02,
 				R.id.spaceMenuWeb03, R.id.spaceMenuWeb10, R.id.spaceMenuWeb11,
 				R.id.spaceMenuWeb12, R.id.spaceMenuWeb20, R.id.spaceMenuWeb21,
@@ -74,13 +74,15 @@ public class MenuWEBActivity extends Activity {
 				R.id.spaceMenuWeb140, R.id.spaceMenuWeb141,
 				R.id.spaceMenuWeb142, R.id.spaceMenuWeb150,
 				R.id.spaceMenuWeb151, R.id.spaceMenuWeb160,
-				R.id.spaceMenuWeb161 };
-		Log.e("ancho de pantalla",screenWidth+"");
+				R.id.spaceMenuWeb161, R.id.spaceMenuWeb200,
+				R.id.spaceMenuWeb201, R.id.spaceMenuWeb202,
+				R.id.spaceMenuWeb210, R.id.spaceMenuWeb211,
+				R.id.spaceMenuWeb212 };
 		for (int i = 0; i < ids.length; i++) {
 			Space im = (Space) findViewById(ids[i]);
 			ViewGroup.LayoutParams iv_params_b = im.getLayoutParams();
-			iv_params_b.height = 0;			
-			iv_params_b.width = (int) ((screenWidth) * (0.04+screenWidth*3/10000));
+			iv_params_b.height = 0;
+			iv_params_b.width = (int) ((screenWidth) * (0.04 + screenWidth / 10000.0));
 			im.setLayoutParams(iv_params_b);
 		}
 		int ids2[] = new int[] { R.id.textTituloMenuWeb, R.id.textMP,
@@ -97,9 +99,20 @@ public class MenuWEBActivity extends Activity {
 			TextView tx = (TextView) findViewById(ids2[i]);
 			tx.setTypeface(fuente);
 		}
-		
-		
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			home();
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void navegar(String cad) {
@@ -123,6 +136,7 @@ public class MenuWEBActivity extends Activity {
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		this.finish();
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_web, menu);
@@ -196,19 +210,23 @@ public class MenuWEBActivity extends Activity {
 			cad = "http://www.bogota.unal.edu.co/estructura/juridica/";
 			break;
 		case R.id.imageLeonG:
-			cad = "http://www.bogota.unal.edu.co/estructura/juridica/";
+			cad = "http://www.divulgacion.unal.edu.co/leon_de_greiff/";
 			break;
 		case R.id.imageLibreria:
-			cad = "http://www.bogota.unal.edu.co/estructura/juridica/";
+			cad = "http://www.libreriaun.unal.edu.co/?q=node/39";
 			break;
 		case R.id.imageComedor:
-			cad = "http://www.bogota.unal.edu.co/estructura/juridica/";
+			cad = "http://www.agenciadenoticias.unal.edu.co/ndetalle/article/la-un-vuelve-a-tener-comedor-central.html";
 			break;
 		case R.id.imageMedico:
-			cad = "http://www.bogota.unal.edu.co/estructura/juridica/";
+			cad = "http://www.bienestarbogota.unal.edu.co/salud.php";
 			break;
-		case R.id.textUNIsalud:
-			cad = "http://www.bogota.unal.edu.co/estructura/juridica/";
+		case R.id.imageUNIsalud:
+			cad = "http://www.unisalud.unal.edu.co/";
+		case R.id.imageAdmisiones:
+			cad = "http://admisiones.unal.edu.co/";
+		case R.id.imagePatrimonio:
+			cad = "http://www.unal.edu.co/contenido/patrimonio_historico.html";
 		default:
 			break;
 		}

@@ -40,22 +40,23 @@ public class MiAdaptador extends BaseAdapter {
 		LayoutInflater inflater = actividad.getLayoutInflater();
 		View view = inflater.inflate(R.layout.elemento_lista, null, true);
 		TextView textView = (TextView) view.findViewById(R.id.titulo);
+		TextView textView2 = (TextView) view.findViewById(R.id.subtitulo);
+		ImageView imageView = (ImageView) view.findViewById(R.id.icono);
+
 		if (lista[position] != null) {
 			textView.setText(toCammelCase(lista[position].toLowerCase()));
 			textView.setHint(toCammelCase(lista[position].toLowerCase()));
-			if (false && lista[position].length() > 20) {
-				if (lista[position].length() > 35) {
-					textView.setTextSize(12);
-				} else {
-					textView.setTextSize(15);
-				}
-			} else {
-				textView.setTextSize(18);
-			}
-		}
-		TextView textView2 = (TextView) view.findViewById(R.id.subtitulo);
+		/*	if (lista[position].contains("Museo")) {
+				textView.setText("\t Museo Paleontologico");
 
-		ImageView imageView = (ImageView) view.findViewById(R.id.icono);
+			}
+			if (lista[position].contains("Franco")) {
+				textView.setText("\t Estacion Tropical Roberto Franco");
+
+			}*/
+			textView.setTextSize(18);
+
+		}
 		imageView.setImageResource(R.drawable.ic_launcher);
 		int ids[] = { R.id.titulo, R.id.subtitulo };
 		for (int i = 0; i < ids.length; i++) {
@@ -64,11 +65,24 @@ public class MiAdaptador extends BaseAdapter {
 		}
 		if (lista2[position] != null) {
 			textView2.setText(toCammelCase(lista2[position].toLowerCase()));
+			if (lista2[position].contains("useo")
+					|| lista2[position].contains("ranco")
+					|| lista[position].contains("Bogotá")
+					|| lista[position].contains("Amaz")
+					|| lista[position].contains("Caribe")
+					|| lista[position].contains("Mani")
+					|| lista[position].contains("Mede")
+					|| lista[position].contains("Tumac")
+					|| lista[position].contains("Palmira")
+					|| lista[position].contains("Orino")) {
+				textView2.setText("");
+
+			}
 			if (lista2[position].contains("Bogo")) {
 				imageView.setImageResource(R.drawable.ic_bogota);
 			}
 			if (lista2[position].contains("Amaz")) {
-				imageView.setImageResource(R.drawable.ic_amazonas);
+				imageView.setImageResource(R.drawable.ic_amazonia);
 			}
 			if (lista2[position].contains("Caribe")) {
 				imageView.setImageResource(R.drawable.ic_caribe);
@@ -86,11 +100,9 @@ public class MiAdaptador extends BaseAdapter {
 				imageView.setImageResource(R.drawable.ic_palmira);
 			}
 			if (lista2[position].contains("Orino")) {
-				imageView.setImageResource(R.drawable.ic_orinoquia);
+				imageView.setImageResource(R.drawable.ic_oriniquia);
 			}
-			if (lista2[position].contains("Nacio")) {
-				imageView.setImageResource(R.drawable.ic_nacional);
-			}
+			imageView.setImageResource(R.drawable.contact);
 		}
 		return view;
 	}

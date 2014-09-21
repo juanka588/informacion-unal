@@ -10,11 +10,10 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
-import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.OverlayItem;
 
-public class MyOverlay extends ItemizedOverlay {
 
+public class MyOverlay  {
+/*
 	private ArrayList<OverlayItem> mapOverlays = new ArrayList<OverlayItem>();
 
 	private Context context;
@@ -62,5 +61,5 @@ public class MyOverlay extends ItemizedOverlay {
 		mapOverlays.add(overlay);
 		this.populate();
 	}
-
+*/
 }

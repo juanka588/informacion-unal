@@ -8,7 +8,8 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_launcher" 
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/titulo"
@@ -17,7 +18,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/icono"
         android:gravity="fill_horizontal"
-        android:singleLine="true"
+        android:layout_marginLeft="20dp"
         android:text="Mi Titulo"
         android:textColor="@android:color/white" />
 
@@ -28,6 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@id/titulo"
         android:layout_toRightOf="@id/icono"
+          android:layout_marginRight="20dp"
         android:gravity="right"
         android:text="Otro Texto"
         android:textColor="@android:color/white" />

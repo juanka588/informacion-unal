@@ -57,13 +57,16 @@
             android:name=".DirectorioActivity"
             android:label="@string/title_activity_directorio"
             android:launchMode="singleInstance"
-            android:logo="@drawable/logo" >
+            android:logo="@drawable/homeun" >
         </activity>
         <activity
             android:name=".MenuWEBActivity"
             android:label="@string/title_activity_menu_web"
             android:launchMode="singleInstance"
-             android:logo="@drawable/logo" >
+            android:logo="@drawable/homeun" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unal.iun.MainActivity" />
         </activity>
         <activity
             android:name=".WebActivity"
@@ -72,7 +75,8 @@
         </activity>
         <activity
             android:name=".DetailsActivity"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance" 
+            android:logo="@drawable/homeun">
         </activity>
         <activity
             android:name=".MapaActivity"

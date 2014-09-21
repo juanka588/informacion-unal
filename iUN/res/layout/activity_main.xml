@@ -27,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
@@ -54,14 +53,16 @@
             android:id="@+id/imageUNPrincipal"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_marginRight="19dp"
             android:layout_weight="0"
+            android:onClick="irSede"
             android:src="@drawable/persona" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:orientation="vertical" >
 
             <TextView
@@ -70,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:maxLength="16"
+                android:shrinkColumns="true"
                 android:text="Longitud: "
                 android:textColor="@android:color/white" />
 
@@ -96,28 +98,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/fondoboton"
+            android:background="@drawable/selectorfondo"
             android:clickable="true"
             android:gravity="center"
             android:onClick="servicios"
             android:padding="5dp"
             android:singleLine="true"
-            android:text="Servicios en linea"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/sedesButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/fondointermedio"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="directorio"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="Nivel Sedes"
+            android:text="Servicios"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
 
@@ -126,13 +113,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/fondoboton"
+            android:background="@drawable/selectorfondo"
             android:clickable="true"
             android:gravity="center"
             android:onClick="eventos"
             android:padding="5dp"
             android:singleLine="true"
             android:text="Eventos"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/sedesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selectorfondo"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="directorio"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="Sedes"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
     </TableRow>

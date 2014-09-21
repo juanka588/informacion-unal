@@ -32,20 +32,5 @@
         android:layout_marginTop="15dp" >
     </ListView>
 
-    <TableRow
-        android:id="@+id/tableRow20"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:gravity="bottom|right" >
-
-        <ImageView
-            android:id="@+id/imageHomeEventos"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:gravity="right"
-            android:onClick="home"
-            android:src="@drawable/homeun" />
-    </TableRow>
 
 </LinearLayout>

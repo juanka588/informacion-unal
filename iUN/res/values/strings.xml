@@ -4,7 +4,7 @@
     <string name="app_name">iUN</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_directorio"></string>
+    <string name="title_activity_directorio">Directorio</string>
     <string name="title_activity_menu_web">Servicios en linea</string>
     <string name="title_activity_web"></string>
     <string name="title_activity_details">Informacion</string>
@@ -18,5 +18,7 @@
     <string name="title_activity_eventos">Eventos</string>
     <string name="buscar">Buscar</string>
     <string name="trafico">Trafico</string>
-
+    <string name="otros_sitios">Ver más</string>
+    <string name="textSwitchON">Departamentos</string>
+    <string name="textSwitchOFF">Direccion</string>
 </resources>

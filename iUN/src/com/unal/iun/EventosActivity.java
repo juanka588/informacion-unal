@@ -26,12 +26,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.CursorJoiner.Result;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -57,8 +60,14 @@ public class EventosActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_eventos);
+		BitmapDrawable background2 = new BitmapDrawable(
+				BitmapFactory.decodeResource(getResources(),
+						R.drawable.fondoinf));
+		this.getActionBar().setBackgroundDrawable(background2);
+		this.getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 		lv = (ListView) findViewById(R.id.listView2);
 		sp = (Space) findViewById(R.id.spaceEventos);
 		act = this;
@@ -88,7 +97,7 @@ public class EventosActivity extends Activity {
 		StrictMode.setThreadPolicy(policy);
 		URL url;
 		try {
-			url = new URL("http://www.ciencias.unal.edu.co/eventos_prueba/");
+			url = new URL("http://maps.googleapis.com/maps/api/directions/json?origin=4.6382023,-74.0840434&destination=6.26261,-75.57775&sensor=true");
 			new EventFetch().execute(url);
 		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
@@ -102,7 +111,18 @@ public class EventosActivity extends Activity {
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		// this.finish();
 	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			home();
+			break;
 
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (recargable) {
@@ -263,7 +283,7 @@ public class EventosActivity extends Activity {
 		super.onBackPressed();
 	}
 
-	public void home(View v) {
+	public void home() {
 		startActivity(new Intent(getApplicationContext(), MainActivity.class));
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		this.finish();

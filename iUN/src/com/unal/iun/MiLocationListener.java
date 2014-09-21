@@ -69,11 +69,11 @@ public class MiLocationListener implements LocationListener {
 			}
 		}
 		Cursor c = db.rawQuery(query, null);
-		String[][] mat = DirectorioActivity.imprimirLista(c);
+		String[][] mat = Util.imprimirLista(c);
 		Log.e("sede", query);
-		Toast.makeText(appcont, DirectorioActivity.getcolumn(mat, 0)[0].trim(),
+		Toast.makeText(appcont, Util.getcolumn(mat, 0)[0].trim(),
 				1).show();
-		String a = DirectorioActivity.getcolumn(mat, 0)[0].trim();
+		String a = Util.getcolumn(mat, 0)[0].trim();
 		textSede.setText(a);
 		MainActivity.sede = a;
 		c.close();
