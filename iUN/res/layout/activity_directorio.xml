@@ -27,24 +27,25 @@
         android:layout_height="227dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:scrollbars="vertical" >
+        android:gravity="bottom" >
     </ListView>
 
     <TableRow
-        android:id="@+id/tableRow10"
+        android:id="@+id/tableRowDirectorio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:gravity="bottom|center" >
+        android:gravity="bottom|center"
+        android:visibility="invisible" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/button1"
+            <CheckedTextView
+                android:id="@+id/buttonDirectorio"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -53,20 +54,11 @@
                 android:gravity="center_vertical|center"
                 android:padding="2dp"
                 android:text="Directorio"
+                android:onClick="refresh"
                 android:textColor="@android:color/white" />
 
-            <ImageView
-                android:id="@+id/imageMapaDirectorio"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/selectorfondo"
-                android:onClick="ubicar"
-                android:src="@drawable/mapa3" />
-
-            <TextView
-                android:id="@+id/button2"
+            <CheckedTextView
+                android:id="@+id/buttonDepartamentos"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -75,6 +67,7 @@
                 android:gravity="center_vertical|center"
                 android:padding="2dp"
                 android:text="Departamentos"
+                android:onClick="refresh"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </TableRow>

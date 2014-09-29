@@ -64,12 +64,13 @@ public class DetailsActivity extends Activity {
 		tl = (LinearLayout) findViewById(R.id.linearLayoutDetalles);
 
 		ExpandableListView sc = (ExpandableListView) findViewById(R.id.expandableListDestails);
-		Space sp = (Space) findViewById(R.id.spaceDetalles);
+		Space sp = (Space) findViewById(R.id.spaceDetalles1);
+		Space sp2 = (Space) findViewById(R.id.spaceDetalles2);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
-		double factor = screenHeight / 2000.0 + 0.35;
+		double factor = screenHeight / 2000.0 + 0.25;
 		double factor2 = 3.0 * screenHeight / 20000.0 + 0.09;
 		if (factor > 0.65) {
 			factor = 0.65;
@@ -79,14 +80,17 @@ public class DetailsActivity extends Activity {
 		}
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
-				(int) (screenHeight * (factor2))));
+				(int) (screenHeight * (factor2 / 2.0))));
+		sp2.setLayoutParams(new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				(int) (screenHeight * (factor2 / 2.0))));
 		sc.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				(int) (screenHeight * (factor))));
-		//try {
+		try {
 			data = (ArrayList<String[]>) b.get("datos");
 			TextView tx = (TextView) findViewById(R.id.tituloDetallesDtos);
-			tx.setText(data.get(0)[0]);
+			tx.setText(data.get(0)[0].trim());
 
 			int id = R.drawable.fondo2;
 			if (b.getInt("fondo") != 0) {
@@ -95,13 +99,13 @@ public class DetailsActivity extends Activity {
 			Drawable background = new BitmapDrawable(
 					BitmapFactory.decodeResource(getResources(), id));
 			tl.setBackgroundDrawable(background);
-			// sc.setDividerHeight(2);
+			sc.setDividerHeight(2);
 			// sc.setGroupIndicator(null);
 			sc.setClickable(true);
 			ArrayList<String> parentItems = new ArrayList<String>();
 			ArrayList<Object> childItems = new ArrayList<Object>();
 			for (int i = 0; i < data.size(); i++) {
-				parentItems.add(data.get(i)[1]);
+				parentItems.add(data.get(i)[1].trim());
 
 			}
 
@@ -110,13 +114,12 @@ public class DetailsActivity extends Activity {
 			titulos = new String[data.size()];
 			descripciones = new String[data.size()];
 
-		
 			for (int k = 0; k < data.size(); k++) {
 				ArrayList<String> child = new ArrayList<String>();
 				String[] datos = data.get(k);
 				for (int i = 2; i < datos.length; i++) {
 					if (datos[i] == null) {
-						child.add("");
+						// child.add("");
 					} else {
 						if (i == datos.length - 1) {
 							titulos[k] = datos[5];
@@ -124,7 +127,9 @@ public class DetailsActivity extends Activity {
 							lat[k] = Double.parseDouble(datos[8].split(" ")[0]);
 							lon[k] = Double.parseDouble(datos[8].split(" ")[1]);
 						} else {
-							child.add(datos[i]);
+							if (datos[i].trim().length()>4) {
+								child.add(datos[i]);
+							}
 						}
 					}
 				}
@@ -137,24 +142,12 @@ public class DetailsActivity extends Activity {
 					(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),
 					this);
 			sc.setAdapter(adapter);
+			sc.expandGroup(0);
 			// sc.setOnChildClickListener(this);
-		//} catch (Exception e) {
-		//	Log.e("error de Detalles ", e.toString());
-		//}
-
-	}
-
-	public void addEventToCalendar(View v) {
-		try {
-			if (evento) {
-				addEventToCalendar(getParent());
-			} else {
-				// llamar("3165000;" + data[6]);
-
-			}
 		} catch (Exception e) {
-			Log.e("Error Detalles", e.toString());
+			Log.e("error de Detalles ", e.toString());
 		}
+
 	}
 
 	@Override
@@ -168,41 +161,6 @@ public class DetailsActivity extends Activity {
 			break;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	public void addEventToCalendar(Activity activity) {
-		Bundle b = getIntent().getExtras();
-		String data[] = b.getStringArray("datos");
-		Calendar cal = Calendar.getInstance();
-		String cad[] = data[6].split("-");
-		cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(cad[2]));
-		cal.set(Calendar.MONTH, Integer.parseInt(cad[1]));
-		cal.set(Calendar.YEAR, Integer.parseInt(cad[0]));
-
-		cal.set(Calendar.HOUR_OF_DAY, 22);
-		cal.set(Calendar.MINUTE, 45);
-
-		Intent intent = new Intent(Intent.ACTION_EDIT);
-		intent.setType("vnd.android.cursor.item/event");
-
-		intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-				cal.getTimeInMillis());
-		intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
-				cal.getTimeInMillis() + 60 * 60 * 1000);
-
-		intent.putExtra(Events.ALL_DAY, false);
-		/*
-		 * case DAILY: event.put("rrule", "FREQ=DAILY"); break; case MONTHLY:
-		 * event.put("rrule", "FREQ=MONTHLY"); break; case WEEKLY:
-		 * event.put("rrule", "FREQ=WEEKLY"); break; case FORTNIGHTLY:
-		 * event.put("rrule", "FREQ=YEARLY"); //CODE for Fortnight to be
-		 */
-		intent.putExtra("rrule", "FREQ=DAILY;COUNT=1");
-		intent.putExtra(Events.TITLE, data[5]);
-		intent.putExtra(Events.DESCRIPTION, data[4]);
-		intent.putExtra(Events.EVENT_LOCATION, data[2]);
-
-		this.startActivity(intent);
 	}
 
 	@Override

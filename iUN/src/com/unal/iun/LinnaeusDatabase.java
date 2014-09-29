@@ -74,7 +74,7 @@ public class LinnaeusDatabase extends SQLiteOpenHelper {
 			checkDB = SQLiteDatabase.openDatabase(dbPath, null,
 					SQLiteDatabase.OPEN_READONLY);
 		} catch (SQLiteException e) {
-			Log.v("db log", "database does't exist");
+			Log.v("db log", "La Base de Datos no existe");
 		}
 
 		if (checkDB != null) {

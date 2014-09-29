@@ -5,17 +5,17 @@
     <item
         android:id="@+id/menu_tipo_mapa"
         android:icon="@drawable/ic_tipomapa"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:title="@string/tipo_mapa"/>
     <item
         android:id="@+id/menu_trafico"
         android:icon="@drawable/ic_trafico"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:title="@string/trafico"/>
     <item
         android:id="@+id/menu_otros_sitios"
         android:icon="@drawable/ic_capas"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:title="@string/otros_sitios"/>
 
 </menu>

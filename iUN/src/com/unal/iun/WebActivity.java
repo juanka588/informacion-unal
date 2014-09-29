@@ -38,15 +38,19 @@ public class WebActivity extends Activity {
 		wb1.loadUrl(b.getString("paginaWeb"));
 		URL = b.getString("paginaWeb");
 		BitmapDrawable background = new BitmapDrawable(
-	            BitmapFactory.decodeResource(getResources(),
-	                    R.drawable.fondoinf));
+				BitmapFactory.decodeResource(getResources(),
+						R.drawable.fondoinf));
 		this.getActionBar().setBackgroundDrawable(background);
+		if (!Util.isOnline(this)) {
+			Util.notificarRed(this);
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.web, menu);
 		menu.getItem(3).setTitle(URL);
+		menu.getItem(3).setTitleCondensed(URL);
 		return super.onCreateOptionsMenu(menu);
 	}
 

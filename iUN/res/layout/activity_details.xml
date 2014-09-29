@@ -9,7 +9,7 @@
     tools:ignore="MergeRootFrame"
     android:orientation="vertical" >
     <Space
-        android:id="@+id/spaceDetalles"
+        android:id="@+id/spaceDetalles1"
         android:layout_width="wrap_content"
         android:layout_height="80dp" />
 
@@ -23,13 +23,18 @@
         android:maxWidth="250dp"
         android:text="Un Titulo muy largo larguisimo de prueba para mirar la efectividad"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp" />
+    <Space
+        android:id="@+id/spaceDetalles2"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" />
     <ExpandableListView
         android:id="@+id/expandableListDestails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp" >
+        android:layout_marginTop="60dp" 
+        android:layout_marginLeft="10dp" >
     </ExpandableListView>
 
 </LinearLayout>

@@ -116,9 +116,7 @@ public class MenuWEBActivity extends Activity {
 	}
 
 	public void navegar(String cad) {
-		Intent deta = new Intent(this, WebActivity.class);
-		deta.putExtra("paginaWeb", cad);
-		startActivity(deta);
+		Util.irA(cad, this);
 	}
 
 	@Override

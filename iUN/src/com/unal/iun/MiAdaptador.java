@@ -44,8 +44,8 @@ public class MiAdaptador extends BaseAdapter {
 		ImageView imageView = (ImageView) view.findViewById(R.id.icono);
 
 		if (lista[position] != null) {
-			textView.setText(toCammelCase(lista[position].toLowerCase()));
-			textView.setHint(toCammelCase(lista[position].toLowerCase()));
+			textView.setText(Util.toCammelCase(lista[position].toLowerCase()));
+			textView.setHint(Util.toCammelCase(lista[position].toLowerCase()));
 		/*	if (lista[position].contains("Museo")) {
 				textView.setText("\t Museo Paleontologico");
 
@@ -64,7 +64,7 @@ public class MiAdaptador extends BaseAdapter {
 			prueba.setTypeface(fuente);
 		}
 		if (lista2[position] != null) {
-			textView2.setText(toCammelCase(lista2[position].toLowerCase()));
+			textView2.setText(Util.toCammelCase(lista2[position].toLowerCase()));
 			if (lista2[position].contains("useo")
 					|| lista2[position].contains("ranco")
 					|| lista[position].contains("Bogotá")
@@ -103,22 +103,12 @@ public class MiAdaptador extends BaseAdapter {
 				imageView.setImageResource(R.drawable.ic_oriniquia);
 			}
 			imageView.setImageResource(R.drawable.contact);
+			textView2.setText("");
 		}
 		return view;
 	}
 
-	private CharSequence toCammelCase(String lowerCase) {
-		String cad = "";
-		String[] palabras = lowerCase.split(" ");
-		for (int i = 0; i < palabras.length; i++) {
-			if (palabras[i].length() > 3) {
-				palabras[i] = (palabras[i].charAt(0) + "").toUpperCase()
-						+ palabras[i].substring(1, palabras[i].length());
-			}
-			cad += palabras[i] + " ";
-		}
-		return cad.trim();
-	}
+
 
 	public int getCount() {
 		return lista.length;

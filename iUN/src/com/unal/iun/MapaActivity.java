@@ -1,5 +1,7 @@
 package com.unal.iun;
 
+import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -10,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.dynamic.d;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,10 +34,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.internal.f;
 
 public class MapaActivity extends FragmentActivity {
 	GoogleMap mapa;
 	double lat[], lon[];
+	ArrayList<LatLng> marcadores = new ArrayList<LatLng>();
 	String titulos[];
 	String descripciones[];
 	static int tipo = 1, count = 0, zoom = 19;
@@ -42,6 +48,7 @@ public class MapaActivity extends FragmentActivity {
 	String urlClima = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=4.53&lon=-74.07&units=metric&mode=JSON&cnt=7";
 	Intent deta;
 	Marker focus;
+	String tableName="BaseM";
 	int nivel = 1;
 	static String cond = "";
 
@@ -76,6 +83,7 @@ public class MapaActivity extends FragmentActivity {
 		cambiar();
 		animarCamara(lat[0], lon[0], zoom);
 		addNuevos(false);
+		tableName=MainActivity.tbName;
 		try {
 			MapsInitializer.initialize(MapaActivity.this);
 		} catch (Exception e) {
@@ -121,20 +129,26 @@ public class MapaActivity extends FragmentActivity {
 		 * 
 		 * default: break; }
 		 */
-		if (tipo == 0) {
-			mapa.addMarker(new MarkerOptions()
-					.position(new LatLng(lat, lng))
-					.title(title)
-					.snippet(desc)
-					.icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.edificiop)));
-		} else {
-			mapa.addMarker(new MarkerOptions()
-					.position(new LatLng(lat, lng))
-					.title(title)
-					.snippet(desc)
-					.icon(BitmapDescriptorFactory
-							.fromResource(R.drawable.edificiop)));
+		if (!marcadores.contains(new LatLng(lat, lng))) {
+			marcadores.add(new LatLng(lat, lng));
+			MarkerOptions k = null;
+			if (tipo == 0) {
+				k = new MarkerOptions()
+						.position(new LatLng(lat, lng))
+						.title(title)
+						.snippet(desc)
+						.icon(BitmapDescriptorFactory
+								.fromResource(R.drawable.edificiop));
+
+			} else {
+				k = new MarkerOptions()
+						.position(new LatLng(lat, lng))
+						.title(title)
+						.snippet(desc)
+						.icon(BitmapDescriptorFactory
+								.fromResource(R.drawable.edificiop));
+			}
+			mapa.addMarker(k);
 		}
 	}
 
@@ -146,7 +160,6 @@ public class MapaActivity extends FragmentActivity {
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 	}
 
@@ -213,7 +226,7 @@ public class MapaActivity extends FragmentActivity {
 		Log.e("sede", cond);
 		nivel++;
 		String query2 = "select latitud, longitud,nombre_edificio, url from edificios "
-				+ "natural join base natural join enlace where sede_edificio='"
+				+ "natural join "+tableName+" natural join enlace where sede_edificio='"
 				+ cond + "' and nivel =" + nivel + " group by nombre_edificio";
 		c = db.rawQuery(query2, null);
 		mat = Util.imprimirLista(c);
@@ -239,7 +252,7 @@ public class MapaActivity extends FragmentActivity {
 				+ " and longitud between"
 				+ (lon - 0.001)
 				+ " and "
-				+ (lon + 0.001) + " and nivel=4";
+				+ (lon + 0.001);// + " and nivel=4";
 		Cursor c = db.rawQuery(query, null);
 		String[][] mat = Util.imprimirLista(c);
 		this.lat = Util.toDouble(Util.getcolumn(mat, 0));
@@ -301,10 +314,12 @@ public class MapaActivity extends FragmentActivity {
 									if (nivel != 3 && nivel < 3) {
 										acercar(arg0);
 									} else {
-										cambiar();
-										String cad = arg0.getTitle();
-										deta.putExtra("paginaWeb", cad);
-										startActivity(deta);
+										String cad = arg0.getSnippet();
+										if (cad.contains("www.")) {
+											cambiar();
+											deta.putExtra("paginaWeb", cad);
+											startActivity(deta);
+										}
 									}
 								}
 							}

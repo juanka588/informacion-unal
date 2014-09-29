@@ -187,7 +187,7 @@
                     android:gravity="left"
                     android:onClick="irA"
                     android:scaleType="fitXY"
-                    android:src="@drawable/radio1" />
+                    android:src="@drawable/radio" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb21"
@@ -296,7 +296,8 @@
                 android:id="@+id/tableRow5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left" >
+                android:gravity="left"
+                android:visibility="gone" >
 
                 <Space
                     android:id="@+id/spaceMenuWeb40"
@@ -352,7 +353,8 @@
                 android:id="@+id/tableRow6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left" >
+                android:gravity="left"
+                android:visibility="gone" >
 
                 <Space
                     android:id="@+id/spaceMenuWeb50"

@@ -3,13 +3,24 @@
     tools:context="com.unal.iun.DirectorioActivity" >
 
     <item
-        android:id="@+id/historial"
-        android:showAsAction="ifRoom|collapseActionView"
-        android:title="@string/lugar"/>
-     <item android:id="@+id/action_busqueda"
-          android:title="@string/buscar"
-          android:icon="@android:drawable/ic_menu_search"
-          android:showAsAction="always"
-          android:actionViewClass="android.widget.SearchView" />
+        android:id="@+id/action_busqueda"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_menu_search"
+        android:showAsAction="always"
+        android:title="@string/buscar"/>
+    <item
+        android:id="@+id/ItemMapa"
+        android:icon="@drawable/mapap"
+        android:showAsAction="always"
+        android:title="@string/menu_mapa"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/ItemWEB"
+        android:icon="@drawable/enlacep"
+        android:showAsAction="always"
+        android:title="@string/menu_irweb"
+        android:visible="true">
+    </item>
 
 </menu>

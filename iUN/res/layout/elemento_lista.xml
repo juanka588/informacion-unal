@@ -8,17 +8,17 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_launcher" 
-        android:visibility="gone"/>
+        android:src="@drawable/ic_launcher"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/icono"
         android:gravity="fill_horizontal"
-        android:layout_marginLeft="20dp"
         android:text="Mi Titulo"
         android:textColor="@android:color/white" />
 
@@ -28,10 +28,11 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@id/titulo"
+        android:layout_marginRight="20dp"
         android:layout_toRightOf="@id/icono"
-          android:layout_marginRight="20dp"
         android:gravity="right"
+        android:src="@drawable/ic_launcher"
         android:text="Otro Texto"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"/>
 
 </RelativeLayout>

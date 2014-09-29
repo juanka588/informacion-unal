@@ -18,7 +18,10 @@
     <string name="title_activity_eventos">Eventos</string>
     <string name="buscar">Buscar</string>
     <string name="trafico">Trafico</string>
-    <string name="otros_sitios">Ver más</string>
+    <string name="otros_sitios">Sitios Cercanos</string>
     <string name="textSwitchON">Departamentos</string>
     <string name="textSwitchOFF">Direccion</string>
+    <string name="menu_mapa">Ver en el mapa</string>
+    <string name="menu_irweb">Ir al Sitio</string>
+
 </resources>

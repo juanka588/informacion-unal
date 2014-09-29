@@ -16,9 +16,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.android.gms.internal.ky;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -46,24 +49,27 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnHoverListener;
+import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	public static String dataBaseName = "DataStore.sqlite";
+	public static String dataBaseName = "DataStore.sqlite", tbName = "BaseM";
 	public Timer tim;
 	public static String sede = "Bogotá";
-	public boolean pausado = false;
+	ImageView im;
 
 	@Override
 	public void onBackPressed() {
@@ -85,9 +91,9 @@ public class MainActivity extends Activity {
 				.getDefaultDisplay();
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
-		double factor = screenHeight / 2000.0 + 0.30;
-		if (factor > 0.75) {
-			factor = 0.75;
+		double factor = screenHeight / 2000.0 + 0.34;
+		if (factor > 0.74) {
+			factor = 0.74;
 		}
 
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
@@ -111,11 +117,35 @@ public class MainActivity extends Activity {
 		}
 		iniciarLocalService();
 		if (!Util.isOnline(this)) {
-			Toast.makeText(getApplicationContext(),
-					"No estas conectado a internet", 1).show();
-			// notificarRed();
+			Util.notificarRed(this);
 		}
+	}
 
+	protected void cambiarBD() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setMessage("¿Que Base de Datos Desea usar?")
+				.setTitle("Confirme:")
+				.setPositiveButton("Modo Básico",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								tbName = "BaseM";
+								dialog.cancel();
+							}
+						})
+				.setNegativeButton("Modo Experto",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								tbName = "Base";
+								dialog.cancel();
+							}
+						});
+		builder.create().show();
+	}
+
+	public void comentar(View v) {
+		Util.enviar(this, "mahiguerag@unal.edu.co", "",
+				"Comentarios Aplicacion iUN Android", "");
 	}
 
 	@Override
@@ -123,29 +153,26 @@ public class MainActivity extends Activity {
 		sede = savedInstanceState.getString("sede");
 		TextView tx = (TextView) findViewById(R.id.textSede);
 		tx.setText(sede);
+		im = (ImageView) findViewById(R.id.imageUNPrincipal);
+		im.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				cambiarBD();
+				return false;
+			}
+		});
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
-	public void notificarRed() {
-		AlertDialog.Builder dialog = new AlertDialog.Builder(
-				getApplicationContext());
-		LayoutInflater inflater = (LayoutInflater) getApplicationContext()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-		dialog.setView(inflater.inflate(R.layout.dialogo_mapa, null))
-				.setPositiveButton("Aceptar",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.cancel();
-							}
-						});
-		dialog.show();
-	}
-
 	public void eventos(View v) {
-		startActivity(new Intent(getApplicationContext(), EventosActivity.class));
+		Intent web = new Intent(getApplicationContext(), WebActivity.class);
+		web.putExtra("paginaWeb",
+				"http://circular.unal.edu.co/nc/eventos-3.html");
+		startActivity(web);
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
+
 	private void iniciarLocalService() {
 		LocationManager milocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		LocationListener milocListener = new MiLocationListener();
@@ -171,13 +198,11 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		pausado = true;
 		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		pausado = false;
 		super.onResume();
 	}
 
