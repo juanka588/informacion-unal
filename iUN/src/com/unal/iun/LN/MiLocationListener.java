@@ -1,4 +1,6 @@
-package com.unal.iun;
+package com.unal.iun.LN;
+
+import com.unal.iun.MainActivity;
 
 import android.content.Context;
 import android.database.Cursor;

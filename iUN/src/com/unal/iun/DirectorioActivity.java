@@ -2,53 +2,38 @@ package com.unal.iun;
 
 import java.util.ArrayList;
 
+import com.unal.iun.LN.LinnaeusDatabase;
+import com.unal.iun.LN.MiAdaptador;
+import com.unal.iun.LN.Util;
+
 import android.app.Activity;
-import android.app.ActionBar;
-import android.content.ClipData.Item;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.CheckedTextView;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.CursorAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import android.widget.Button;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Space;
-import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class DirectorioActivity extends Activity {
 	String seleccion = "";
@@ -131,7 +116,7 @@ public class DirectorioActivity extends Activity {
 			mapa.putExtra("titulos", titulos);
 			mapa.putExtra("descripciones", descripciones);
 			mapa.putExtra("nivel", current - 1);
-			mapa.putExtra("zoom", current <= 2 ? current + 3 : current + 10);
+			mapa.putExtra("zoom", current <= 2 ? current + 3 : current + 13);
 			mapa.putExtra("tipo", 0);
 			startActivity(mapa);
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -716,7 +701,6 @@ public class DirectorioActivity extends Activity {
 			auxCond = " and departamentos like('%Departamento%')";
 		}
 		try {
-			lv.setAdapter(null);
 			String query = "select distinct departamentos,sede from "
 					+ tableName + " where " + condicion;
 			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
@@ -728,9 +712,13 @@ public class DirectorioActivity extends Activity {
 				Toast.makeText(getApplicationContext(),
 						"No hay " + (cond ? "Directorio" : "Departamentos"), 1)
 						.show();
+				c.close();
+				db.close();
+				return;
 			}
 			c.close();
 			db.close();
+			lv.setAdapter(null);
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 1));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),

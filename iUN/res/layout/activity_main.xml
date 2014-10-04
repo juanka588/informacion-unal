@@ -72,7 +72,6 @@
                 android:gravity="left"
                 android:maxLength="16"
                 android:shrinkColumns="true"
-                android:text="Longitud: "
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -81,20 +80,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:maxLength="16"
-                android:text="Latitud: "
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </TableRow>
-
-    <TextView
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="comentar"
-        android:text="Danos tu opinion"
-        android:textColor="@android:color/white" />
 
     <TableRow
         android:id="@+id/tableRow2"
@@ -148,5 +136,15 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
     </TableRow>
+
+    <TextView
+        android:id="@+id/ratingBar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="comentar"
+        android:text="Danos tu opinion"
+        android:textColor="@android:color/white" />
 
 </TableLayout>

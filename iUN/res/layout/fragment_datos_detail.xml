@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutDatosDetalles"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo2"
+    tools:context="com.unal.iun.DetailsActivity"
+    tools:ignore="MergeRootFrame"
+    android:orientation="vertical" >
+    <Space
+        android:id="@+id/spaceDatosDetalles1"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/tituloDatosDetallesDtos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_span="2"
+        android:gravity="center"
+        android:maxLines="3"
+        android:maxWidth="250dp"
+        android:text="Un Titulo muy largo larguisimo de prueba para mirar la efectividad"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp" />
+    <Space
+        android:id="@+id/spaceDatosDetalles2"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" />
+    <ExpandableListView
+        android:id="@+id/expandableListDatosDestails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp" 
+        android:layout_marginLeft="10dp" >
+    </ExpandableListView>
+
+</LinearLayout>
+

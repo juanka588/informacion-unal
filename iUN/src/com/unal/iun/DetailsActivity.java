@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
+import com.unal.iun.LN.MiAdaptadorExpandible;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -154,6 +156,7 @@ public class DetailsActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
+			item.setTitle("Detalles");
 			home();
 			break;
 

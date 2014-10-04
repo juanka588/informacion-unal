@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipData.Item;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -35,6 +36,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.internal.f;
+import com.unal.iun.LN.LinnaeusDatabase;
+import com.unal.iun.LN.MiLocationListener;
+import com.unal.iun.LN.Util;
 
 public class MapaActivity extends FragmentActivity {
 	GoogleMap mapa;
@@ -48,8 +52,9 @@ public class MapaActivity extends FragmentActivity {
 	String urlClima = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=4.53&lon=-74.07&units=metric&mode=JSON&cnt=7";
 	Intent deta;
 	Marker focus;
-	String tableName="BaseM";
+	String tableName = "BaseM";
 	int nivel = 1;
+	MenuItem item;
 	static String cond = "";
 
 	@Override
@@ -83,7 +88,7 @@ public class MapaActivity extends FragmentActivity {
 		cambiar();
 		animarCamara(lat[0], lon[0], zoom);
 		addNuevos(false);
-		tableName=MainActivity.tbName;
+		tableName = MainActivity.tbName;
 		try {
 			MapsInitializer.initialize(MapaActivity.this);
 		} catch (Exception e) {
@@ -155,6 +160,8 @@ public class MapaActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.mapa, menu);
+		item = menu.getItem(0);
+		item.setTitle("Cobertura Nacional");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -226,8 +233,11 @@ public class MapaActivity extends FragmentActivity {
 		Log.e("sede", cond);
 		nivel++;
 		String query2 = "select latitud, longitud,nombre_edificio, url from edificios "
-				+ "natural join "+tableName+" natural join enlace where sede_edificio='"
-				+ cond + "' and nivel =" + nivel + " group by nombre_edificio";
+				+ "natural join "
+				+ tableName
+				+ " natural join enlace where sede_edificio='"
+				+ cond
+				+ "' and nivel =" + nivel + " group by nombre_edificio";
 		c = db.rawQuery(query2, null);
 		mat = Util.imprimirLista(c);
 		this.lat = Util.toDouble(Util.getcolumn(mat, 0));
@@ -265,9 +275,12 @@ public class MapaActivity extends FragmentActivity {
 	}
 
 	public void addNuevos(final boolean b) {
+		if (nivel < 3&&!b) {
+			mapa.clear();
+			marcadores.removeAll(marcadores);
+		}
 		int type = 0;
 		if (b) {
-			// mapa.clear();
 			type = 1;
 		}
 		count++;
@@ -340,6 +353,7 @@ public class MapaActivity extends FragmentActivity {
 		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(Marker marker) {
 				focus = marker;
+				item.setTitle(marker.getTitle());
 				return false;
 			}
 		});

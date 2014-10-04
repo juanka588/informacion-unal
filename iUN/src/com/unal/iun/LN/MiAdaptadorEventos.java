@@ -1,6 +1,10 @@
-package com.unal.iun;
+package com.unal.iun.LN;
 
 import java.util.ArrayList;
+
+import com.unal.iun.R;
+import com.unal.iun.R.id;
+import com.unal.iun.R.layout;
 
 import android.app.Activity;
 import android.content.ContextWrapper;

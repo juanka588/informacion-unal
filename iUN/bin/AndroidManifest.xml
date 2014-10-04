@@ -86,13 +86,35 @@
             android:label="@string/title_activity_mapa"
             android:launchMode="singleInstance"
             android:logo="@drawable/logo"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".EventosActivity"
             android:label="@string/title_activity_eventos"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".datoListActivity"
+            android:label="@string/title_dato_list" >
+        </activity>
+        <activity
+            android:name=".datoDetailActivity"
+            android:label="@string/title_dato_detail" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unal.iun.datoListActivity" />
+        </activity>
+        <activity
+            android:name=".datosListActivity"
+            android:label="@string/title_datos_list" >
+        </activity>
+        <activity
+            android:name=".datosDetailActivity"
+            android:label="@string/title_datos_detail" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unal.iun.datosListActivity" />
         </activity>
     </application>
 

@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.unal.iun.LN.MiAdaptadorEventos;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;

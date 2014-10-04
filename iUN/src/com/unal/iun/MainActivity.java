@@ -17,6 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.android.gms.internal.ky;
+import com.unal.iun.LN.LinnaeusDatabase;
+import com.unal.iun.LN.MiLocationListener;
+import com.unal.iun.LN.Timer;
+import com.unal.iun.LN.Util;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -166,7 +170,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void eventos(View v) {
-		Intent web = new Intent(getApplicationContext(), WebActivity.class);
+		Intent web = new Intent(getApplicationContext(), datosListActivity.class);
 		web.putExtra("paginaWeb",
 				"http://circular.unal.edu.co/nc/eventos-3.html");
 		startActivity(web);
