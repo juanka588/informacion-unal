@@ -3,11 +3,19 @@ package com.unal.iun;
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TableRow;
 
-import com.unal.iun.LN.DummyContent;
+import com.unal.iun.LN.LinnaeusDatabase;
+import com.unal.iun.LN.MiAdaptador;
+import com.unal.iun.LN.Util;
 
 /**
  * A list fragment representing a list of datos. This fragment also supports
@@ -20,6 +28,23 @@ import com.unal.iun.LN.DummyContent;
  */
 public class datosListFragment extends ListFragment {
 
+	String seleccion = "";
+	String condicion = "";
+	String tableName = "BaseM";
+	String tableName2 = "Edificios";
+	String tableName3 = "ENLACE";
+	String sql = "";
+	String path = "";
+	String auxCon;
+	ListView lv;
+	MenuItem item;
+	SearchView sv;
+	int current = 1;
+	TableRow tr;
+	String columnas[] = { "codigo", "NIVEL_ADMINISTRATIVO", "SEDE",
+			"DEPENDENCIAS", "DIVISIONES", "DEPARTAMENTOS", "SECCIONES",
+			"CORREO_ELECTRONICO", "EXTENSION", "FAX", "DIRECTO",
+			"LUGAR_GEOGRAFICO", "EDIFICIO", "PISO_OFICINA", "CLASIFICACION" };
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * activated item position. Only used on tablets.
@@ -36,6 +61,8 @@ public class datosListFragment extends ListFragment {
 	 * The current activated item position. Only used on tablets.
 	 */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
+	LinnaeusDatabase lb;
+	SQLiteDatabase db;
 
 	/**
 	 * A callback interface that all activities containing this fragment must
@@ -66,14 +93,40 @@ public class datosListFragment extends ListFragment {
 	public datosListFragment() {
 	}
 
+	public void setDataBase(LinnaeusDatabase lb, SQLiteDatabase db) {
+		this.lb = lb;
+		this.db = db;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// TODO: replace with a real list adapter.
-		setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		/*
+		 * TODO: replace with a real list adapter. setListAdapter(new
+		 * ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+		 * android.R.layout.simple_list_item_activated_1, android.R.id.text1,
+		 * DummyContent.ITEMS));
+		 */
+	}
+
+	@Override
+	public void onDestroy() {
+		db.close();
+		super.onDestroy();
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		sql = "select distinct sede from BaseM ";
+		Cursor c = db.rawQuery(sql, null);
+		final String[][] mat = Util.imprimirLista(c);
+		c.close();
+		ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, DummyContent.ITEMS));
+				android.R.id.text1, Util.getcolumn(mat, 0));
+		setListAdapter(adapter);
+		super.onActivityCreated(savedInstanceState);
 	}
 
 	@Override
@@ -110,13 +163,40 @@ public class datosListFragment extends ListFragment {
 	}
 
 	@Override
-	public void onListItemClick(ListView listView, View view, int position,
+	public void onListItemClick(ListView listView, View view, int posicion,
 			long id) {
-		super.onListItemClick(listView, view, position, id);
+		
+		sql = "select distinct dependencias from BaseM where sede='Bogotá' ";
+		Cursor c = db.rawQuery(sql, null);
+		final String[][] mat = Util.imprimirLista(c);
+		c.close();
+		ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_activated_1,
+				android.R.id.text1, Util.getcolumn(mat, 0));
+		setListAdapter(adapter);
+		seleccion = mat[posicion][0];
+		if (path == "") {
+			path = seleccion;
+			// item.setTitleCondensed(path.toUpperCase().trim());
+		} else {
+			path = path + ">" + seleccion.toUpperCase().trim();
+			// item.setTitleCondensed(path);
+		}
+		current++;
+		int resta = 1;
+		if (condicion.equals("")) {
+			condicion = columnas[current - resta] + " = '" + seleccion + "'";
 
+		} else {
+			condicion += " and " + columnas[current - resta] + " = '"
+					+ seleccion + "'";
+		}
+		sql = "select  distinct " + columnas[current] + ", " + columnas[2]
+				+ " from " + tableName + "  where " + condicion;
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
-		mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		// mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		super.onListItemClick(listView, view, posicion, id);
 	}
 
 	@Override

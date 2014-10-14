@@ -74,6 +74,8 @@ public class MainActivity extends Activity {
 	public Timer tim;
 	public static String sede = "Bogotá";
 	ImageView im;
+	int screenWidth;
+	int screenHeight;
 
 	@Override
 	public void onBackPressed() {
@@ -93,11 +95,11 @@ public class MainActivity extends Activity {
 		Space sp = (Space) findViewById(R.id.SpaceMain);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
-		int screenWidth = display.getWidth();
-		int screenHeight = display.getHeight();
+		screenWidth = display.getWidth();
+		screenHeight = display.getHeight();
 		double factor = screenHeight / 2000.0 + 0.34;
-		if (factor > 0.74) {
-			factor = 0.74;
+		if (factor > 0.70) {
+			factor = 0.70;
 		}
 
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
@@ -244,8 +246,14 @@ public class MainActivity extends Activity {
 
 	public void servicios(View v) {
 		try {
+			Class cls;
+			if(screenWidth>600){
+				cls=ServiciosActivity.class;
+			}else{
+				cls=MenuWEBActivity.class;
+			}
 			startActivity(new Intent(getApplicationContext(),
-					MenuWEBActivity.class));
+					cls));
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			// this.finish();
 		} catch (Exception e) {

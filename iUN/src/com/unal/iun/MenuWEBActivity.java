@@ -183,8 +183,10 @@ public class MenuWEBActivity extends Activity {
 			cad = "http://livestream.com/prisma_tv";
 			break;
 		case R.id.imageUNradio:
-			cad = "http://www.unradio.unal.edu.co/nc/en-linea/web.html";
-			break;
+			Intent radio = new Intent(this, RadioActivity.class);
+			startActivity(radio);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+			return;
 		case R.id.imageBB:
 			cad = "http://www.bb.unal.edu.co/";
 			break;

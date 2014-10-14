@@ -43,28 +43,28 @@ public class MiLocationListener implements LocationListener {
 	}
 
 	public void buscarSede() {
-		String query = "SELECT nombre_edificio,min((latitud-" + lat
+		String query = "SELECT sede_edificio,min((latitud-" + lat
 				+ ")*(latitud-" + lat + ")+(longitud-" + longi + ")*(longitud-"
 				+ longi + ")) FROM edificios where nivel=1";
 		if (longi < 0) {
-			query = "SELECT nombre_edificio,min((latitud-" + lat
+			query = "SELECT sede_edificio,min((latitud-" + lat
 					+ ")*(latitud-" + lat + ")+(longitud+" + longi * -1
 					+ ")*(longitud+" + longi * -1
 					+ ")) FROM edificios where nivel=1";
 			if (lat < 0) {
-				query = "SELECT nombre_edificio,min((latitud+" + lat * -1
+				query = "SELECT sede_edificio,min((latitud+" + lat * -1
 						+ ")*(latitud+" + lat * -1 + ")+(longitud+" + longi
 						* -1 + ")*(longitud+" + longi * -1
 						+ ")) FROM edificios where nivel=1";
 			}
 		}
 		if (lat < 0) {
-			query = "SELECT nombre_edificio,min((latitud+" + lat * -1
+			query = "SELECT sede_edificio,min((latitud+" + lat * -1
 					+ ")*(latitud+" + lat * -1 + ")+(longitud-" + longi
 					+ ")*(longitud-" + longi
 					+ ")) FROM edificios where nivel=1";
 			if (longi < 0) {
-				query = "SELECT nombre_edificio,min((latitud+" + lat * -1
+				query = "SELECT sede_edificio,min((latitud+" + lat * -1
 						+ ")*(latitud+" + lat * -1 + ")+(longitud+" + longi
 						* -1 + ")*(longitud+" + longi * -1
 						+ ")) FROM edificios where nivel=1";

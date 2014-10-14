@@ -27,5 +27,7 @@
     <string name="title_dato_detail">dato Detail</string>
     <string name="title_datos_list">datos</string>
     <string name="title_datos_detail">datos Detail</string>
+    <string name="title_activity_radio">Radio UN</string>
+    <string name="title_activity_servicios">Servicios en linea</string>
 
 </resources>

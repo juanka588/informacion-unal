@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:maxLength="16"
-                android:text="Amazonia "
+                android:text="Bogotá"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -63,7 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp" >
 
             <TextView
                 android:id="@+id/textLongitud"

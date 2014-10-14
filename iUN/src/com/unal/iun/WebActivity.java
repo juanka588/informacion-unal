@@ -18,16 +18,16 @@ import android.widget.TextView;
 
 public class WebActivity extends Activity {
 	String URL = "";
-
+	WebView browser;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_web);
-		WebView wb1 = (WebView) findViewById(R.id.webView1);
-		wb1.getSettings().setJavaScriptEnabled(true);
-		wb1.getSettings().setBuiltInZoomControls(true);
-		wb1.setWebViewClient(new WebViewClient() {
+		browser = (WebView) findViewById(R.id.webView1);
+		browser.getSettings().setJavaScriptEnabled(true);
+		browser.getSettings().setBuiltInZoomControls(true);
+		browser.setWebViewClient(new WebViewClient() {
 			// evita que los enlaces se abran fuera nuestra app en el navegador
 			// de android
 			@Override
@@ -37,7 +37,7 @@ public class WebActivity extends Activity {
 
 		});
 		Bundle b = getIntent().getExtras();
-		wb1.loadUrl(b.getString("paginaWeb"));
+		browser.loadUrl(b.getString("paginaWeb"));
 		URL = b.getString("paginaWeb");
 		BitmapDrawable background = new BitmapDrawable(
 				BitmapFactory.decodeResource(getResources(),
@@ -61,21 +61,18 @@ public class WebActivity extends Activity {
 	}
 
 	public void volver() {
-		WebView browser = (WebView) findViewById(R.id.webView1);
 		if (browser.canGoBack()) {
 			browser.goBack();
 		}
 	}
 
 	public void adelante() {
-		WebView browser = (WebView) findViewById(R.id.webView1);
 		if (browser.canGoForward()) {
 			browser.goForward();
 		}
 	}
 
 	public void recargar() {
-		WebView browser = (WebView) findViewById(R.id.webView1);
 		browser.reload();
 	}
 

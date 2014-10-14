@@ -143,7 +143,7 @@ public class MapaActivity extends FragmentActivity {
 						.title(title)
 						.snippet(desc)
 						.icon(BitmapDescriptorFactory
-								.fromResource(R.drawable.edificiop));
+								.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
 
 			} else {
 				k = new MarkerOptions()
@@ -151,7 +151,8 @@ public class MapaActivity extends FragmentActivity {
 						.title(title)
 						.snippet(desc)
 						.icon(BitmapDescriptorFactory
-								.fromResource(R.drawable.edificiop));
+								.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+							//	.fromResource(R.drawable.edificiop2));
 			}
 			mapa.addMarker(k);
 		}
@@ -298,7 +299,7 @@ public class MapaActivity extends FragmentActivity {
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						MapaActivity.this);
 
-				builder.setTitle("Selección").setItems(items,
+				builder.setTitle(arg0.getTitle()).setItems(items,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int item) {
 								if (item == 0) {
@@ -353,7 +354,8 @@ public class MapaActivity extends FragmentActivity {
 		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(Marker marker) {
 				focus = marker;
-				item.setTitle(marker.getTitle());
+				int len=marker.getTitle().length();
+				item.setTitle(marker.getTitle().substring(0, len>20?20:len));
 				return false;
 			}
 		});

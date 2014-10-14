@@ -19,6 +19,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:text="Telefono"
-        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

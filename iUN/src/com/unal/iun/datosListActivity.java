@@ -2,6 +2,7 @@ package com.unal.iun;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.internal.df;
 import com.unal.iun.LN.LinnaeusDatabase;
 import com.unal.iun.LN.MiAdaptador;
 import com.unal.iun.LN.Util;
@@ -57,7 +58,7 @@ public class datosListActivity extends Activity implements
 	ListView lv;
 	MenuItem item;
 	SearchView sv;
-	int current = 2;
+	int current = 1;
 	TableRow tr;
 	int idFondo = R.drawable.fondo2, idFondoTras = R.drawable.fondo2;
 	double lat[];
@@ -94,8 +95,13 @@ public class datosListActivity extends Activity implements
 
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			((datosListFragment) getFragmentManager().findFragmentById(
-					R.id.datos_list)).setActivateOnItemClick(true);
+			datosListFragment dlf = ((datosListFragment) getFragmentManager()
+					.findFragmentById(R.id.datos_list));
+			dlf.setActivateOnItemClick(true);
+			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+					MODE_WORLD_READABLE, null);
+			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
+			dlf.setDataBase(lb, db);
 		}
 
 		// TODO: If exposing deep links into your app, handle intents here.
@@ -158,7 +164,7 @@ public class datosListActivity extends Activity implements
 			home();
 			break;
 		case R.id.ItemMapa:
-			ubicar(null);
+			ubicar();
 			break;
 		case R.id.ItemWEB:
 			if (current == 2) {
@@ -186,7 +192,7 @@ public class datosListActivity extends Activity implements
 		this.finish();
 	}
 
-	public void ubicar(View v) {
+	public void ubicar() {
 		try {
 			Intent mapa = new Intent(this, MapaActivity.class);
 			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
@@ -248,12 +254,15 @@ public class datosListActivity extends Activity implements
 	 */
 	@Override
 	public void onItemSelected(String id) {
+		ArrayList<String[]> datos = getDatos();
+		ArrayList<String> datosLinea = Util.parseLine(datos);
 		if (mTwoPane) {
 			// In two-pane mode, show the detail view in this activity by
 			// adding or replacing the detail fragment using a
 			// fragment transaction.
+
 			Bundle arguments = new Bundle();
-			arguments.putString(datosDetailFragment.ARG_ITEM_ID, id);
+			arguments.putStringArrayList("datos", datosLinea);
 			datosDetailFragment fragment = new datosDetailFragment();
 			fragment.setDisplay(this);
 			fragment.setArguments(arguments);
@@ -265,6 +274,7 @@ public class datosListActivity extends Activity implements
 			// for the selected item ID.
 			Intent detailIntent = new Intent(this, datosDetailActivity.class);
 			detailIntent.putExtra(datosDetailFragment.ARG_ITEM_ID, id);
+			detailIntent.putStringArrayListExtra("datos", datosLinea);
 			startActivity(detailIntent);
 		}
 	}
@@ -392,12 +402,12 @@ public class datosListActivity extends Activity implements
 						if (cond2) {
 							condicion = "secciones like('" + seleccion + "')";
 							animarFondo(mat[posicion][1], false);
-							// detalles();
+							detalles();
 							return;
 						} else {
 							condicion += " and " + columnas[current] + " = '"
 									+ seleccion + "'";
-							// detalles();
+							detalles();
 							return;
 						}
 					}
@@ -414,8 +424,6 @@ public class datosListActivity extends Activity implements
 					sql = "select  distinct " + columnas[current] + ", "
 							+ columnas[2] + " from " + tableName + "  where "
 							+ condicion;
-					// Toast.makeText(getApplication(), sql, Toast.LENGTH_LONG)
-					// .show();
 					recargar(sql, current == 5, false);
 					boolean cont = path.contains("FACULTAD DE");
 					if (cont) {
@@ -502,13 +510,6 @@ public class datosListActivity extends Activity implements
 				datos.add(arr);
 				Log.e("los datos " + i, Util.toString(arr));
 			}
-			/*
-			 * datos[0] = mat[0][0];// departamento datos[1] = mat[0][1];//
-			 * titulo datos[2] = mat[0][2];// telefono datos[3] = mat[0][3];//
-			 * extension datos[4] = mat[0][4];// email datos[5] = mat[0][5];//
-			 * edificio datos[6] = mat[0][6];// enlace datos[7] = mat[0][7];//
-			 * descripcion datos[8] = mat[0][8] + " " + mat[0][9];// posiciones
-			 */
 		} catch (Exception e) {
 			Log.e("Error Datos", e.toString());
 			Toast.makeText(getApplication(), "Aun no tenemos los Datos",
@@ -590,7 +591,7 @@ public class datosListActivity extends Activity implements
 					sql = "select  distinct " + columnas[5] + ", "
 							+ columnas[2] + " from " + tableName + "  where "
 							+ condicion;
-					// detalles();
+					detalles();
 					return;
 				}
 			});
@@ -608,8 +609,9 @@ public class datosListActivity extends Activity implements
 			this.finish();
 			super.onBackPressed();
 		}
-		erase(condicion, true);
+/*		erase(condicion, true);
 		recargar(sql, false, false);
+		*/
 	}
 
 	private void erase(String condicion2, boolean cond) {
@@ -664,5 +666,33 @@ public class datosListActivity extends Activity implements
 			}
 		}
 		return getDatos(condicion, cond);
+	}
+
+	public void detalles() {
+		ArrayList<String[]> datos = getDatos();
+		ArrayList<String> datosLinea = Util.parseLine(datos);
+		if (mTwoPane) {
+			Bundle arguments = new Bundle();
+			arguments.putStringArrayList("datos", datosLinea);
+			arguments.putInt("fondo", idFondoTras);
+			datosDetailFragment fragment = new datosDetailFragment();
+			fragment.setDisplay(this);
+			fragment.setArguments(arguments);
+			getFragmentManager().beginTransaction()
+					.replace(R.id.datos_detail_container, fragment).commit();
+		} else {
+			Intent deta = new Intent(this, DetailsActivity.class);
+			deta.putExtra("datos", datos);
+			try {
+				deta.putExtra("fondo", idFondoTras);
+			} catch (Exception e) {
+
+			}
+			startActivity(deta);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+			if (current == 5) {
+				erase(condicion, false);
+			}
+		}
 	}
 }

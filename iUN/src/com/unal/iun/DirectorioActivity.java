@@ -94,7 +94,7 @@ public class DirectorioActivity extends Activity {
 			if (condicion != "") {
 				query = "select distinct edificio,nombre_edificio,latitud,longitud from edificios natural join "
 						+ tableName + " where " + condicion;
-				//chambonazo mapa
+				// chambonazo mapa
 				if (path.contains("Bogotá")) {
 					query = query + " and nivel=" + nivel;
 				}
@@ -116,7 +116,7 @@ public class DirectorioActivity extends Activity {
 			mapa.putExtra("titulos", titulos);
 			mapa.putExtra("descripciones", descripciones);
 			mapa.putExtra("nivel", current - 1);
-			mapa.putExtra("zoom", current <= 2 ? current + 3 : current + 13);
+			mapa.putExtra("zoom", current <= 2 ? current + 3 : current + 9);
 			mapa.putExtra("tipo", 0);
 			startActivity(mapa);
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -238,6 +238,7 @@ public class DirectorioActivity extends Activity {
 			final String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
+			MiAdaptador.tipo=1;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 0));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
@@ -499,11 +500,15 @@ public class DirectorioActivity extends Activity {
 			if (current == 3) {
 				c = db.rawQuery(query
 						+ " and NIVEL_ADMINISTRATIVO between 1 and 4", null);
+				if (tableName.equals("Base")) {
+					c = db.rawQuery(query, null);
+				}
 			}
 
 			final String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
+			MiAdaptador.tipo=1;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 1));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
@@ -578,6 +583,9 @@ public class DirectorioActivity extends Activity {
 			return true;
 		}
 		if (seleccion2.contains("Roberto")) {
+			return true;
+		}
+		if (seleccion2.contains("Instituto ")) {
 			return true;
 		}
 		return false;
@@ -662,7 +670,7 @@ public class DirectorioActivity extends Activity {
 	}
 
 	private ArrayList<String[]> getDatos(String criteria, boolean cond) {
-		String consulta = "SELECT departamentos,secciones,directo,extension,correo_electronico,NOMBRE_EDIFICIO,url,DESCRIPCION, LATITUD,LONGITUD FROM "
+		String consulta = "SELECT departamentos,secciones,directo,extension,correo_electronico,NOMBRE_EDIFICIO,url,piso_oficina, LATITUD,LONGITUD FROM "
 				+ tableName
 				+ " natural join "
 				+ tableName2
@@ -719,6 +727,7 @@ public class DirectorioActivity extends Activity {
 			c.close();
 			db.close();
 			lv.setAdapter(null);
+			MiAdaptador.tipo=1;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 1));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),

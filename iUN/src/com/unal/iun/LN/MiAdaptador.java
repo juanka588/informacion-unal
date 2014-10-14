@@ -10,6 +10,7 @@ import com.unal.iun.R.layout;
 import android.app.Activity;
 import android.content.ContextWrapper;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ public class MiAdaptador extends BaseAdapter {
 	private final String[] lista;
 	private final String[] lista2;
 	public Typeface fuente;
+	// 0 con todo 1 sin imagen ni subtitulo 2 con imagen y sin subtitulo
+	public static int tipo = 0;
 
 	public MiAdaptador(Activity actividad, ArrayList<String> titulos,
 			ArrayList<String> subtitulos) {
@@ -51,15 +54,17 @@ public class MiAdaptador extends BaseAdapter {
 		if (lista[position] != null) {
 			textView.setText(Util.toCammelCase(lista[position].toLowerCase()));
 			textView.setHint(Util.toCammelCase(lista[position].toLowerCase()));
-		/*	if (lista[position].contains("Museo")) {
-				textView.setText("\t Museo Paleontologico");
+			if (tipo != 0&&false) {
+				if (lista[position].contains("Museo")) {
+					textView.setText("\t Museo Paleontologico");
 
+				}
+				if (lista[position].contains("Franco")) {
+					textView.setText("\t Estacion Tropical Roberto Franco");
+
+				}
 			}
-			if (lista[position].contains("Franco")) {
-				textView.setText("\t Estacion Tropical Roberto Franco");
-
-			}*/
-			textView.setTextSize(18);
+			// textView.setTextSize(18);
 
 		}
 		imageView.setImageResource(R.drawable.ic_launcher);
@@ -69,19 +74,10 @@ public class MiAdaptador extends BaseAdapter {
 			prueba.setTypeface(fuente);
 		}
 		if (lista2[position] != null) {
-			textView2.setText(Util.toCammelCase(lista2[position].toLowerCase()));
-			if (lista2[position].contains("useo")
-					|| lista2[position].contains("ranco")
-					|| lista[position].contains("Bogotá")
-					|| lista[position].contains("Amaz")
-					|| lista[position].contains("Caribe")
-					|| lista[position].contains("Mani")
-					|| lista[position].contains("Mede")
-					|| lista[position].contains("Tumac")
-					|| lista[position].contains("Palmira")
-					|| lista[position].contains("Orino")) {
+			textView2
+					.setText(Util.toCammelCase(lista2[position].toLowerCase()));
+			if (tipo != 0) {
 				textView2.setText("");
-
 			}
 			if (lista2[position].contains("Bogo")) {
 				imageView.setImageResource(R.drawable.ic_bogota);
@@ -107,13 +103,22 @@ public class MiAdaptador extends BaseAdapter {
 			if (lista2[position].contains("Orino")) {
 				imageView.setImageResource(R.drawable.ic_oriniquia);
 			}
-			imageView.setImageResource(R.drawable.contact);
-			textView2.setText("");
+			if (tipo == 2) {
+			//	Log.e("iconos en servicios",lista2[position]);
+				String cad=lista2[position];
+				cad=cad.substring(0,cad.length()-4);
+				int id = actividad.getResources()
+						.getIdentifier(
+								"com.unal.iun:drawable/" + cad,
+								null, null);
+				imageView.setImageResource(id);
+			}
+			if (tipo == 1) {
+				imageView.setVisibility(View.GONE);
+			}
 		}
 		return view;
 	}
-
-
 
 	public int getCount() {
 		return lista.length;

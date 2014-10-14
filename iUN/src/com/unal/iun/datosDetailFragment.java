@@ -22,9 +22,8 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
-
-import com.unal.iun.LN.DummyContent;
 import com.unal.iun.LN.MiAdaptadorExpandible;
+import com.unal.iun.LN.Util;
 
 /**
  * A fragment representing a single datos detail screen. This fragment is either
@@ -49,7 +48,7 @@ public class datosDetailFragment extends Fragment {
 	/**
 	 * The dummy content this fragment is presenting.
 	 */
-	private DummyContent.DummyItem mItem;
+	private ArrayList<String> datosLinea;
 
 	/**
 	 * Mandatory empty constructor for the fragment manager to instantiate the
@@ -57,25 +56,17 @@ public class datosDetailFragment extends Fragment {
 	 */
 	public datosDetailFragment() {
 	}
-	public void setDisplay(Activity act){
-		display= ((WindowManager) act
-				.getSystemService(Context.WINDOW_SERVICE))
+
+	public void setDisplay(Activity act) {
+		display = ((WindowManager) act.getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle b) {
 		super.onCreate(b);
+		datosLinea = getArguments().getStringArrayList("datos");
 
-		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
-			mItem = DummyContent.ITEM_MAP.get(getArguments().getString(
-					ARG_ITEM_ID));
-			
-		}
 	}
 
 	@Override
@@ -85,10 +76,6 @@ public class datosDetailFragment extends Fragment {
 				container, false);
 
 		// Show the dummy content as text in a TextView.
-		if (mItem != null) {
-			((TextView) rootView.findViewById(R.id.tituloDatosDetallesDtos))
-					.setText(mItem.content);
-		}
 		tl = (LinearLayout) rootView
 				.findViewById(R.id.linearLayoutDatosDetalles);
 
@@ -96,7 +83,7 @@ public class datosDetailFragment extends Fragment {
 				.findViewById(R.id.expandableListDatosDestails);
 		Space sp = (Space) rootView.findViewById(R.id.spaceDatosDetalles1);
 		Space sp2 = (Space) rootView.findViewById(R.id.spaceDatosDetalles2);
-	
+
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
 		double factor = screenHeight / 2000.0 + 0.25;
@@ -117,7 +104,7 @@ public class datosDetailFragment extends Fragment {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				(int) (screenHeight * (factor))));
 		try {
-			data = (ArrayList<String[]>) b.get("datos");
+			data = Util.toArray(datosLinea);
 			TextView tx = (TextView) rootView
 					.findViewById(R.id.tituloDatosDetallesDtos);
 			tx.setText(data.get(0)[0].trim());
@@ -154,10 +141,8 @@ public class datosDetailFragment extends Fragment {
 						if (i == datos.length - 1) {
 							titulos[k] = datos[5];
 							descripciones[k] = datos[6];
-							lat[k] = Double
-									.parseDouble(datos[8].split(" ")[0]);
-							lon[k] = Double
-									.parseDouble(datos[8].split(" ")[1]);
+							lat[k] = Double.parseDouble(datos[8].split(" ")[0]);
+							lon[k] = Double.parseDouble(datos[8].split(" ")[1]);
 						} else {
 							if (datos[i].trim().length() > 4) {
 								child.add(datos[i]);
@@ -170,14 +155,13 @@ public class datosDetailFragment extends Fragment {
 
 			MiAdaptadorExpandible adapter = new MiAdaptadorExpandible(
 					parentItems, childItems);
-			adapter.setInflater(inflater,new datosDetailActivity());
+			adapter.setInflater(inflater, new datosDetailActivity());
 			sc.setAdapter(adapter);
 			sc.expandGroup(0);
 			// sc.setOnChildClickListener(this);
 		} catch (Exception e) {
 			Log.e("error de Detalles ", e.toString());
 		}
-
 
 		return rootView;
 	}

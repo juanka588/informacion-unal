@@ -1,5 +1,6 @@
 package com.unal.iun.LN;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.unal.iun.MainActivity;
@@ -239,8 +240,35 @@ public class Util {
 				palabras[i] = (palabras[i].charAt(0) + "").toUpperCase()
 						+ palabras[i].substring(1, palabras[i].length());
 			}
+			if(palabras[i].contains("un")){
+				palabras[i]="UN";
+			}
 			cad += palabras[i] + " ";
 		}
 		return cad.trim();
+	}
+
+	public static ArrayList<String> parseLine(ArrayList<String[]> datos) {
+		ArrayList<String> salida = new ArrayList<String>();
+		StringBuilder sb = new StringBuilder();
+		for (String[] arr : datos) {
+			for (int i = 0; i < arr.length - 1; i++) {
+				sb.append(arr[i]);
+				sb.append(' ');
+			}
+			sb.append(arr[arr.length - 1]);
+			salida.add(sb.toString());
+			sb = new StringBuilder();
+		}
+		return salida;
+	}
+
+	public static ArrayList<String[]> toArray(ArrayList<String> datosLinea) {
+		ArrayList<String[]> salida=new ArrayList<String[]>();
+		for (String string : datosLinea) {
+			String arr[]=string.split(" ");
+			salida.add(arr);
+		}
+		return salida;
 	}
 }
