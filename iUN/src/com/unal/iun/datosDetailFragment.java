@@ -36,7 +36,7 @@ public class datosDetailFragment extends Fragment {
 	public static String titulos[], descripciones[];
 	LinearLayout tl;
 	boolean evento = false;
-	static Display display;
+	Display display;
 	ArrayList<String[]> data = new ArrayList<String[]>();
 
 	/**
@@ -57,8 +57,8 @@ public class datosDetailFragment extends Fragment {
 	public datosDetailFragment() {
 	}
 
-	public void setDisplay(Activity act) {
-		display = ((WindowManager) act.getSystemService(Context.WINDOW_SERVICE))
+	public void setDisplay() {
+		display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 	}
 
@@ -66,7 +66,10 @@ public class datosDetailFragment extends Fragment {
 	public void onCreate(Bundle b) {
 		super.onCreate(b);
 		datosLinea = getArguments().getStringArrayList("datos");
-
+		if(datosLinea==null&&b!=null){
+			datosLinea = b.getStringArrayList("datos");
+		}
+		setDisplay();
 	}
 
 	@Override
@@ -110,9 +113,9 @@ public class datosDetailFragment extends Fragment {
 			tx.setText(data.get(0)[0].trim());
 
 			int id = R.drawable.fondo2;
-			if (b.getInt("fondo") != 0) {
-				id = b.getInt("fondo");
-			}
+			//if (b.getInt("fondo") != 0) {
+			//	id = b.getInt("fondo");
+			//}
 			Drawable background = new BitmapDrawable(
 					BitmapFactory.decodeResource(getResources(), id));
 			tl.setBackgroundDrawable(background);
@@ -152,10 +155,13 @@ public class datosDetailFragment extends Fragment {
 				}
 				childItems.add(child);
 			}
-
+			DetailsActivity.lat=lat;
+			DetailsActivity.lon=lon;
+			DetailsActivity.titulos=titulos;
+			DetailsActivity.descripciones=descripciones;
 			MiAdaptadorExpandible adapter = new MiAdaptadorExpandible(
 					parentItems, childItems);
-			adapter.setInflater(inflater, new datosDetailActivity());
+			adapter.setInflater(inflater,getActivity());
 			sc.setAdapter(adapter);
 			sc.expandGroup(0);
 			// sc.setOnChildClickListener(this);

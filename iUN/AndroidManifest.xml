@@ -65,7 +65,8 @@
             android:name=".MenuWEBActivity"
             android:label="@string/title_activity_menu_web"
             android:launchMode="singleInstance"
-            android:logo="@drawable/homeun" >
+            android:logo="@drawable/homeun"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unal.iun.MainActivity" />
@@ -79,7 +80,8 @@
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details"
             android:launchMode="singleInstance"
-            android:logo="@drawable/homeun" >
+            android:logo="@drawable/homeun"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".MapaActivity"
@@ -121,7 +123,8 @@
         </activity>
         <activity
             android:name=".ServiciosActivity"
-            android:label="@string/title_activity_servicios" >
+            android:label="@string/title_activity_servicios"
+            android:logo="@drawable/homeun" >
         </activity>
     </application>
 

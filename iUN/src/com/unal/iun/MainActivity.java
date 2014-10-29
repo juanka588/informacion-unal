@@ -1,73 +1,28 @@
 package com.unal.iun;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Calendar;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.google.android.gms.internal.ky;
 import com.unal.iun.LN.LinnaeusDatabase;
 import com.unal.iun.LN.MiLocationListener;
 import com.unal.iun.LN.Timer;
 import com.unal.iun.LN.Util;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ConfigurationInfo;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
-import android.provider.CalendarContract;
-import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.Display;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnHoverListener;
 import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Space;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public static String dataBaseName = "DataStore.sqlite", tbName = "BaseM";
@@ -92,11 +47,12 @@ public class MainActivity extends Activity {
 		if (savedInstanceState != null) {
 			sede = savedInstanceState.getString("sede");
 		}
-		Space sp = (Space) findViewById(R.id.SpaceMain);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
 		screenWidth = display.getWidth();
 		screenHeight = display.getHeight();
+		/*Space sp = (Space) findViewById(R.id.SpaceMain);
+		
 		double factor = screenHeight / 2000.0 + 0.34;
 		if (factor > 0.70) {
 			factor = 0.70;
@@ -105,11 +61,10 @@ public class MainActivity extends Activity {
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				(int) (screenHeight * (factor))));
-		/*
-		 * tim = new Timer((Button) findViewById(R.id.nacionalButton), 30);
-		 * Handler hand = tim.puente; Thread hilo = new Thread(tim);
-		 * hilo.start();
-		 */
+		 tim = new Timer((Button) findViewById(R.id.nacionalButton), 30);
+		 Handler hand = tim.puente; Thread hilo = new Thread(tim);
+		 hilo.start();
+		*/
 		Typeface fuente = Typeface
 				.createFromAsset(getAssets(), "Helvetica.ttf");
 		int ids[] = { R.id.SOnlineButton, R.id.eventosButton, R.id.sedesButton,
@@ -172,7 +127,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void eventos(View v) {
-		Intent web = new Intent(getApplicationContext(), datosListActivity.class);
+		Intent web = new Intent(getApplicationContext(), WebActivity.class);
 		web.putExtra("paginaWeb",
 				"http://circular.unal.edu.co/nc/eventos-3.html");
 		startActivity(web);
@@ -247,7 +202,7 @@ public class MainActivity extends Activity {
 	public void servicios(View v) {
 		try {
 			Class cls;
-			if(screenWidth>600){
+			if(screenWidth>600&&false){
 				cls=ServiciosActivity.class;
 			}else{
 				cls=MenuWEBActivity.class;

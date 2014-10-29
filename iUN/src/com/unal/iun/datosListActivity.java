@@ -2,11 +2,7 @@ package com.unal.iun;
 
 import java.util.ArrayList;
 
-import com.google.android.gms.internal.df;
-import com.unal.iun.LN.LinnaeusDatabase;
-import com.unal.iun.LN.MiAdaptador;
-import com.unal.iun.LN.Util;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,11 +20,13 @@ import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
-import android.widget.SearchView.OnQueryTextListener;
-import android.app.Activity;
+
+import com.unal.iun.LN.MiAdaptador;
+import com.unal.iun.LN.Util;
 
 /**
  * An activity representing a list of datos. This activity has different
@@ -74,7 +72,7 @@ public class datosListActivity extends Activity implements
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
 	 */
-	private boolean mTwoPane;
+	public boolean mTwoPane;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +84,7 @@ public class datosListActivity extends Activity implements
 		this.getActionBar().setBackgroundDrawable(background2);
 		this.getActionBar().setDisplayHomeAsUpEnabled(true);
 		this.getActionBar().setHomeButtonEnabled(true);
+		datosListFragment dlf = null;
 		if (findViewById(R.id.datos_detail_container) != null) {
 			// The detail container view will be present only in the
 			// large-screen layouts (res/values-large and
@@ -95,14 +94,12 @@ public class datosListActivity extends Activity implements
 
 			// In two-pane mode, list items should be given the
 			// 'activated' state when touched.
-			datosListFragment dlf = ((datosListFragment) getFragmentManager()
-					.findFragmentById(R.id.datos_list));
+			dlf = ((datosListFragment) getFragmentManager().findFragmentById(
+					R.id.datos_list));
 			dlf.setActivateOnItemClick(true);
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
-					MODE_WORLD_READABLE, null);
-			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-			dlf.setDataBase(lb, db);
+			dlf.setTwoPane(mTwoPane);
 		}
+		
 
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
@@ -195,7 +192,6 @@ public class datosListActivity extends Activity implements
 	public void ubicar() {
 		try {
 			Intent mapa = new Intent(this, MapaActivity.class);
-			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
 			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
 					MODE_WORLD_READABLE, null);
 			String query;
@@ -264,7 +260,6 @@ public class datosListActivity extends Activity implements
 			Bundle arguments = new Bundle();
 			arguments.putStringArrayList("datos", datosLinea);
 			datosDetailFragment fragment = new datosDetailFragment();
-			fragment.setDisplay(this);
 			fragment.setArguments(arguments);
 			getFragmentManager().beginTransaction()
 					.replace(R.id.datos_detail_container, fragment).commit();
@@ -348,7 +343,7 @@ public class datosListActivity extends Activity implements
 				+ "%') order by NIVEL_ADMINISTRATIVO ASC";
 		Log.e("buscado", sql);
 		current = 1;
-		tr.setVisibility(View.INVISIBLE);
+		//tr.setVisibility(View.INVISIBLE);
 		recargar(sql, true, true);
 		// animarFondo("", false);
 
@@ -609,9 +604,9 @@ public class datosListActivity extends Activity implements
 			this.finish();
 			super.onBackPressed();
 		}
-/*		erase(condicion, true);
-		recargar(sql, false, false);
-		*/
+		/*
+		 * erase(condicion, true); recargar(sql, false, false);
+		 */
 	}
 
 	private void erase(String condicion2, boolean cond) {
@@ -676,7 +671,6 @@ public class datosListActivity extends Activity implements
 			arguments.putStringArrayList("datos", datosLinea);
 			arguments.putInt("fondo", idFondoTras);
 			datosDetailFragment fragment = new datosDetailFragment();
-			fragment.setDisplay(this);
 			fragment.setArguments(arguments);
 			getFragmentManager().beginTransaction()
 					.replace(R.id.datos_detail_container, fragment).commit();

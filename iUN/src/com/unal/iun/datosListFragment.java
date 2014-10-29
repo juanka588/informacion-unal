@@ -1,17 +1,23 @@
 package com.unal.iun;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.unal.iun.LN.LinnaeusDatabase;
 import com.unal.iun.LN.MiAdaptador;
@@ -39,7 +45,7 @@ public class datosListFragment extends ListFragment {
 	ListView lv;
 	MenuItem item;
 	SearchView sv;
-	int current = 1;
+	int current = 2;
 	TableRow tr;
 	String columnas[] = { "codigo", "NIVEL_ADMINISTRATIVO", "SEDE",
 			"DEPENDENCIAS", "DIVISIONES", "DEPARTAMENTOS", "SECCIONES",
@@ -62,7 +68,8 @@ public class datosListFragment extends ListFragment {
 	 */
 	private int mActivatedPosition = ListView.INVALID_POSITION;
 	LinnaeusDatabase lb;
-	SQLiteDatabase db;
+	private static boolean mTwoPane = false;
+	public SQLiteDatabase db;
 
 	/**
 	 * A callback interface that all activities containing this fragment must
@@ -93,15 +100,12 @@ public class datosListFragment extends ListFragment {
 	public datosListFragment() {
 	}
 
-	public void setDataBase(LinnaeusDatabase lb, SQLiteDatabase db) {
-		this.lb = lb;
-		this.db = db;
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		db = getActivity().openOrCreateDatabase("DataStore.sqlite",
+				Context.MODE_WORLD_READABLE, null);
+		lb = new LinnaeusDatabase(getActivity().getApplicationContext());
 		/*
 		 * TODO: replace with a real list adapter. setListAdapter(new
 		 * ArrayAdapter<DummyContent.DummyItem>(getActivity(),
@@ -119,13 +123,15 @@ public class datosListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		sql = "select distinct sede from BaseM ";
-		Cursor c = db.rawQuery(sql, null);
-		final String[][] mat = Util.imprimirLista(c);
-		c.close();
-		ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, Util.getcolumn(mat, 0));
-		setListAdapter(adapter);
+		if (db != null) {
+			Cursor c = db.rawQuery(sql, null);
+			final String[][] mat = Util.imprimirLista(c);
+			c.close();
+			ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),
+					android.R.layout.simple_list_item_activated_1,
+					android.R.id.text1, Util.getcolumn(mat, 0));
+			setListAdapter(adapter);
+		}
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -165,8 +171,9 @@ public class datosListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView listView, View view, int posicion,
 			long id) {
-		
-		sql = "select distinct dependencias from BaseM where sede='Bogotá' ";
+		if(current>=5){
+			return;
+		}
 		Cursor c = db.rawQuery(sql, null);
 		final String[][] mat = Util.imprimirLista(c);
 		c.close();
@@ -177,10 +184,8 @@ public class datosListFragment extends ListFragment {
 		seleccion = mat[posicion][0];
 		if (path == "") {
 			path = seleccion;
-			// item.setTitleCondensed(path.toUpperCase().trim());
 		} else {
 			path = path + ">" + seleccion.toUpperCase().trim();
-			// item.setTitleCondensed(path);
 		}
 		current++;
 		int resta = 1;
@@ -193,9 +198,42 @@ public class datosListFragment extends ListFragment {
 		}
 		sql = "select  distinct " + columnas[current] + ", " + columnas[2]
 				+ " from " + tableName + "  where " + condicion;
+		if (current == 5) {
+			ArrayList<String[]> datos = getDatos();
+			ArrayList<String> datosLinea = Util.parseLine(datos);
+			if (mTwoPane) {
+				// In two-pane mode, show the detail view in this activity by
+				// adding or replacing the detail fragment using a
+				// fragment transaction.
+
+				Bundle arguments = new Bundle();
+				arguments.putStringArrayList("datos", datosLinea);
+				datosDetailFragment fragment = new datosDetailFragment();
+				fragment.setArguments(arguments);
+				getFragmentManager().beginTransaction()
+						.replace(R.id.datos_detail_container, fragment)
+						.commit();
+
+			} else {
+				// In single-pane mode, simply start the detail activity
+				// for the selected item ID.
+				Intent detailIntent = new Intent(getActivity(),
+						datosDetailActivity.class);
+				detailIntent.putStringArrayListExtra("datos", datosLinea);
+				startActivity(detailIntent);
+			}
+		}else{
 		// Notify the active callbacks interface (the activity, if the
 		// fragment is attached to one) that an item has been selected.
 		// mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+		c = db.rawQuery(sql, null);
+		String[][] mat2 = Util.imprimirLista(c);
+		c.close();
+		adapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_activated_1,
+				android.R.id.text1, Util.getcolumn(mat2, 0));
+		setListAdapter(adapter);
+		}
 		super.onListItemClick(listView, view, posicion, id);
 	}
 
@@ -229,4 +267,71 @@ public class datosListFragment extends ListFragment {
 
 		mActivatedPosition = position;
 	}
+
+	private ArrayList<String[]> getDatos(String criteria, boolean cond) {
+		String consulta = "SELECT departamentos,secciones,directo,extension,correo_electronico,NOMBRE_EDIFICIO,url,piso_oficina, LATITUD,LONGITUD FROM "
+				+ tableName
+				+ " natural join "
+				+ tableName2
+				+ " natural join "
+				+ tableName3 + " where ";
+		return getDatos(consulta, criteria, cond);
+	}
+
+	private ArrayList<String[]> getDatos(String baseConsult, String criteria,
+			boolean cond) {
+		String consulta = baseConsult + criteria;
+		ArrayList<String[]> datos = new ArrayList<String[]>();
+		Log.e("SQL ORIGINAL", consulta);
+		if (cond) {
+			consulta = sql;
+		}
+
+		Log.e("consulta", consulta);
+
+		Cursor c = db.rawQuery(consulta, null);
+		String[][] mat = Util.imprimirLista(c);
+		c.close();
+		Log.e("datos", Util.toString(mat));
+		try {
+			for (int i = 0; i < mat.length; i++) {
+				String arr[];
+				if (mat[i].length == 1) {
+					arr = new String[] { mat[i][0] };
+				} else {
+					arr = new String[mat[i].length - 1];
+					for (int j = 0; j < mat[i].length - 1; j++) {
+						if (j == mat[i].length - 2) {
+							arr[j] = mat[i][j] + " " + mat[i][j + 1];
+						} else {
+							arr[j] = mat[i][j];
+						}
+					}
+				}
+				datos.add(arr);
+				//Log.e("los datos " + i, Util.toString(arr));
+			}
+		} catch (Exception e) {
+			Log.e("Error Datos", e.toString());
+			Toast.makeText(getActivity(), "Aun no tenemos los Datos",
+					Toast.LENGTH_LONG).show();
+		}
+		return datos;
+	}
+
+	private ArrayList<String[]> getDatos() {
+		boolean cond = false;
+		if (!sql.contains("ASC")) {
+			if (current != 5) {
+				cond = true;
+			}
+		}
+		return getDatos(condicion, cond);
+	}
+
+	public void setTwoPane(boolean mTwoPane) {
+		this.mTwoPane = mTwoPane;
+
+	}
+
 }

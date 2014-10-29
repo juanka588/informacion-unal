@@ -54,18 +54,16 @@ public class MiAdaptador extends BaseAdapter {
 		if (lista[position] != null) {
 			textView.setText(Util.toCammelCase(lista[position].toLowerCase()));
 			textView.setHint(Util.toCammelCase(lista[position].toLowerCase()));
-			if (tipo != 0&&false) {
-				if (lista[position].contains("Museo")) {
+			if (tipo != 0) {
+				if (lista[position].contains("Museo Paleon")) {
 					textView.setText("\t Museo Paleontologico");
-
+					textView.setTextSize(15);
 				}
-				if (lista[position].contains("Franco")) {
-					textView.setText("\t Estacion Tropical Roberto Franco");
-
+				if (lista[position].contains("Estación de Biolo")) {
+					textView.setText("\t Estación de Biología Tropical Roberto Franco");
+					textView.setTextSize(15);
 				}
 			}
-			// textView.setTextSize(18);
-
 		}
 		imageView.setImageResource(R.drawable.ic_launcher);
 		int ids[] = { R.id.titulo, R.id.subtitulo };
@@ -104,13 +102,11 @@ public class MiAdaptador extends BaseAdapter {
 				imageView.setImageResource(R.drawable.ic_oriniquia);
 			}
 			if (tipo == 2) {
-			//	Log.e("iconos en servicios",lista2[position]);
-				String cad=lista2[position];
-				cad=cad.substring(0,cad.length()-4);
-				int id = actividad.getResources()
-						.getIdentifier(
-								"com.unal.iun:drawable/" + cad,
-								null, null);
+				// Log.e("iconos en servicios",lista2[position]);
+				String cad = lista2[position];
+				cad = cad.substring(0, cad.length() - 4);
+				int id = actividad.getResources().getIdentifier(
+						"com.unal.iun:drawable/" + cad, null, null);
 				imageView.setImageResource(id);
 			}
 			if (tipo == 1) {

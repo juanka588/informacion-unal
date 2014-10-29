@@ -24,9 +24,9 @@
     <string name="menu_mapa">Ver en el mapa</string>
     <string name="menu_irweb">Ir al Sitio</string>
     <string name="title_dato_list">datos</string>
-    <string name="title_dato_detail">dato Detail</string>
+    <string name="title_dato_detail">Directorio</string>
     <string name="title_datos_list">datos</string>
-    <string name="title_datos_detail">datos Detail</string>
+    <string name="title_datos_detail">Informacion</string>
     <string name="title_activity_radio">Radio UN</string>
     <string name="title_activity_servicios">Servicios en linea</string>
 

@@ -65,8 +65,9 @@ public class RadioActivity extends Activity implements OnClickListener {
 
 			@Override
 			public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
-				player.seekTo(arg1);
-
+				if (arg2) {
+					player.seekTo(arg1);
+				}
 			}
 		});
 		playSeekBar.setVisibility(View.INVISIBLE);
@@ -82,9 +83,11 @@ public class RadioActivity extends Activity implements OnClickListener {
 
 	private Runnable UpdateSongTime = new Runnable() {
 		public void run() {
-			if (player.isPlaying()) {
-				playSeekBar.setProgress(player.getCurrentPosition());
-				myHandler.postDelayed(this, 100);
+			if (player != null) {
+				if (player.isPlaying()) {
+					playSeekBar.setProgress(player.getCurrentPosition());
+					myHandler.postDelayed(this, 100);
+				}
 			}
 		}
 	};
@@ -125,10 +128,9 @@ public class RadioActivity extends Activity implements OnClickListener {
 
 	private void stopPlaying() {
 		if (player.isPlaying()) {
-			songPosition=player.getCurrentPosition();
 			player.stop();
 			player.release();
-			//initializeMediaPlayer();			
+			initializeMediaPlayer();
 		}
 		buttonPlay.setEnabled(true);
 		buttonStopPlay.setEnabled(false);

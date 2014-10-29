@@ -4,9 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo2"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.unal.iun.DetailsActivity"
-    tools:ignore="MergeRootFrame"
-    android:orientation="vertical" >
+    tools:ignore="MergeRootFrame" >
+
     <Space
         android:id="@+id/spaceDetalles1"
         android:layout_width="wrap_content"
@@ -16,24 +21,26 @@
         android:id="@+id/tituloDetallesDtos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:layout_span="2"
         android:gravity="center"
         android:maxLines="3"
         android:maxWidth="250dp"
         android:text="Un Titulo muy largo larguisimo de prueba para mirar la efectividad"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-        android:layout_marginBottom="5dp" />
+        android:textStyle="bold" />
+
     <Space
         android:id="@+id/spaceDetalles2"
         android:layout_width="wrap_content"
         android:layout_height="80dp" />
+
     <ExpandableListView
         android:id="@+id/expandableListDestails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp" 
-        android:layout_marginLeft="10dp" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="60dp" >
     </ExpandableListView>
 
 </LinearLayout>

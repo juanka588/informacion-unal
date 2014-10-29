@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,19 +68,20 @@ public class MiAdaptadorExpandible extends BaseExpandableListAdapter {
 		int draw = 0;
 		switch (type) {
 		case 0:
-			draw = R.drawable.ic_celular;
+			draw = R.drawable.llamar;
 			break;
 		case 1:
-			draw = R.drawable.ic_celular;
+			draw = R.drawable.llamar;
 			break;
 		case 2:
-			draw = R.drawable.ic_email;
+			draw = R.drawable.correo;
 			break;
 		case 3:
-			draw = R.drawable.ic_edificio;
+			draw = R.drawable.edificio;
 			break;
 		case 4:
-			draw = R.drawable.ic_web;
+			draw = R.drawable.un;
+			textView.setText("Sitio Web");
 			break;
 
 		default:
@@ -141,6 +143,9 @@ public class MiAdaptadorExpandible extends BaseExpandableListAdapter {
 		m = p.matcher(cad);
 		if (m.matches()) {
 			ret = 4;
+		}
+		if(cad.contains("http")){
+			ret=4;
 		}
 		return ret;
 	}

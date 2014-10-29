@@ -38,9 +38,11 @@ public class ServiciosActivity extends Activity {
 				BitmapFactory.decodeResource(getResources(),
 						R.drawable.fondoinf));
 		this.getActionBar().setBackgroundDrawable(background2);
+		this.getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 		lv = (ListView) findViewById(R.id.listaServicios);
 		browser = (WebView) findViewById(R.id.navegadorWebServicios);
-		browser.getSettings().setJavaScriptEnabled(true);
+	    browser.getSettings().setJavaScriptEnabled(true);
 		browser.getSettings().setBuiltInZoomControls(true);
 		browser.setWebViewClient(new WebViewClient() {
 			// evita que los enlaces se abran fuera nuestra app en el navegador
@@ -77,7 +79,7 @@ public class ServiciosActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Log.e("Url Cargada", mat[position][2]);
+				//Log.e("Url Cargada", mat[position][2]);
 				if (mat[position][2].equals("") || mat[position][2] == null) {
 					Intent radio = new Intent(act, RadioActivity.class);
 					act.startActivity(radio);
@@ -132,12 +134,15 @@ public class ServiciosActivity extends Activity {
 	}
 
 	public void navegar(String cad) {
-		Util.irA(cad, this);
+		browser.loadUrl(cad);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			home();
+			break;
 		case R.id.ItemVolver:
 			volver();
 			return true;
@@ -166,5 +171,11 @@ public class ServiciosActivity extends Activity {
 
 	public void recargar() {
 		browser.reload();
+	}
+
+	public void home() {
+		startActivity(new Intent(getApplicationContext(), MainActivity.class));
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+		this.finish();
 	}
 }

@@ -254,7 +254,7 @@ public class Util {
 		for (String[] arr : datos) {
 			for (int i = 0; i < arr.length - 1; i++) {
 				sb.append(arr[i]);
-				sb.append(' ');
+				sb.append(';');
 			}
 			sb.append(arr[arr.length - 1]);
 			salida.add(sb.toString());
@@ -266,7 +266,7 @@ public class Util {
 	public static ArrayList<String[]> toArray(ArrayList<String> datosLinea) {
 		ArrayList<String[]> salida=new ArrayList<String[]>();
 		for (String string : datosLinea) {
-			String arr[]=string.split(" ");
+			String arr[]=string.split(";");
 			salida.add(arr);
 		}
 		return salida;

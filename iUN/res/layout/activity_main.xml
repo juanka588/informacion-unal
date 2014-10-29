@@ -1,6 +1,6 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/TableLayout1"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
@@ -11,84 +11,26 @@
     android:shrinkColumns="*"
     tools:context=".MainActivity" >
 
-    <Space
-        android:id="@+id/SpaceMain"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_gravity="fill_horizontal" />
-
-    <TableRow
-        android:id="@+id/tableRow11"
+    <TextView
+        android:id="@+id/ratingBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="bottom|center" >
-
-        <ImageView
-            android:id="@+id/imageUNPrincipal"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_gravity="left"
-            android:layout_marginRight="19dp"
-            android:layout_weight="0"
-            android:onClick="irSede"
-            android:src="@drawable/persona" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|left"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/textLugar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:shrinkColumns="true"
-                android:text="Mi Sede"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/textSede"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:maxLength="16"
-                android:text="Bogotá"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:layout_marginLeft="5dp" >
-
-            <TextView
-                android:id="@+id/textLongitud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:maxLength="16"
-                android:shrinkColumns="true"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/textLatitud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:maxLength="16"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </TableRow>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="24dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="comentar"
+        android:text="Danos tu opinion"
+        android:textColor="@android:color/white" />
 
     <TableRow
         android:id="@+id/tableRow2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
         android:layout_weight="1"
         android:gravity="bottom" >
 
@@ -138,14 +80,74 @@
             android:textColor="@android:color/white" />
     </TableRow>
 
-    <TextView
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
+    <TableRow
+        android:id="@+id/tableRow11"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="comentar"
-        android:text="Danos tu opinion"
-        android:textColor="@android:color/white" />
+        android:layout_above="@+id/tableRow2"
+        android:layout_centerHorizontal="true"
+        android:gravity="bottom|center" >
 
-</TableLayout>
+        <ImageView
+            android:id="@+id/imageUNPrincipal"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left"
+            android:layout_marginRight="19dp"
+            android:layout_weight="0"
+            android:onClick="irSede"
+            android:src="@drawable/persona" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textLugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:shrinkColumns="true"
+                android:text="Mi Sede"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/textSede"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:maxLength="16"
+                android:text="Bogotá"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textLongitud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:maxLength="16"
+                android:shrinkColumns="true"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/textLatitud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:maxLength="16"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </TableRow>
+
+</RelativeLayout>

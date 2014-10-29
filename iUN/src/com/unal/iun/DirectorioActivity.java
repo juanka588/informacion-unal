@@ -100,8 +100,8 @@ public class DirectorioActivity extends Activity {
 				}
 				Log.e("query mapa", query);
 			} else {
-				query = "select distinct edificio,nombre_edificio,latitud,longitud from edificios natural join "
-						+ tableName + " where nivel=" + nivel;
+				query = "select distinct edificio,nombre_edificio,latitud,longitud from edificios "
+						+ " where nivel=" + nivel;
 			}
 			Cursor c = db.rawQuery(query, null);
 			String[][] mat = Util.imprimirLista(c);
@@ -202,19 +202,19 @@ public class DirectorioActivity extends Activity {
 		int screenWidth = display.getWidth();
 		int screenHeight = display.getHeight();
 		double factor = screenHeight / 2000.0 + 0.25;
-		double factor2 = 3.0 * screenHeight / 20000.0 + 0.09;
-		if (factor > 0.5) {
-			factor = 0.5;
+		double factor2 = screenHeight / 2000.0 + 0.25;
+		if (factor > 0.45) {
+			factor = 0.45;
 		}
-		if (factor2 > 0.2) {
-			factor2 = 0.2;
+		if (factor2 > 0.4) {
+			factor2 = 0.4;
 		}
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
-				(int) (screenHeight * (factor2))));
+				(int) (screenHeight * (factor))));
 		lv.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.WRAP_CONTENT,
-				(int) (screenHeight * (0.47))));
+				(int) (screenHeight * (factor2))));
 
 		Bundle b = getIntent().getExtras();
 		try {
@@ -234,11 +234,17 @@ public class DirectorioActivity extends Activity {
 				sql = "select  distinct " + columnas[current] + " from "
 						+ tableName;
 			}
-			Cursor c = db.rawQuery(sql, null);
+			Cursor c;
+			if (b.getBoolean("salto")) {
+				c = db.rawQuery(sql, null);
+			} else {
+				c = db.rawQuery(sql
+						+ " natural join edificios order by (orden)", null);
+			}
 			final String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
-			MiAdaptador.tipo=1;
+			MiAdaptador.tipo = 1;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 0));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
@@ -340,6 +346,10 @@ public class DirectorioActivity extends Activity {
 			id = R.drawable.ciudad_universitaria;
 			idFondoTras = id;
 		}
+		if (cad.contains("Observatorio")) {
+			id = R.drawable.oan_sede_h;
+			idFondoTras = id;
+		}
 		idFondo = id;
 		background = new BitmapDrawable(BitmapFactory.decodeResource(
 				getResources(), id));
@@ -402,7 +412,7 @@ public class DirectorioActivity extends Activity {
 			path = "";
 			condicion = "";
 			sql = "select  distinct " + columnas[2] + ", " + columnas[2]
-					+ " from " + tableName;
+					+ " from " + tableName+" natural join edificios order by (orden)";
 			current = 2;
 			animarFondo("", true);
 			return;
@@ -508,7 +518,7 @@ public class DirectorioActivity extends Activity {
 			final String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
-			MiAdaptador.tipo=1;
+			MiAdaptador.tipo = 1;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 1));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
@@ -727,7 +737,7 @@ public class DirectorioActivity extends Activity {
 			c.close();
 			db.close();
 			lv.setAdapter(null);
-			MiAdaptador.tipo=1;
+			MiAdaptador.tipo = 1;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 1));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
@@ -738,6 +748,9 @@ public class DirectorioActivity extends Activity {
 				public void onItemClick(AdapterView<?> arg0, View vista,
 						int posicion, long arg3) {
 					seleccion = mat[posicion][0];
+					if (seleccion.contains("Observatorio")) {
+						animarFondo(seleccion, true);
+					}
 					condicion += " and " + columnas[5] + " = '" + seleccion
 							+ "'";
 					sql = "select  distinct " + columnas[5] + ", "

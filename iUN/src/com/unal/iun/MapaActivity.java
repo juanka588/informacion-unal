@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ClipData.Item;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -13,16 +12,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.dynamic.d;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,7 +31,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.internal.f;
 import com.unal.iun.LN.LinnaeusDatabase;
 import com.unal.iun.LN.MiLocationListener;
 import com.unal.iun.LN.Util;
@@ -152,7 +147,7 @@ public class MapaActivity extends FragmentActivity {
 						.snippet(desc)
 						.icon(BitmapDescriptorFactory
 								.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-							//	.fromResource(R.drawable.edificiop2));
+				// .fromResource(R.drawable.edificiop2));
 			}
 			mapa.addMarker(k);
 		}
@@ -233,12 +228,15 @@ public class MapaActivity extends FragmentActivity {
 		cond = Util.getcolumn(mat, 0)[0].trim();
 		Log.e("sede", cond);
 		nivel++;
-		String query2 = "select latitud, longitud,nombre_edificio, url from edificios "
+		String query2  = "select latitud, longitud,nombre_edificio, url from edificios "
 				+ "natural join "
 				+ tableName
 				+ " natural join enlace where sede_edificio='"
-				+ cond
-				+ "' and nivel =" + nivel + " group by nombre_edificio";
+				+ cond+"'";
+		// chambonazo mapa
+		if (cond.equals("Bogotá")) {
+			query2+=" and nivel =" + nivel + " group by nombre_edificio";
+		}
 		c = db.rawQuery(query2, null);
 		mat = Util.imprimirLista(c);
 		this.lat = Util.toDouble(Util.getcolumn(mat, 0));
@@ -276,7 +274,7 @@ public class MapaActivity extends FragmentActivity {
 	}
 
 	public void addNuevos(final boolean b) {
-		if (nivel < 3&&!b) {
+		if (nivel < 3 && !b) {
 			mapa.clear();
 			marcadores.removeAll(marcadores);
 		}
@@ -354,8 +352,9 @@ public class MapaActivity extends FragmentActivity {
 		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(Marker marker) {
 				focus = marker;
-				int len=marker.getTitle().length();
-				item.setTitle(marker.getTitle().substring(0, len>20?20:len));
+				int len = marker.getTitle().length();
+				item.setTitle(marker.getTitle().substring(0,
+						len > 20 ? 20 : len));
 				return false;
 			}
 		});
