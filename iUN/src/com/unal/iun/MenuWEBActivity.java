@@ -1,10 +1,13 @@
 package com.unal.iun;
 
+import com.unal.iun.LN.LinnaeusDatabase;
 import com.unal.iun.LN.Util;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,7 +31,9 @@ import android.widget.TextView;
 
 public class MenuWEBActivity extends Activity {
 	SearchView sv;
-
+	double lat[];
+	double lon[];
+	String titulos[], descripciones[];
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -183,10 +188,14 @@ public class MenuWEBActivity extends Activity {
 			cad = "http://livestream.com/prisma_tv";
 			break;
 		case R.id.imageUNradio:
+			cad = "http://www.unradio.unal.edu.co/nc/en-linea/bogota.html";
+			break;
+			/*
 			Intent radio = new Intent(this, RadioActivity.class);
 			startActivity(radio);
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			return;
+			*/
 		case R.id.imageBB:
 			cad = "http://www.bb.unal.edu.co/";
 			break;
@@ -218,21 +227,58 @@ public class MenuWEBActivity extends Activity {
 			cad = "http://www.libreriaun.unal.edu.co/?q=node/39";
 			break;
 		case R.id.imageComedor:
-			cad = "http://www.agenciadenoticias.unal.edu.co/ndetalle/article/la-un-vuelve-a-tener-comedor-central.html";
-			break;
+			ubicar();
+			return;
+			//break;
 		case R.id.imageMedico:
 			cad = "http://www.bienestarbogota.unal.edu.co/salud.php";
 			break;
 		case R.id.imageUNIsalud:
 			cad = "http://www.unisalud.unal.edu.co/";
+			break;
 		case R.id.imageAdmisiones:
 			cad = "http://admisiones.unal.edu.co/";
+			break;
+		case R.id.imageUNperiodico:
+			cad = "http://www.unperiodico.unal.edu.co";
+			break;
 		case R.id.imagePatrimonio:
 			cad = "http://www.unal.edu.co/contenido/patrimonio_historico.html";
+			break;
 		default:
 			break;
 		}
 		navegar(cad);
+	}
+	public void ubicar() {
+		try {
+			Intent mapa = new Intent(this, MapaActivity.class);
+			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
+			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+					MODE_WORLD_READABLE, null);
+			String query;
 
+			query = "select distinct edificio,nombre_edificio,latitud,longitud from edificios "
+						+ " where nivel=" + 5;
+		
+			Cursor c = db.rawQuery(query, null);
+			String[][] mat = Util.imprimirLista(c);
+			c.close();
+			db.close();
+			lat = Util.toDouble(Util.getcolumn(mat, 2));
+			lon = Util.toDouble(Util.getcolumn(mat, 3));
+			titulos = Util.getcolumn(mat, 1);
+			descripciones = Util.getcolumn(mat, 0);
+			mapa.putExtra("lat", lat);
+			mapa.putExtra("lon", lon);
+			mapa.putExtra("titulos", titulos);
+			mapa.putExtra("descripciones", descripciones);
+			mapa.putExtra("nivel", 3);
+			mapa.putExtra("zoom", 14);
+			mapa.putExtra("tipo", 1);
+			startActivity(mapa);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+		} catch (Exception ex) {
+		}
 	}
 }

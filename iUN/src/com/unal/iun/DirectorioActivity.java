@@ -49,7 +49,7 @@ public class DirectorioActivity extends Activity {
 	SearchView sv;
 	int current = 2;
 	TableRow tr;
-	int idFondo = R.drawable.fondo2, idFondoTras = R.drawable.fondo2;
+	int idFondo = R.drawable.fondo2, idFondoTras = R.drawable.ciudad_universitaria;
 	double lat[];
 	double lon[];
 	String titulos[], descripciones[];
@@ -59,6 +59,7 @@ public class DirectorioActivity extends Activity {
 			"LUGAR_GEOGRAFICO", "EDIFICIO", "PISO_OFICINA", "CLASIFICACION" };
 	TableLayout tl;
 	BitmapDrawable background;
+	boolean buscando = false;
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -135,7 +136,9 @@ public class DirectorioActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				recargar(query);
+				if (query.length() > 3) {
+					recargar(query);
+				}
 				return false;
 			}
 
@@ -160,9 +163,17 @@ public class DirectorioActivity extends Activity {
 			home();
 			break;
 		case R.id.ItemMapa:
-			ubicar(null);
+			if (!buscando) {
+				ubicar(null);
+			}
 			break;
 		case R.id.ItemWEB:
+			if(buscando){
+				String cad = "http://unal.edu.co/resultados-de-la-busqueda/?q="
+						+ sv.getQuery();
+				Util.irA(cad, this);
+				break;
+			}
 			if (current == 2) {
 				Util.irA("http://www.unal.edu.co", this);
 			} else {
@@ -203,11 +214,11 @@ public class DirectorioActivity extends Activity {
 		int screenHeight = display.getHeight();
 		double factor = screenHeight / 2000.0 + 0.25;
 		double factor2 = screenHeight / 2000.0 + 0.25;
-		if (factor > 0.45) {
-			factor = 0.45;
+		if (factor > 0.35) {
+			factor = 0.35;
 		}
-		if (factor2 > 0.4) {
-			factor2 = 0.4;
+		if (factor2 > 0.35) {
+			factor2 = 0.35;
 		}
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
@@ -311,7 +322,7 @@ public class DirectorioActivity extends Activity {
 			idFondoTras = id;
 		}
 		if (cad.contains("Amaz")) {
-			id = R.drawable.amazonia;
+			id = R.drawable.amazonas;
 			idFondoTras = id;
 		}
 		if (cad.contains("Caribe")) {
@@ -348,6 +359,10 @@ public class DirectorioActivity extends Activity {
 		}
 		if (cad.contains("Observatorio")) {
 			id = R.drawable.oan_sede_h;
+			idFondoTras = id;
+		}
+		if (cad.contains("Dirección Nacional")) {
+			id = R.drawable.uriel;
 			idFondoTras = id;
 		}
 		idFondo = id;
@@ -412,7 +427,8 @@ public class DirectorioActivity extends Activity {
 			path = "";
 			condicion = "";
 			sql = "select  distinct " + columnas[2] + ", " + columnas[2]
-					+ " from " + tableName+" natural join edificios order by (orden)";
+					+ " from " + tableName
+					+ " natural join edificios order by (orden)";
 			current = 2;
 			animarFondo("", true);
 			return;
@@ -462,6 +478,7 @@ public class DirectorioActivity extends Activity {
 		current = 1;
 		tr.setVisibility(View.INVISIBLE);
 		recargar(sql, true, true);
+		buscando = true;
 		// animarFondo("", false);
 
 	}
@@ -537,8 +554,12 @@ public class DirectorioActivity extends Activity {
 						irDirecto();
 						return;
 					}
-					if (current == 2) {
-						animarFondo(mat[posicion][1], true);
+					if (path.contains("INSTITUTOS ")) {
+						irDirecto(seleccion);
+						return;
+					}
+					if (current == 2||seleccion.contains("Dirección Nacional")) {
+						animarFondo(seleccion, true);
 					}
 					if (path == "") {
 						path = seleccion;
@@ -595,9 +616,6 @@ public class DirectorioActivity extends Activity {
 		if (seleccion2.contains("Roberto")) {
 			return true;
 		}
-		if (seleccion2.contains("Instituto ")) {
-			return true;
-		}
 		return false;
 	}
 
@@ -627,7 +645,7 @@ public class DirectorioActivity extends Activity {
 		Util.irA(datos.get(0)[0], this);
 	}
 
-	private ArrayList<String[]> getDatos(String baseConsult, String criteria,
+	public ArrayList<String[]> getDatos(String baseConsult, String criteria,
 			boolean cond) {
 		String consulta = baseConsult + criteria;
 		ArrayList<String[]> datos = new ArrayList<String[]>();
@@ -679,7 +697,7 @@ public class DirectorioActivity extends Activity {
 		return datos;
 	}
 
-	private ArrayList<String[]> getDatos(String criteria, boolean cond) {
+	public ArrayList<String[]> getDatos(String criteria, boolean cond) {
 		String consulta = "SELECT departamentos,secciones,directo,extension,correo_electronico,NOMBRE_EDIFICIO,url,piso_oficina, LATITUD,LONGITUD FROM "
 				+ tableName
 				+ " natural join "

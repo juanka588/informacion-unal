@@ -165,7 +165,7 @@ public class EventosActivity extends Activity {
 						jsonObject.getString("telefono") };
 				nm = (NotificationManager) getSystemService(ns);
 				notificacion(
-						R.drawable.ic_launcher,
+						R.drawable.icono_app,
 						jsonObject.getString("titulo"),
 						jsonObject.getString("titulo"),
 						jsonObject.getString("lugar")

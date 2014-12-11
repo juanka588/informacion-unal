@@ -65,7 +65,7 @@ public class MiAdaptador extends BaseAdapter {
 				}
 			}
 		}
-		imageView.setImageResource(R.drawable.ic_launcher);
+		imageView.setImageResource(R.drawable.icono_app);
 		int ids[] = { R.id.titulo, R.id.subtitulo };
 		for (int i = 0; i < ids.length; i++) {
 			TextView prueba = (TextView) view.findViewById(ids[i]);

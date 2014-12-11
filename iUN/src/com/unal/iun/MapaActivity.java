@@ -16,6 +16,9 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -51,6 +54,7 @@ public class MapaActivity extends FragmentActivity {
 	int nivel = 1;
 	MenuItem item;
 	static String cond = "";
+	int idFondoTras=R.drawable.ciudad_universitaria;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class MapaActivity extends FragmentActivity {
 					requestCode);
 			dialog.show();
 		}
-		deta = new Intent(this, WebActivity.class);
+		deta = new Intent(this, DetailsActivity.class);
 		BitmapDrawable background2 = new BitmapDrawable(
 				BitmapFactory.decodeResource(getResources(),
 						R.drawable.fondoinf));
@@ -327,9 +331,19 @@ public class MapaActivity extends FragmentActivity {
 										acercar(arg0);
 									} else {
 										String cad = arg0.getSnippet();
-										if (cad.contains("www.")) {
+										if (cad.contains("www.")||cad.contains("http")) {
 											cambiar();
-											deta.putExtra("paginaWeb", cad);
+											String consulta = "SELECT departamentos,secciones," +
+													"directo,extension,correo_electronico,NOMBRE_EDIFICIO," +
+													"url,piso_oficina, LATITUD,LONGITUD FROM "
+													+ tableName
+													+ " natural join edificios"
+													+ " natural join enlace"+ " where ";
+											ArrayList<String[]> datos=getDatos(consulta, "NOMBRE_EDIFICIO='"+arg0.getTitle()+"'");
+											deta.putExtra("datos", datos);
+											animarFondo(cond);
+											deta.putExtra("fondo", idFondoTras);
+											//deta.putExtra("paginaWeb", cad);
 											startActivity(deta);
 										}
 									}
@@ -359,6 +373,89 @@ public class MapaActivity extends FragmentActivity {
 			}
 		});
 
+	}
+	public ArrayList<String[]> getDatos(String baseConsult, String criteria) {
+		String consulta = baseConsult + criteria;
+		ArrayList<String[]> datos = new ArrayList<String[]>();
+		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+				MODE_WORLD_READABLE, null);
+		Cursor c = db.rawQuery(consulta, null);
+		String[][] mat = Util.imprimirLista(c);
+		c.close();
+		db.close();
+		Log.e("datos", Util.toString(mat));
+		try {
+			for (int i = 0; i < mat.length; i++) {
+				String arr[];
+				if (mat[i].length == 1) {
+					arr = new String[] { mat[i][0] };
+				} else {
+					arr = new String[mat[i].length - 1];
+					for (int j = 0; j < mat[i].length - 1; j++) {
+						if (j == mat[i].length - 2) {
+							arr[j] = mat[i][j] + " " + mat[i][j + 1];
+						} else {
+							arr[j] = mat[i][j];
+						}
+					}
+				}
+				datos.add(arr);
+				Log.e("los datos " + i, Util.toString(arr));
+			}
+		} catch (Exception e) {
+			Log.e("Error Datos", e.toString());
+			Toast.makeText(getApplication(), "Aun no tenemos los Datos",
+					Toast.LENGTH_LONG).show();
+		}
+		return datos;
+	}
+	public void animarFondo(String cad) {
+		int id = R.drawable.fondo2;
+		Log.e("Seleccionado el fondo", cad);
+		if (cad.contains("Bogo")) {
+			id = R.drawable.ciudad_universitaria;
+			idFondoTras = id;
+		}
+		if (cad.contains("Amaz")) {
+			id = R.drawable.amazonas;
+			idFondoTras = id;
+		}
+		if (cad.contains("Caribe")) {
+			id = R.drawable.caribe;
+			idFondoTras = id;
+		}
+		if (cad.contains("Mani")) {
+			id = R.drawable.manizales;
+			idFondoTras = id;
+		}
+		if (cad.contains("Mede")) {
+			id = R.drawable.medellin;
+			idFondoTras = id;
+		}
+		if (cad.contains("Tumac")) {
+			id = R.drawable.tumaco;
+			idFondoTras = id;
+		}
+		if (cad.contains("Palmira")) {
+			id = R.drawable.palmira;
+			idFondoTras = id;
+		}
+		if (cad.contains("Orino")) {
+			id = R.drawable.orinoquia;
+			idFondoTras = id;
+		}
+		if (cad.contains("Franco")) {
+			id = R.drawable.ciudad_universitaria;
+			idFondoTras = id;
+		}
+		if (cad.contains("Museo")) {
+			id = R.drawable.ciudad_universitaria;
+			idFondoTras = id;
+		}
+		if (cad.contains("Observatorio")) {
+			id = R.drawable.oan_sede_h;
+			idFondoTras = id;
+		}
 	}
 
 }

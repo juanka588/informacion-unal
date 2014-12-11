@@ -282,7 +282,7 @@ public class datosListActivity extends Activity implements
 			idFondoTras = id;
 		}
 		if (cad.contains("Amaz")) {
-			id = R.drawable.amazonia;
+			id = R.drawable.amazonas;
 			idFondoTras = id;
 		}
 		if (cad.contains("Caribe")) {

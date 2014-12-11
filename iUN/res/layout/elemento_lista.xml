@@ -9,7 +9,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/selectorfondocir"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/icono_app" />
 
     <TextView
         android:id="@+id/titulo"
@@ -32,7 +32,7 @@
         android:layout_marginRight="20dp"
         android:layout_toRightOf="@id/icono"
         android:gravity="right"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/icono_app"
         android:text="Otro Texto"
         android:textColor="@android:color/white" />
 

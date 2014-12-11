@@ -233,7 +233,7 @@ public class MainActivity extends Activity {
 		addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, contentTitle.toString());
 		addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
 				Intent.ShortcutIconResource.fromContext(
-						getApplicationContext(), R.drawable.ic_launcher));
+						getApplicationContext(), R.drawable.icono_app));
 		// IMPORTATE: si el icono ya esta creado que no cree otro
 		addIntent.putExtra("duplicate", false);
 		// Llamamos a la acción

@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_span="2"
-        android:gravity="center"
+        android:gravity="right"
         android:maxLines="3"
-        android:maxWidth="250dp"
+        android:maxWidth="200dp"
         android:text="Un Titulo muy largo larguisimo de prueba para mirar la efectividad"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />

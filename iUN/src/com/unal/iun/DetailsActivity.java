@@ -82,10 +82,10 @@ public class DetailsActivity extends Activity {
 		}
 		sp.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
-				(int) (screenHeight * (factor2 / 2.0))));
+				(int) (screenHeight * (0.0))));
 		sp2.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
-				(int) (screenHeight * (factor2 / 2.0))));
+				(int) (screenHeight * (factor2))));
 		sc.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				(int) (screenHeight * (factor))));
@@ -94,7 +94,7 @@ public class DetailsActivity extends Activity {
 			TextView tx = (TextView) findViewById(R.id.tituloDetallesDtos);
 			tx.setText(data.get(0)[0].trim());
 
-			int id = R.drawable.fondo2;
+			int id = R.drawable.ciudad_universitaria;
 			if (b.getInt("fondo") != 0) {
 				id = b.getInt("fondo");
 			}
