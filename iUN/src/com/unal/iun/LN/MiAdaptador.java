@@ -25,6 +25,7 @@ public class MiAdaptador extends BaseAdapter {
 	private final String[] lista2;
 	public Typeface fuente;
 	// 0 con todo 1 sin imagen ni subtitulo 2 con imagen y sin subtitulo
+	// 3 con titulo y subtitulo sin imagen
 	public static int tipo = 0;
 
 	public MiAdaptador(Activity actividad, ArrayList<String> titulos,
@@ -74,7 +75,7 @@ public class MiAdaptador extends BaseAdapter {
 		if (lista2[position] != null) {
 			textView2
 					.setText(Util.toCammelCase(lista2[position].toLowerCase()));
-			if (tipo != 0) {
+			if (tipo > 0 && tipo < 3) {
 				textView2.setText("");
 			}
 			if (lista2[position].contains("Bogo")) {
@@ -109,7 +110,7 @@ public class MiAdaptador extends BaseAdapter {
 						"com.unal.iun:drawable/" + cad, null, null);
 				imageView.setImageResource(id);
 			}
-			if (tipo == 1) {
+			if (tipo == 1 || tipo == 3) {
 				imageView.setVisibility(View.GONE);
 			}
 		}

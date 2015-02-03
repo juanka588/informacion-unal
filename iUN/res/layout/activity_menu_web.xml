@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo2"
+    android:background="@drawable/fondo"
     android:orientation="vertical"
     tools:context="com.unal.iun.MenuWEBActivity"
     tools:ignore="MergeRootFrame" >

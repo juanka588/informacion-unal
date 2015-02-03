@@ -49,7 +49,8 @@ public class DirectorioActivity extends Activity {
 	SearchView sv;
 	int current = 2;
 	TableRow tr;
-	int idFondo = R.drawable.fondo2, idFondoTras = R.drawable.ciudad_universitaria;
+	int idFondo = R.drawable.fondo,
+			idFondoTras = R.drawable.ciudad_universitaria;
 	double lat[];
 	double lon[];
 	String titulos[], descripciones[];
@@ -99,15 +100,20 @@ public class DirectorioActivity extends Activity {
 				if (path.contains("Bogotá")) {
 					query = query + " and nivel=" + nivel;
 				}
-				Log.e("query mapa", query);
 			} else {
-				query = "select distinct edificio,nombre_edificio,latitud,longitud from edificios "
-						+ " where nivel=" + nivel;
+				query = "select distinct edificio,nombre_edificio,latitud,longitud from edificios ";
+				query += " where nivel=" + nivel;
 			}
+			Log.e("query mapa", query);
+			Log.e("PATH", path);
 			Cursor c = db.rawQuery(query, null);
 			String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
+			if(mat.length==0){
+				Toast.makeText(getApplicationContext(), "No hemos podido ubicar los edificios", 1).show();
+				return;
+			}
 			lat = Util.toDouble(Util.getcolumn(mat, 2));
 			lon = Util.toDouble(Util.getcolumn(mat, 3));
 			titulos = Util.getcolumn(mat, 1);
@@ -122,6 +128,7 @@ public class DirectorioActivity extends Activity {
 			startActivity(mapa);
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		} catch (Exception ex) {
+			Toast.makeText(getApplicationContext(), ex.toString(), 1).show();
 		}
 	}
 
@@ -164,11 +171,12 @@ public class DirectorioActivity extends Activity {
 			break;
 		case R.id.ItemMapa:
 			if (!buscando) {
+
 				ubicar(null);
 			}
 			break;
 		case R.id.ItemWEB:
-			if(buscando){
+			if (buscando) {
 				String cad = "http://unal.edu.co/resultados-de-la-busqueda/?q="
 						+ sv.getQuery();
 				Util.irA(cad, this);
@@ -315,7 +323,7 @@ public class DirectorioActivity extends Activity {
 	}
 
 	public void animarFondo(String cad, boolean cond) {
-		int id = R.drawable.fondo2;
+		int id = R.drawable.fondo;
 		Log.e("Seleccionado el fondo", cad);
 		if (cad.contains("Bogo")) {
 			id = R.drawable.ciudad_universitaria;
@@ -379,19 +387,19 @@ public class DirectorioActivity extends Activity {
 	}
 
 	public void detalles() {
-		Intent deta = new Intent(this, DetailsActivity.class);
-		ArrayList<String[]> datos = getDatos();
-		deta.putExtra("datos", datos);
 		try {
+			Intent deta = new Intent(this, DetailsActivity.class);
+			ArrayList<String[]> datos = getDatos();
+			deta.putExtra("datos", datos);
 			deta.putExtra("fondo", idFondoTras);
+			startActivity(deta);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+			// this.finish();
+			if (current == 5) {
+				erase(condicion, false);
+			}
 		} catch (Exception e) {
-
-		}
-		startActivity(deta);
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-		// this.finish();
-		if (current == 5) {
-			erase(condicion, false);
+			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
 		}
 	}
 
@@ -558,7 +566,8 @@ public class DirectorioActivity extends Activity {
 						irDirecto(seleccion);
 						return;
 					}
-					if (current == 2||seleccion.contains("Dirección Nacional")) {
+					if (current == 2
+							|| seleccion.contains("Dirección Nacional")) {
 						animarFondo(seleccion, true);
 					}
 					if (path == "") {
@@ -606,6 +615,7 @@ public class DirectorioActivity extends Activity {
 			});
 		} catch (Exception e) {
 			Log.e("error al recargar ", e.toString());
+			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
 		}
 	}
 
@@ -630,7 +640,7 @@ public class DirectorioActivity extends Activity {
 		try {
 			deta.putExtra("fondo", idFondoTras);
 		} catch (Exception e) {
-
+			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
 		}
 		startActivity(deta);
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -780,6 +790,7 @@ public class DirectorioActivity extends Activity {
 			});
 		} catch (Exception e) {
 			Log.e("error al recargar ", e.toString());
+			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
 		}
 	}
 }

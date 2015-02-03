@@ -54,7 +54,7 @@ public class MapaActivity extends FragmentActivity {
 	int nivel = 1;
 	MenuItem item;
 	static String cond = "";
-	int idFondoTras=R.drawable.ciudad_universitaria;
+	int idFondoTras = R.drawable.ciudad_universitaria;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,24 +71,24 @@ public class MapaActivity extends FragmentActivity {
 					requestCode);
 			dialog.show();
 		}
-		deta = new Intent(this, DetailsActivity.class);
-		BitmapDrawable background2 = new BitmapDrawable(
-				BitmapFactory.decodeResource(getResources(),
-						R.drawable.fondoinf));
-		this.getActionBar().setBackgroundDrawable(background2);
-		Bundle b = getIntent().getExtras();
-		lat = b.getDoubleArray("lat");
-		lon = b.getDoubleArray("lon");
-		titulos = b.getStringArray("titulos");
-		descripciones = b.getStringArray("descripciones");
-		zoom = b.getInt("zoom");
-		tipo = b.getInt("tipo");
-		nivel = b.getInt("nivel");
-		cambiar();
-		animarCamara(lat[0], lon[0], zoom);
-		addNuevos(false);
-		tableName = MainActivity.tbName;
 		try {
+			deta = new Intent(this, DetailsActivity.class);
+			BitmapDrawable background2 = new BitmapDrawable(
+					BitmapFactory.decodeResource(getResources(),
+							R.drawable.fondoinf));
+			this.getActionBar().setBackgroundDrawable(background2);
+			Bundle b = getIntent().getExtras();
+			lat = b.getDoubleArray("lat");
+			lon = b.getDoubleArray("lon");
+			titulos = b.getStringArray("titulos");
+			descripciones = b.getStringArray("descripciones");
+			zoom = b.getInt("zoom");
+			tipo = b.getInt("tipo");
+			nivel = b.getInt("nivel");
+			cambiar();
+			animarCamara(lat[0], lon[0], zoom);
+			addNuevos(false);
+			tableName = MainActivity.tbName;
 			MapsInitializer.initialize(MapaActivity.this);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -232,14 +232,13 @@ public class MapaActivity extends FragmentActivity {
 		cond = Util.getcolumn(mat, 0)[0].trim();
 		Log.e("sede", cond);
 		nivel++;
-		String query2  = "select latitud, longitud,nombre_edificio, url from edificios "
+		String query2 = "select latitud, longitud,nombre_edificio, url from edificios "
 				+ "natural join "
 				+ tableName
-				+ " natural join enlace where sede_edificio='"
-				+ cond+"'";
+				+ " natural join enlace where sede_edificio='" + cond + "'";
 		// chambonazo mapa
 		if (cond.equals("Bogotá")) {
-			query2+=" and nivel =" + nivel + " group by nombre_edificio";
+			query2 += " and nivel =" + nivel + " group by nombre_edificio";
 		}
 		c = db.rawQuery(query2, null);
 		mat = Util.imprimirLista(c);
@@ -331,19 +330,25 @@ public class MapaActivity extends FragmentActivity {
 										acercar(arg0);
 									} else {
 										String cad = arg0.getSnippet();
-										if (cad.contains("www.")||cad.contains("http")) {
+										if (cad.contains("www.")
+												|| cad.contains("http")) {
 											cambiar();
-											String consulta = "SELECT departamentos,secciones," +
-													"directo,extension,correo_electronico,NOMBRE_EDIFICIO," +
-													"url,piso_oficina, LATITUD,LONGITUD FROM "
+											String consulta = "SELECT departamentos,secciones,"
+													+ "directo,extension,correo_electronico,NOMBRE_EDIFICIO,"
+													+ "url,piso_oficina, LATITUD,LONGITUD FROM "
 													+ tableName
 													+ " natural join edificios"
-													+ " natural join enlace"+ " where ";
-											ArrayList<String[]> datos=getDatos(consulta, "NOMBRE_EDIFICIO='"+arg0.getTitle()+"'");
+													+ " natural join enlace"
+													+ " where ";
+											ArrayList<String[]> datos = getDatos(
+													consulta,
+													"NOMBRE_EDIFICIO='"
+															+ arg0.getTitle()
+															+ "'");
 											deta.putExtra("datos", datos);
 											animarFondo(cond);
 											deta.putExtra("fondo", idFondoTras);
-											//deta.putExtra("paginaWeb", cad);
+											// deta.putExtra("paginaWeb", cad);
 											startActivity(deta);
 										}
 									}
@@ -374,6 +379,7 @@ public class MapaActivity extends FragmentActivity {
 		});
 
 	}
+
 	public ArrayList<String[]> getDatos(String baseConsult, String criteria) {
 		String consulta = baseConsult + criteria;
 		ArrayList<String[]> datos = new ArrayList<String[]>();
@@ -409,8 +415,9 @@ public class MapaActivity extends FragmentActivity {
 		}
 		return datos;
 	}
+
 	public void animarFondo(String cad) {
-		int id = R.drawable.fondo2;
+		int id = R.drawable.fondo;
 		Log.e("Seleccionado el fondo", cad);
 		if (cad.contains("Bogo")) {
 			id = R.drawable.ciudad_universitaria;

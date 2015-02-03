@@ -110,12 +110,10 @@ public class DetailsActivity extends Activity {
 				parentItems.add(data.get(i)[1].trim());
 
 			}
-
 			lat = new double[data.size()];
 			lon = new double[data.size()];
 			titulos = new String[data.size()];
 			descripciones = new String[data.size()];
-
 			for (int k = 0; k < data.size(); k++) {
 				ArrayList<String> child = new ArrayList<String>();
 				String[] datos = data.get(k);
@@ -148,6 +146,7 @@ public class DetailsActivity extends Activity {
 			// sc.setOnChildClickListener(this);
 		} catch (Exception e) {
 			Log.e("error de Detalles ", e.toString());
+			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
 		}
 
 	}

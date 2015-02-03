@@ -112,7 +112,7 @@ public class datosDetailFragment extends Fragment {
 					.findViewById(R.id.tituloDatosDetallesDtos);
 			tx.setText(data.get(0)[0].trim());
 
-			int id = R.drawable.fondo2;
+			int id = R.drawable.fondo;
 			//if (b.getInt("fondo") != 0) {
 			//	id = b.getInt("fondo");
 			//}

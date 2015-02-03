@@ -45,7 +45,7 @@
             android:onClick="servicios"
             android:padding="5dp"
             android:singleLine="true"
-            android:text="Servicios"
+            android:text="@string/main_menu_item1"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
 
@@ -60,7 +60,7 @@
             android:onClick="eventos"
             android:padding="5dp"
             android:singleLine="true"
-            android:text="Eventos"
+            android:text="@string/main_menu_item2"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
 
@@ -75,7 +75,7 @@
             android:onClick="directorio"
             android:padding="5dp"
             android:singleLine="true"
-            android:text="Sedes"
+            android:text="@string/main_menu_item3"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white" />
     </TableRow>

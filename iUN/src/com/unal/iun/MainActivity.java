@@ -41,7 +41,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addShortcut();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState != null) {
@@ -51,20 +50,18 @@ public class MainActivity extends Activity {
 				.getDefaultDisplay();
 		screenWidth = display.getWidth();
 		screenHeight = display.getHeight();
-		/*Space sp = (Space) findViewById(R.id.SpaceMain);
-		
-		double factor = screenHeight / 2000.0 + 0.34;
-		if (factor > 0.70) {
-			factor = 0.70;
-		}
-
-		sp.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				(int) (screenHeight * (factor))));
-		 tim = new Timer((Button) findViewById(R.id.nacionalButton), 30);
-		 Handler hand = tim.puente; Thread hilo = new Thread(tim);
-		 hilo.start();
-		*/
+		/*
+		 * Space sp = (Space) findViewById(R.id.SpaceMain);
+		 * 
+		 * double factor = screenHeight / 2000.0 + 0.34; if (factor > 0.70) {
+		 * factor = 0.70; }
+		 * 
+		 * sp.setLayoutParams(new LinearLayout.LayoutParams(
+		 * LinearLayout.LayoutParams.MATCH_PARENT, (int) (screenHeight *
+		 * (factor)))); tim = new Timer((Button)
+		 * findViewById(R.id.nacionalButton), 30); Handler hand = tim.puente;
+		 * Thread hilo = new Thread(tim); hilo.start();
+		 */
 		Typeface fuente = Typeface
 				.createFromAsset(getAssets(), "Helvetica.ttf");
 		int ids[] = { R.id.SOnlineButton, R.id.eventosButton, R.id.sedesButton,
@@ -80,6 +77,7 @@ public class MainActivity extends Activity {
 		if (!Util.isOnline(this)) {
 			Util.notificarRed(this);
 		}
+		//addShortcut();
 	}
 
 	protected void cambiarBD() {
@@ -105,8 +103,26 @@ public class MainActivity extends Activity {
 	}
 
 	public void comentar(View v) {
-		Util.enviar(this, "mahiguerag@unal.edu.co", "",
-				"Comentarios Aplicacion iUN Android", "");
+		Util.enviar(
+				this,
+				"mahiguerag@unal.edu.co",
+				"",
+				"Comentarios Aplicacion iUN Android",
+				"iUN es una aplicacción de apoyo, " +
+				"en tal razón la información contenida " +
+				"en ella es solo de referencia. \n\n\n " +
+				"Envía tus comentarios acerca de la aplicación iUN" +
+				" respondiendo las siguientes preguntas.\n\n\n " +
+				"A. Nombres y Apellidos. \n\n\n B. Estudiante, Docente, " +
+				"Administrativo de la Universidad Nacional de Colombia o " +
+				"persona externa? \n\n\n 1 " +
+				"¿Cual fue la primera acción que ejecutó? \n\n\n 2 " +
+				"¿Identifica claramente las acciones de los botones e iconos?" +
+				" \n\n\n 3. Si hubo un bloqueo, ¿Cual fue, si recuerda, " +
+				"la acción que causo esto?  \n\n\n 4 " +
+				"¿ Impresión general sobre la aplicación? " +
+				"\n\n\n Gracias por su colaboración.\n " +
+				"Equipo de Desarrollo iUN.");
 	}
 
 	@Override
@@ -129,7 +145,7 @@ public class MainActivity extends Activity {
 	public void eventos(View v) {
 		Intent web = new Intent(getApplicationContext(), WebActivity.class);
 		web.putExtra("paginaWeb",
-				"http://circular.unal.edu.co/nc/eventos-3.html");
+				"http://www.admisiones.unal.edu.co/");
 		startActivity(web);
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
@@ -202,13 +218,12 @@ public class MainActivity extends Activity {
 	public void servicios(View v) {
 		try {
 			Class cls;
-			if(screenWidth>600&&false){
-				cls=ServiciosActivity.class;
-			}else{
-				cls=MenuWEBActivity.class;
+			if (screenWidth > 600 && false) {
+				cls = ServiciosActivity.class;
+			} else {
+				cls = MenuWEBActivity.class;
 			}
-			startActivity(new Intent(getApplicationContext(),
-					cls));
+			startActivity(new Intent(getApplicationContext(), cls));
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 			// this.finish();
 		} catch (Exception e) {

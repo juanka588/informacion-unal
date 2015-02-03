@@ -58,7 +58,7 @@ public class datosListActivity extends Activity implements
 	SearchView sv;
 	int current = 1;
 	TableRow tr;
-	int idFondo = R.drawable.fondo2, idFondoTras = R.drawable.fondo2;
+	int idFondo = R.drawable.fondo, idFondoTras = R.drawable.fondo;
 	double lat[];
 	double lon[];
 	String titulos[], descripciones[];
@@ -275,7 +275,7 @@ public class datosListActivity extends Activity implements
 	}
 
 	public void animarFondo(String cad, boolean cond) {
-		int id = R.drawable.fondo2;
+		int id = R.drawable.fondo;
 		Log.e("Seleccionado el fondo", cad);
 		if (cad.contains("Bogo")) {
 			id = R.drawable.ciudad_universitaria;
