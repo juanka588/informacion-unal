@@ -8,6 +8,7 @@ import android.content.ClipData.Item;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 public class WebActivity extends Activity {
 	String URL = "";
 	WebView browser;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,16 +38,36 @@ public class WebActivity extends Activity {
 			}
 
 		});
-		Bundle b = getIntent().getExtras();
-		browser.loadUrl(b.getString("paginaWeb"));
-		URL = b.getString("paginaWeb");
+		if (savedInstanceState == null) {
+			Bundle b = getIntent().getExtras();
+			URL = b.getString("paginaWeb");
+			browser.loadUrl(URL);
+			BitmapDrawable background = new BitmapDrawable(
+					BitmapFactory.decodeResource(getResources(),
+							R.drawable.fondoinf));
+			this.getActionBar().setBackgroundDrawable(background);
+			if (!Util.isOnline(this)) {
+				Util.notificarRed(this);
+			}
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putString("URL", browser.getUrl());		
+		Log.e("pagina actual",""+ browser.getUrl());
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		URL = savedInstanceState.getString("URL");
+		browser.loadUrl(URL);
 		BitmapDrawable background = new BitmapDrawable(
 				BitmapFactory.decodeResource(getResources(),
 						R.drawable.fondoinf));
 		this.getActionBar().setBackgroundDrawable(background);
-		if (!Util.isOnline(this)) {
-			Util.notificarRed(this);
-		}
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 	@Override

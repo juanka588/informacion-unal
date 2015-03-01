@@ -103,7 +103,7 @@ public class datosListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		db = getActivity().openOrCreateDatabase("DataStore.sqlite",
+		db = getActivity().openOrCreateDatabase(MainActivity.dataBaseName,
 				Context.MODE_WORLD_READABLE, null);
 		lb = new LinnaeusDatabase(getActivity().getApplicationContext());
 		/*

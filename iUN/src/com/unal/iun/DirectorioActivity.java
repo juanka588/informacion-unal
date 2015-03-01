@@ -29,6 +29,7 @@ import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SearchView.OnCloseListener;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Space;
 import android.widget.TableLayout;
@@ -86,7 +87,7 @@ public class DirectorioActivity extends Activity {
 		try {
 			Intent mapa = new Intent(this, MapaActivity.class);
 			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			String query;
 			int nivel = current - 1;
@@ -110,8 +111,9 @@ public class DirectorioActivity extends Activity {
 			String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
-			if(mat.length==0){
-				Toast.makeText(getApplicationContext(), "No hemos podido ubicar los edificios", 1).show();
+			if (mat.length == 0) {
+				Toast.makeText(getApplicationContext(),
+						"No hemos podido ubicar los edificios", 1).show();
 				return;
 			}
 			lat = Util.toDouble(Util.getcolumn(mat, 2));
@@ -145,6 +147,14 @@ public class DirectorioActivity extends Activity {
 			public boolean onQueryTextSubmit(String query) {
 				if (query.length() > 3) {
 					recargar(query);
+				} else {
+					/*
+					current = 2;
+					recargar("select  distinct " + columnas[2] + ", "
+							+ columnas[2] + " from " + tableName
+							+ " natural join edificios order by (orden)",
+							false, false);
+					*/
 				}
 				return false;
 			}
@@ -153,6 +163,14 @@ public class DirectorioActivity extends Activity {
 			public boolean onQueryTextChange(String newText) {
 				if (newText.length() > 3) {
 					recargar(newText);
+				} else {
+					/*
+					current = 2;
+					recargar("select  distinct " + columnas[2] + ", "
+							+ columnas[2] + " from " + tableName
+							+ " natural join edificios order by (orden)",
+							false, false);
+					*/
 				}
 				return false;
 			}
@@ -160,6 +178,14 @@ public class DirectorioActivity extends Activity {
 		/*
 		 * c.close(); db.close();
 		 */
+		sv.setOnCloseListener(new OnCloseListener() {
+			
+			@Override
+			public boolean onClose() {
+				home();
+				return false;
+			}
+		});
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -238,7 +264,7 @@ public class DirectorioActivity extends Activity {
 		Bundle b = getIntent().getExtras();
 		try {
 			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			if (b.getBoolean("salto")) {
 				current = b.getInt("current");
@@ -479,8 +505,9 @@ public class DirectorioActivity extends Activity {
 		cad = cad.replaceAll("o", "_");
 		cad = cad.replaceAll("u", "_");
 		Log.e("cadena", cad);
-		sql = "select secciones, " + columnas[2] + " from " + tableName
-				+ " where secciones like('%" + cad
+		sql = "select secciones, " + columnas[2] 
+				+ ", secciones||extension as consulta from " + tableName
+				+ " where consulta like('%" + cad
 				+ "%') order by NIVEL_ADMINISTRATIVO ASC";
 		Log.e("buscado", sql);
 		current = 1;
@@ -529,7 +556,7 @@ public class DirectorioActivity extends Activity {
 		try {
 
 			lv.setAdapter(null);
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			Cursor c = db.rawQuery(query, null);
 			if (current == 3) {
@@ -659,7 +686,7 @@ public class DirectorioActivity extends Activity {
 			boolean cond) {
 		String consulta = baseConsult + criteria;
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 
 		Log.e("SQL ORIGINAL", consulta);
@@ -749,7 +776,7 @@ public class DirectorioActivity extends Activity {
 		try {
 			String query = "select distinct departamentos,sede from "
 					+ tableName + " where " + condicion;
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			Cursor c = db.rawQuery(query + auxCond, null);
 			Log.e("consulta recarga", query + auxCond);

@@ -79,8 +79,7 @@
             android:name=".MenuWEBActivity"
             android:label="@string/title_activity_menu_web"
             android:launchMode="singleInstance"
-            android:logo="@drawable/homeun"
-            android:screenOrientation="portrait" >
+            android:logo="@drawable/homeun" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unal.iun.MainActivity" />
@@ -132,7 +131,8 @@
         </activity>
         <activity
             android:name=".RadioActivity"
-            android:label="@string/title_activity_radio" >
+            android:label="@string/title_activity_radio"
+            android:logo="@drawable/homeun" >
         </activity>
         <activity
             android:name=".ServiciosActivity"
@@ -140,7 +140,7 @@
             android:logo="@drawable/homeun" >
         </activity>
         <activity
-            android:name=".ColegiosActivity"
+            android:name=".InstitucionesActivity"
             android:label="@string/title_activity_colegios"
             android:logo="@drawable/homeun" >
         </activity>

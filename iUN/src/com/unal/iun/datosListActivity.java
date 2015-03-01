@@ -192,7 +192,7 @@ public class datosListActivity extends Activity implements
 	public void ubicar() {
 		try {
 			Intent mapa = new Intent(this, MapaActivity.class);
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			String query;
 			int nivel = current - 1;
@@ -354,7 +354,7 @@ public class datosListActivity extends Activity implements
 		try {
 
 			lv.setAdapter(null);
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			Cursor c = db.rawQuery(query, null);
 			if (current == 3) {
@@ -472,7 +472,7 @@ public class datosListActivity extends Activity implements
 			boolean cond) {
 		String consulta = baseConsult + criteria;
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 
 		Log.e("SQL ORIGINAL", consulta);
@@ -555,7 +555,7 @@ public class datosListActivity extends Activity implements
 		try {
 			String query = "select distinct departamentos,sede from "
 					+ tableName + " where " + condicion;
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			Cursor c = db.rawQuery(query + auxCond, null);
 			Log.e("consulta recarga", query + auxCond);

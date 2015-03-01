@@ -58,14 +58,14 @@ public class MenuWEBActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
-		int screenWidth,screenHeight,dpi ;
+		int screenWidth, screenHeight, dpi;
 		float density;
-		  DisplayMetrics metrics = new DisplayMetrics();
-		    this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		    screenHeight = metrics.heightPixels;
-		    screenWidth = metrics.widthPixels;
-		    density = metrics.density;
-		    dpi = metrics.densityDpi;
+		DisplayMetrics metrics = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		screenHeight = metrics.heightPixels;
+		screenWidth = metrics.widthPixels;
+		density = metrics.density;
+		dpi = metrics.densityDpi;
 		double factor = screenHeight / 2000.0 + 0.35;
 		double factor2 = 3.0 * screenHeight / 20000.0 + 0.09;
 		if (factor > 0.65) {
@@ -84,9 +84,7 @@ public class MenuWEBActivity extends Activity {
 				R.id.spaceMenuWeb03, R.id.spaceMenuWeb10, R.id.spaceMenuWeb11,
 				R.id.spaceMenuWeb12, R.id.spaceMenuWeb20, R.id.spaceMenuWeb21,
 				R.id.spaceMenuWeb22, R.id.spaceMenuWeb30, R.id.spaceMenuWeb31,
-				R.id.spaceMenuWeb32, R.id.spaceMenuWeb40, R.id.spaceMenuWeb41,
-				R.id.spaceMenuWeb42, R.id.spaceMenuWeb50, R.id.spaceMenuWeb51,
-				R.id.spaceMenuWeb52, R.id.spaceMenuWeb60, R.id.spaceMenuWeb61,
+				R.id.spaceMenuWeb32, R.id.spaceMenuWeb60, R.id.spaceMenuWeb61,
 				R.id.spaceMenuWeb62, R.id.spaceMenuWeb70, R.id.spaceMenuWeb71,
 				R.id.spaceMenuWeb72, R.id.spaceMenuWeb110,
 				R.id.spaceMenuWeb111, R.id.spaceMenuWeb112,
@@ -95,27 +93,30 @@ public class MenuWEBActivity extends Activity {
 				R.id.spaceMenuWeb131, R.id.spaceMenuWeb132,
 				R.id.spaceMenuWeb140, R.id.spaceMenuWeb141,
 				R.id.spaceMenuWeb142, R.id.spaceMenuWeb150,
-				R.id.spaceMenuWeb151, R.id.spaceMenuWeb160,
-				R.id.spaceMenuWeb161, R.id.spaceMenuWeb200,
+				R.id.spaceMenuWeb160, R.id.spaceMenuWeb170,
+				R.id.spaceMenuWeb171, R.id.spaceMenuWeb172,
+				R.id.spaceMenuWeb180, R.id.spaceMenuWeb181,
+				R.id.spaceMenuWeb182, R.id.spaceMenuWeb200,
 				R.id.spaceMenuWeb201, R.id.spaceMenuWeb202,
 				R.id.spaceMenuWeb210, R.id.spaceMenuWeb211,
 				R.id.spaceMenuWeb212 };
-		Log.e("densidadDPI",density+"");
+		Log.e("densidadDPI", density + "");
 		for (int i = 0; i < ids.length; i++) {
 			Space im = (Space) findViewById(ids[i]);
 			ViewGroup.LayoutParams iv_params_b = im.getLayoutParams();
 			iv_params_b.height = 0;
-			iv_params_b.width = (int) ((screenWidth) * (0.04 + screenWidth / (10000.0*density)));
+			iv_params_b.width = (int) ((screenWidth) * (0.04 + screenWidth
+					/ (10000.0 * density)));
 			im.setLayoutParams(iv_params_b);
 		}
 		int ids2[] = new int[] { R.id.textTituloMenuWeb, R.id.textMP,
 				R.id.textUNradio, R.id.textPrisma, R.id.textLeon,
-				R.id.textAnimales, R.id.textSicologia, R.id.textJuridico,
 				R.id.textLibreria, R.id.textComunidad, R.id.textCorreo,
 				R.id.textComedor, R.id.textMedico, R.id.textTituloMenuWeb,
-				R.id.textUNIsalud, R.id.textBB, R.id.textServiciosACOM,
-				R.id.textSIA, R.id.textSINAB, R.id.textHermes, R.id.textDRE,
-				R.id.textSARA, R.id.textWD };
+				R.id.textUNIsalud, R.id.textServiciosACOM, R.id.textSIA,
+				R.id.textSINAB, R.id.textHermes, R.id.textDRE, R.id.textSARA,
+				R.id.textWD,R.id.textIPARM,R.id.textFODUN,R.id.textCooperativa,
+				R.id.textLaboratorios,R.id.textComsion};
 		Typeface fuente = Typeface
 				.createFromAsset(getAssets(), "Helvetica.ttf");
 		for (int i = 0; i < ids2.length; i++) {
@@ -204,16 +205,15 @@ public class MenuWEBActivity extends Activity {
 			cad = "http://livestream.com/prisma_tv";
 			break;
 		case R.id.imageUNradio:
-			cad = "http://www.unradio.unal.edu.co/nc/en-linea/bogota.html";
-			break;
-		/*
-		 * Intent radio = new Intent(this, RadioActivity.class);
-		 * startActivity(radio); overridePendingTransition(R.anim.fade_in,
-		 * R.anim.fade_out); return;
-		 */
-		case R.id.imageBB:
-			cad = "http://www.bb.unal.edu.co/";
-			break;
+			/*
+			 * cad = "http://www.unradio.unal.edu.co/nc/en-linea/bogota.html";
+			 * break;
+			 */
+
+			Intent radio = new Intent(this, RadioActivity.class);
+			startActivity(radio);
+			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+			return;
 		case R.id.imageWD:
 			cad = "http://www.docentes.unal.edu.co/";
 			break;
@@ -225,15 +225,6 @@ public class MenuWEBActivity extends Activity {
 			break;
 		case R.id.imageCorreo:
 			cad = "https://login.unal.edu.co/cloudkey/a/unal.edu.co/user/login?namespace=unal.edu.co";
-			break;
-		case R.id.imageAnimales:
-			cad = "http://www.veterinaria.unal.edu.co/ex_clinica_peq.html";
-			break;
-		case R.id.imageSicologia:
-			cad = "http://www.humanas.unal.edu.co/sap/";
-			break;
-		case R.id.imageJuridico:
-			cad = "http://www.bogota.unal.edu.co/estructura/juridica/";
 			break;
 		case R.id.imageLeonG:
 			cad = "http://www.divulgacion.unal.edu.co/leon_de_greiff/";
@@ -260,6 +251,21 @@ public class MenuWEBActivity extends Activity {
 		case R.id.imagePatrimonio:
 			cad = "http://www.unal.edu.co/contenido/patrimonio_historico.html";
 			break;
+		case R.id.imageLaboratorios:
+			cad = "http://www.laboratorios.unal.edu.co";
+			break;
+		case R.id.imageIPARM:
+			cad = "http://www.unal.edu.co/iparm/";
+			break;
+		case R.id.imageComite:
+			cad = "http://www.bienestar.unal.edu.co/";
+			break;
+		case R.id.imageFODUN:
+			cad = "http://www.fodun.com.co";
+			break;
+		case R.id.imageCooperativa:
+			cad = "http://www.cooprofesoresun.coop";
+			break;
 		default:
 			break;
 		}
@@ -274,12 +280,15 @@ public class MenuWEBActivity extends Activity {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 						if (item == 0) {
-							try{
-							Intent ca = new Intent(act, ColegiosActivity.class);
-							startActivity(ca);
-							overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-							}catch(Exception e){
-								Toast.makeText(getApplicationContext(), "Disponible proximamente", 1).show();
+							try {
+								Intent ca = new Intent(act,
+										InstitucionesActivity.class);
+								startActivity(ca);
+								overridePendingTransition(R.anim.fade_in,
+										R.anim.fade_out);
+							} catch (Exception e) {
+								Toast.makeText(getApplicationContext(),
+										"Disponible proximamente", 1).show();
 							}
 						} else {
 							String cad = "http://admisiones.unal.edu.co/";
@@ -291,7 +300,7 @@ public class MenuWEBActivity extends Activity {
 		builder.setNegativeButton("Cancelar", new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
+
 			}
 		});
 		builder.show();
@@ -301,7 +310,7 @@ public class MenuWEBActivity extends Activity {
 		try {
 			Intent mapa = new Intent(this, MapaActivity.class);
 			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-			SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
 			String query;
 

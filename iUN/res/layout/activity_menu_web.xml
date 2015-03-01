@@ -205,7 +205,7 @@
                     android:gravity="left"
                     android:onClick="irA"
                     android:scaleType="fitXY"
-                    android:src="@drawable/un" />
+                    android:src="@drawable/periodico" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb22"
@@ -293,131 +293,6 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:visibility="gone" >
-
-                <Space
-                    android:id="@+id/spaceMenuWeb40"
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:layout_gravity="fill_horizontal" />
-
-                <ImageView
-                    android:id="@+id/imageAnimales"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/selectorfondocir"
-                    android:onClick="irA"
-                    android:src="@drawable/animales" />
-
-                <Space
-                    android:id="@+id/spaceMenuWeb41"
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:layout_gravity="fill_horizontal" />
-
-                <ImageView
-                    android:id="@+id/imageSicologia"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/selectorfondocir"
-                    android:onClick="irA"
-                    android:src="@drawable/sicologia" />
-
-                <Space
-                    android:id="@+id/spaceMenuWeb42"
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:layout_gravity="fill_horizontal" />
-
-                <ImageView
-                    android:id="@+id/imageJuridico"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/selectorfondocir"
-                    android:gravity="left"
-                    android:onClick="irA"
-                    android:src="@drawable/juridico" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:visibility="gone" >
-
-                <Space
-                    android:id="@+id/spaceMenuWeb50"
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:layout_gravity="fill_horizontal" />
-
-                <TextView
-                    android:id="@+id/textAnimales"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:lines="3"
-                    android:maxLines="3"
-                    android:maxWidth="5dp"
-                    android:singleLine="false"
-                    android:text="Clinica de Animales"
-                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
-
-                <Space
-                    android:id="@+id/spaceMenuWeb51"
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:layout_gravity="fill_horizontal" />
-
-                <TextView
-                    android:id="@+id/textSicologia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:lines="3"
-                    android:maxLines="3"
-                    android:maxWidth="5dp"
-                    android:singleLine="false"
-                    android:text="Atención Sicologica"
-                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
-
-                <Space
-                    android:id="@+id/spaceMenuWeb52"
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:layout_gravity="fill_horizontal" />
-
-                <TextView
-                    android:id="@+id/textJuridico"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:lines="3"
-                    android:maxLines="3"
-                    android:maxWidth="5dp"
-                    android:singleLine="false"
-                    android:text="Oficina Juridica"
-                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
-            </TableRow>
-
-            <TableRow
                 android:id="@+id/tableRow21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -437,7 +312,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/un" />
+                    android:src="@drawable/museos" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb201"
@@ -453,13 +328,23 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/un" />
+                    android:src="@drawable/admisiones" />
 
                 <Space
                     android:id="@+id/spaceMenuWeb202"
                     android:layout_width="0px"
                     android:layout_height="0px"
                     android:layout_gravity="fill_horizontal" />
+
+                <ImageView
+                    android:id="@+id/imageLaboratorios"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:onClick="irA"
+                    android:src="@drawable/un" />
             </TableRow>
 
             <TableRow
@@ -513,6 +398,20 @@
                     android:layout_width="0px"
                     android:layout_height="0px"
                     android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:id="@+id/textLaboratorios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:maxWidth="5dp"
+                    android:singleLine="false"
+                    android:text="Direccion nacional de laboratorios"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
             </TableRow>
 
             <TableRow
@@ -684,14 +583,30 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <ImageView
-                    android:id="@+id/imageBB"
+                    android:id="@+id/imageComite"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/selectorfondocir"
                     android:onClick="irA"
-                    android:src="@drawable/black" />
+                    android:src="@drawable/un" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb152"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <ImageView
+                    android:id="@+id/imageIPARM"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:onClick="irA"
+                    android:src="@drawable/iparm" />
             </TableRow>
 
             <TableRow
@@ -727,7 +642,7 @@
                     android:layout_gravity="fill_horizontal" />
 
                 <TextView
-                    android:id="@+id/textBB"
+                    android:id="@+id/textComsion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
@@ -737,8 +652,130 @@
                     android:maxLines="3"
                     android:maxWidth="5dp"
                     android:singleLine="false"
-                    android:text="Black Board"
+                    android:text="Comite de comsion de riesgo"
                     android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb162"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:id="@+id/textIPARM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:maxWidth="5dp"
+                    android:singleLine="false"
+                    android:text="Colegio IPARM"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left" >
+
+                <Space
+                    android:id="@+id/spaceMenuWeb170"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <ImageView
+                    android:id="@+id/imageFODUN"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:gravity="left"
+                    android:onClick="irA"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fodun" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb171"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <ImageView
+                    android:id="@+id/imageCooperativa"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/selectorfondocir"
+                    android:gravity="left"
+                    android:onClick="irA"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/coopera" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb172"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left" >
+
+                <Space
+                    android:id="@+id/spaceMenuWeb180"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:id="@+id/textFODUN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:maxWidth="5dp"
+                    android:singleLine="false"
+                    android:text="Fodun"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb181"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
+
+                <TextView
+                    android:id="@+id/textCooperativa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:lines="3"
+                    android:maxLines="3"
+                    android:maxWidth="5dp"
+                    android:singleLine="false"
+                    android:text="Cooperativa de profesores"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu" />
+
+                <Space
+                    android:id="@+id/spaceMenuWeb182"
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_gravity="fill_horizontal" />
             </TableRow>
 
             <TableRow

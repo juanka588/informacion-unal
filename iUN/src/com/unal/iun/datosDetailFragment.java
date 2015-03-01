@@ -22,7 +22,7 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
-import com.unal.iun.LN.MiAdaptadorExpandible;
+import com.unal.iun.LN.MiAdaptadorExpandibleDetalles;
 import com.unal.iun.LN.Util;
 
 /**
@@ -159,7 +159,7 @@ public class datosDetailFragment extends Fragment {
 			DetailsActivity.lon=lon;
 			DetailsActivity.titulos=titulos;
 			DetailsActivity.descripciones=descripciones;
-			MiAdaptadorExpandible adapter = new MiAdaptadorExpandible(
+			MiAdaptadorExpandibleDetalles adapter = new MiAdaptadorExpandibleDetalles(
 					parentItems, childItems);
 			adapter.setInflater(inflater,getActivity());
 			sc.setAdapter(adapter);

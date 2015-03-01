@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Typeface;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,9 +24,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	public static String dataBaseName = "DataStore.sqlite", tbName = "BaseM";
+	public static String dataBaseName = "datastore.sqlite", tbName = "BaseM";
 	public Timer tim;
 	public static String sede = "Bogotá";
 	ImageView im;
@@ -64,8 +66,9 @@ public class MainActivity extends Activity {
 		 */
 		Typeface fuente = Typeface
 				.createFromAsset(getAssets(), "Helvetica.ttf");
-		int ids[] = { R.id.SOnlineButton, R.id.eventosButton, R.id.sedesButton,
-				R.id.textLatitud, R.id.textLongitud, R.id.textLugar };
+		int ids[] = { R.id.SOnlineButton, R.id.admisionesButton,
+				R.id.sedesButton, R.id.textLatitud, R.id.textLongitud,
+				R.id.textLugar };
 		for (int i = 0; i < ids.length; i++) {
 			TextView prueba = (TextView) findViewById(ids[i]);
 			prueba.setTypeface(fuente);
@@ -77,7 +80,7 @@ public class MainActivity extends Activity {
 		if (!Util.isOnline(this)) {
 			Util.notificarRed(this);
 		}
-		//addShortcut();
+		// addShortcut();
 	}
 
 	protected void cambiarBD() {
@@ -108,21 +111,21 @@ public class MainActivity extends Activity {
 				"mahiguerag@unal.edu.co",
 				"",
 				"Comentarios Aplicacion iUN Android",
-				"iUN es una aplicacción de apoyo, " +
-				"en tal razón la información contenida " +
-				"en ella es solo de referencia. \n\n\n " +
-				"Envía tus comentarios acerca de la aplicación iUN" +
-				" respondiendo las siguientes preguntas.\n\n\n " +
-				"A. Nombres y Apellidos. \n\n\n B. Estudiante, Docente, " +
-				"Administrativo de la Universidad Nacional de Colombia o " +
-				"persona externa? \n\n\n 1 " +
-				"¿Cual fue la primera acción que ejecutó? \n\n\n 2 " +
-				"¿Identifica claramente las acciones de los botones e iconos?" +
-				" \n\n\n 3. Si hubo un bloqueo, ¿Cual fue, si recuerda, " +
-				"la acción que causo esto?  \n\n\n 4 " +
-				"¿ Impresión general sobre la aplicación? " +
-				"\n\n\n Gracias por su colaboración.\n " +
-				"Equipo de Desarrollo iUN.");
+				"iUN es una aplicacción de apoyo, "
+						+ "en tal razón la información contenida "
+						+ "en ella es solo de referencia. \n\n\n "
+						+ "Envía tus comentarios acerca de la aplicación iUN"
+						+ " respondiendo las siguientes preguntas.\n\n\n "
+						+ "A. Nombres y Apellidos. \n\n\n B. Estudiante, Docente, "
+						+ "Administrativo de la Universidad Nacional de Colombia o "
+						+ "persona externa? \n\n\n 1 "
+						+ "¿Cual fue la primera acción que ejecutó? \n\n\n 2 "
+						+ "¿Identifica claramente las acciones de los botones e iconos?"
+						+ " \n\n\n 3. Si hubo un bloqueo, ¿Cual fue, si recuerda, "
+						+ "la acción que causo esto?  \n\n\n 4 "
+						+ "¿ Impresión general sobre la aplicación? "
+						+ "\n\n\n Gracias por su colaboración.\n "
+						+ "Equipo de Desarrollo iUN.");
 	}
 
 	@Override
@@ -143,11 +146,41 @@ public class MainActivity extends Activity {
 	}
 
 	public void eventos(View v) {
-		Intent web = new Intent(getApplicationContext(), WebActivity.class);
-		web.putExtra("paginaWeb",
-				"http://www.admisiones.unal.edu.co/");
-		startActivity(web);
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+		Util.irA("http://circular.unal.edu.co/nc/eventos-3.html", this);
+	}
+
+	public void admisiones(View v) {
+		final String[] items = { "Instituciones", "Información" };
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		final Activity act = this;
+		builder.setTitle("Admisiones").setItems(items,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) {
+						if (item == 0) {
+							try {
+								Intent ca = new Intent(act,
+										InstitucionesActivity.class);
+								startActivity(ca);
+								overridePendingTransition(R.anim.fade_in,
+										R.anim.fade_out);
+							} catch (Exception e) {
+								Toast.makeText(getApplicationContext(),
+										"Disponible proximamente", 1).show();
+							}
+						} else {
+							String cad = "http://admisiones.unal.edu.co/";
+							Util.irA(cad, act);
+						}
+					}
+				});
+
+		builder.setNegativeButton("Cancelar", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		builder.show();
 	}
 
 	private void iniciarLocalService() {
@@ -158,7 +191,7 @@ public class MainActivity extends Activity {
 		MiLocationListener.textLon = (TextView) findViewById(R.id.textLongitud);
 		MiLocationListener.textSede = (TextView) findViewById(R.id.textSede);
 		LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-		MiLocationListener.db = openOrCreateDatabase("DataStore.sqlite",
+		MiLocationListener.db = openOrCreateDatabase(dataBaseName,
 				MODE_WORLD_READABLE, null);
 		try {
 

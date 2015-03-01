@@ -60,7 +60,7 @@ public class ServiciosActivity extends Activity {
 	}
 
 	public void iniciarComponentes() {
-		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 		Cursor c = db.rawQuery("SELECT descripcion_enlace,nombre_icono, url, "
 				+ "servComunidad FROM ENLACE where orden_enlace !='' "

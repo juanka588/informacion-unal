@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
-import com.unal.iun.LN.MiAdaptadorExpandible;
+import com.unal.iun.LN.MiAdaptadorExpandibleDetalles;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -136,11 +136,13 @@ public class DetailsActivity extends Activity {
 				childItems.add(child);
 			}
 
-			MiAdaptadorExpandible adapter = new MiAdaptadorExpandible(
+			MiAdaptadorExpandibleDetalles adapter = new MiAdaptadorExpandibleDetalles(
 					parentItems, childItems);
 			adapter.setInflater(
 					(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),
 					this);
+			adapter.fuente=Typeface.createFromAsset(getAssets(),
+					"Helvetica.ttf");;
 			sc.setAdapter(adapter);
 			sc.expandGroup(0);
 			// sc.setOnChildClickListener(this);

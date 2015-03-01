@@ -26,6 +26,7 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapsInitializer;
@@ -49,7 +50,7 @@ public class MapaActivity extends FragmentActivity {
 	String urlRutas = "http://maps.googleapis.com/maps/api/directions/json?origin=4.6382023,-74.0840434&destination=6.26261,-75.57775&sensor=true";
 	String urlClima = "http://api.openweathermap.org/data/2.5/forecast/daily?lat=4.53&lon=-74.07&units=metric&mode=JSON&cnt=7";
 	Intent deta;
-	Marker focus;
+	MarkerOptions focus;
 	String tableName = "BaseM";
 	int nivel = 1;
 	MenuItem item;
@@ -190,13 +191,6 @@ public class MapaActivity extends FragmentActivity {
 				traffic = true;
 			}
 			return true;
-		case R.id.menu_otros_sitios:
-			try {
-				acercar();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 
@@ -215,7 +209,7 @@ public class MapaActivity extends FragmentActivity {
 
 	public void acercar(Marker arg0) {
 		LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 		double lat = arg0.getPosition().latitude;
 		double lon = arg0.getPosition().longitude;
@@ -253,7 +247,7 @@ public class MapaActivity extends FragmentActivity {
 
 	public void acercar() {
 		LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 		double lat = focus.getPosition().latitude;
 		double lon = focus.getPosition().longitude;
@@ -291,6 +285,23 @@ public class MapaActivity extends FragmentActivity {
 			mostrarMarcador(lat[i], lon[i], titulos[i], descripciones[i], type);
 		}
 		mapa.setMyLocationEnabled(true);
+		mapa.setOnMapLongClickListener(new OnMapLongClickListener() {
+
+			@Override
+			public void onMapLongClick(LatLng arg0) {
+				focus = new MarkerOptions()
+						.position(arg0)
+						.title("Aqui estoy")
+						.snippet(
+								"lat: " + arg0.latitude + "\nlong: "
+										+ arg0.longitude)
+						.icon(BitmapDescriptorFactory
+								.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+				mapa.addMarker(focus);
+				acercar();
+
+			}
+		});
 		mapa.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 			@Override
@@ -370,7 +381,6 @@ public class MapaActivity extends FragmentActivity {
 
 		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(Marker marker) {
-				focus = marker;
 				int len = marker.getTitle().length();
 				item.setTitle(marker.getTitle().substring(0,
 						len > 20 ? 20 : len));
@@ -383,7 +393,7 @@ public class MapaActivity extends FragmentActivity {
 	public ArrayList<String[]> getDatos(String baseConsult, String criteria) {
 		String consulta = baseConsult + criteria;
 		ArrayList<String[]> datos = new ArrayList<String[]>();
-		SQLiteDatabase db = openOrCreateDatabase("DataStore.sqlite",
+		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 		Cursor c = db.rawQuery(consulta, null);
 		String[][] mat = Util.imprimirLista(c);

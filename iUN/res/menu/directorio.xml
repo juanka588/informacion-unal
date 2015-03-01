@@ -10,7 +10,7 @@
         android:title="@string/buscar"/>
     <item
         android:id="@+id/ItemMapa"
-        android:icon="@drawable/mapap"
+        android:icon="@drawable/edificio"
         android:showAsAction="always"
         android:title="@string/menu_mapa"
         android:visible="true">

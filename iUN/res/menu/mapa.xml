@@ -16,10 +16,5 @@
         android:icon="@drawable/ic_trafico"
         android:showAsAction="always"
         android:title="@string/trafico"/>
-    <item
-        android:id="@+id/menu_otros_sitios"
-        android:icon="@drawable/ic_capas"
-        android:showAsAction="always"
-        android:title="@string/otros_sitios"/>
 
 </menu>
