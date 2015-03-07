@@ -101,7 +101,6 @@ public class Util {
 	}
 
 	public static String[][] imprimirLista(Cursor cursor) {
-
 		String[][] lista = new String[cursor.getCount()][cursor
 				.getColumnCount()];
 		if (cursor.moveToFirst()) {

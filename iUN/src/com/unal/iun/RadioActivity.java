@@ -71,12 +71,12 @@ public class RadioActivity extends Activity implements
 				android.R.layout.simple_spinner_item, list);
 		dataAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+		TextView text=(TextView)findViewById(R.id.textRadioTEMP);
 		spin.setAdapter(dataAdapter);
 		bPlay = (Button) findViewById(R.id.play);
 		bPlay.setEnabled(false);
 		bPause = (Button) findViewById(R.id.pause);
-		spin.setOnItemSelectedListener(new onItemSpinSelected(bPlay, bPause));
+		spin.setOnItemSelectedListener(new onItemSpinSelected(bPlay, bPause,text));
 		try {
 			// mediaPlayer = new MediaPlayer();
 			// mediaPlayer.setDataSource(path);

@@ -332,7 +332,7 @@ public class DirectorioActivity extends Activity {
 						sql = "select  distinct " + columnas[current] + ", "
 								+ columnas[2] + " from " + tableName
 								+ "  where " + condicion;
-						recargar(sql, false, false);
+						recargar(sql, false, false,1);
 
 					} catch (Exception e) {
 						Toast.makeText(getApplication(), e.toString(),
@@ -449,7 +449,7 @@ public class DirectorioActivity extends Activity {
 			super.onBackPressed();
 		}
 		erase(condicion, true);
-		recargar(sql, false, false);
+		recargar(sql, false, false,1);
 	}
 
 	private void erase(String condicion2, boolean cond) {
@@ -498,24 +498,22 @@ public class DirectorioActivity extends Activity {
 	}
 
 	public void recargar(String cad2) {
-
 		String cad = cad2.replaceAll("i", "_");
 		cad = cad.replaceAll("a", "_");
 		cad = cad.replaceAll("e", "_");
 		cad = cad.replaceAll("o", "_");
 		cad = cad.replaceAll("u", "_");
 		Log.e("cadena", cad);
-		sql = "select secciones, " + columnas[2] 
-				+ ", secciones||extension as consulta from " + tableName
+		sql = "select secciones, " + columnas[5] 
+				+ ", secciones||extension||departamentos as consulta from " + tableName
 				+ " where consulta like('%" + cad
 				+ "%') order by NIVEL_ADMINISTRATIVO ASC";
 		Log.e("buscado", sql);
 		current = 1;
 		tr.setVisibility(View.INVISIBLE);
-		recargar(sql, true, true);
+		recargar(sql, true, true,3);
 		buscando = true;
 		// animarFondo("", false);
-
 	}
 
 	@Override
@@ -542,7 +540,7 @@ public class DirectorioActivity extends Activity {
 				condicion = savedInstanceState.getString("condicion");
 				// Log.e("al restaurar", sql);
 				animarFondo(path, false);
-				recargar(sql, current == 5, false);
+				recargar(sql, current == 5, false,1);
 				// item.setTitleCondensed(path);
 			}
 		} catch (Exception e) {
@@ -551,7 +549,7 @@ public class DirectorioActivity extends Activity {
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
-	public void recargar(String query, final boolean cond, final boolean cond2) {
+	public void recargar(String query, final boolean cond, final boolean cond2,int tipo) {
 
 		try {
 
@@ -570,7 +568,7 @@ public class DirectorioActivity extends Activity {
 			final String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
-			MiAdaptador.tipo = 1;
+			MiAdaptador.tipo = tipo;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
 					Util.getcolumn(mat, 1));
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
@@ -632,7 +630,7 @@ public class DirectorioActivity extends Activity {
 							+ condicion;
 					// Toast.makeText(getApplication(), sql, Toast.LENGTH_LONG)
 					// .show();
-					recargar(sql, current == 5, false);
+					recargar(sql, current == 5, false,1);
 					boolean cont = path.contains("FACULTAD DE");
 					if (cont) {
 						tr.setVisibility(View.VISIBLE);

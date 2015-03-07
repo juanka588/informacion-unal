@@ -283,6 +283,7 @@ public class MenuWEBActivity extends Activity {
 							try {
 								Intent ca = new Intent(act,
 										InstitucionesActivity.class);
+								ca.putExtra("modo", true);
 								startActivity(ca);
 								overridePendingTransition(R.anim.fade_in,
 										R.anim.fade_out);

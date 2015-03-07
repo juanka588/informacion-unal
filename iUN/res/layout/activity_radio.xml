@@ -39,4 +39,15 @@
             android:layout_weight="1" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textRadioTEMP"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/ButonsLayout"
+        android:layout_below="@+id/ButonsLayout"
+        android:layout_marginTop="29dp"
+        android:gravity="center"
+        android:text="RADIO UNAL"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>

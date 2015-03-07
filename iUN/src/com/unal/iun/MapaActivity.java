@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -110,16 +111,27 @@ public class MapaActivity extends FragmentActivity {
 	}
 
 	public void ruta(double lat, double lon) {
-		Intent deta = new Intent(this, WebActivity.class);
-		double lat2 = 4.637275;// (float) MiLocationListener.lat;
-		double lon2 = -74.082776; // (float) MiLocationListener.longi;
-		if (lat2 != 0 && lon2 != 0) {
-			lat2 = (double) MiLocationListener.lat;
-			lon2 = (double) MiLocationListener.longi;
+		try {
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("dir:"
+					+ lat + "," + lon));
+			startActivity(intent);
+		} catch (Exception e) {
+			Intent navigation = new Intent(Intent.ACTION_VIEW,
+					Uri.parse("http://maps.google.com/maps?" + "saddr="
+							+ MiLocationListener.lat + ","
+							+ MiLocationListener.longi + "&daddr=" + lat + ","
+							+ lon));
+			startActivity(navigation);
 		}
-		deta.putExtra("paginaWeb", "https://www.google.es/maps/dir/'" + lat2
-				+ "," + lon2 + "'/'" + lat + "," + lon + "'");
-		startActivity(deta);
+		/*
+		 * Intent deta = new Intent(this, WebActivity.class); double lat2 =
+		 * 4.637275;// (float) MiLocationListener.lat; double lon2 = -74.082776;
+		 * // (float) MiLocationListener.longi; if (lat2 != 0 && lon2 != 0) {
+		 * lat2 = (double) MiLocationListener.lat; lon2 = (double)
+		 * MiLocationListener.longi; } deta.putExtra("paginaWeb",
+		 * "https://www.google.es/maps/dir/'" + lat2 + "," + lon2 + "'/'" + lat
+		 * + "," + lon + "'"); startActivity(deta);
+		 */
 	}
 
 	private void mostrarMarcador(double lat, double lng, String title,
@@ -291,10 +303,11 @@ public class MapaActivity extends FragmentActivity {
 			public void onMapLongClick(LatLng arg0) {
 				focus = new MarkerOptions()
 						.position(arg0)
-						.title("Aqui estoy")
+						.title("¿Que hay aqui?")
 						.snippet(
-								"lat: " + arg0.latitude + "\nlong: "
-										+ arg0.longitude)
+								("lat: " + arg0.latitude).substring(0, 15)
+										+ ("\nlong: " + arg0.longitude)
+												.substring(0, 15))
 						.icon(BitmapDescriptorFactory
 								.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 				mapa.addMarker(focus);
@@ -337,31 +350,33 @@ public class MapaActivity extends FragmentActivity {
 									}
 									animarCamara(arg0.getPosition().latitude,
 											arg0.getPosition().longitude, zoom);
-									if (nivel != 3 && nivel < 3) {
-										acercar(arg0);
-									} else {
-										String cad = arg0.getSnippet();
-										if (cad.contains("www.")
-												|| cad.contains("http")) {
-											cambiar();
-											String consulta = "SELECT departamentos,secciones,"
-													+ "directo,extension,correo_electronico,NOMBRE_EDIFICIO,"
-													+ "url,piso_oficina, LATITUD,LONGITUD FROM "
-													+ tableName
-													+ " natural join edificios"
-													+ " natural join enlace"
-													+ " where ";
-											ArrayList<String[]> datos = getDatos(
-													consulta,
-													"NOMBRE_EDIFICIO='"
-															+ arg0.getTitle()
-															+ "'");
+									try {
+										String consulta = "SELECT departamentos,secciones,"
+												+ "directo,extension,correo_electronico,NOMBRE_EDIFICIO,"
+												+ "url,piso_oficina, LATITUD,LONGITUD FROM "
+												+ tableName
+												+ " natural join edificios"
+												+ " natural join enlace"
+												+ " where ";
+
+										ArrayList<String[]> datos = getDatos(
+												consulta, "NOMBRE_EDIFICIO='"
+														+ arg0.getTitle() + "'");
+										if (datos.isEmpty() || nivel < 3) {
+											acercar(arg0);
+										} else {
 											deta.putExtra("datos", datos);
 											animarFondo(cond);
 											deta.putExtra("fondo", idFondoTras);
-											// deta.putExtra("paginaWeb", cad);
 											startActivity(deta);
+											cambiar();
 										}
+									} catch (Exception e) {
+										acercar(arg0);
+										Toast.makeText(
+												getApplicationContext(),
+												"No hay información disponible",
+												1).show();
 									}
 								}
 							}
@@ -392,6 +407,7 @@ public class MapaActivity extends FragmentActivity {
 
 	public ArrayList<String[]> getDatos(String baseConsult, String criteria) {
 		String consulta = baseConsult + criteria;
+		Log.e("consulta mapa", consulta);
 		ArrayList<String[]> datos = new ArrayList<String[]>();
 		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);

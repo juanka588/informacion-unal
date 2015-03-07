@@ -64,7 +64,6 @@ public class DetailsActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		Bundle b = getIntent().getExtras();
 		tl = (LinearLayout) findViewById(R.id.linearLayoutDetalles);
-
 		ExpandableListView sc = (ExpandableListView) findViewById(R.id.expandableListDestails);
 		Space sp = (Space) findViewById(R.id.spaceDetalles1);
 		Space sp2 = (Space) findViewById(R.id.spaceDetalles2);
@@ -92,8 +91,8 @@ public class DetailsActivity extends Activity {
 		try {
 			data = (ArrayList<String[]>) b.get("datos");
 			TextView tx = (TextView) findViewById(R.id.tituloDetallesDtos);
-			tx.setText(data.get(0)[0].trim());
-
+			String title=data.get(0)[0];
+			tx.setText(title==null?"":title.trim());
 			int id = R.drawable.ciudad_universitaria;
 			if (b.getInt("fondo") != 0) {
 				id = b.getInt("fondo");
@@ -107,8 +106,8 @@ public class DetailsActivity extends Activity {
 			ArrayList<String> parentItems = new ArrayList<String>();
 			ArrayList<Object> childItems = new ArrayList<Object>();
 			for (int i = 0; i < data.size(); i++) {
-				parentItems.add(data.get(i)[1].trim());
-
+				String titlei=data.get(i)[1];
+				parentItems.add(titlei==null?"":titlei.trim());
 			}
 			lat = new double[data.size()];
 			lon = new double[data.size()];

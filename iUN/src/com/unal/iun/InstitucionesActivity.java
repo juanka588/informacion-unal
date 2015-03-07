@@ -39,6 +39,8 @@ public class InstitucionesActivity extends Activity {
 	private ExpandableListView lv;
 	private Activity act;
 	private SearchView sv;
+	private boolean mode;
+	private String table = "colegios";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +77,24 @@ public class InstitucionesActivity extends Activity {
 			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
 			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 					MODE_WORLD_READABLE, null);
-			Cursor c = db
-					.rawQuery(
-							"select nombre_edificio,direccion_edificio,latitud,longitud,departamento from colegios",
-							null);
+			Bundle b = getIntent().getExtras();
+			String query = "";
+			mode = b.getBoolean("modo");
+			if (mode) {
+				table = "colegios";
+				query = "select nombre_edificio,direccion_edificio,latitud,longitud,departamento from "
+						+ table;
+			} else {
+				table = "edificios";
+				query = "select distinct nombre_edificio,edificio,latitud,longitud,sede_edificio from "
+						+ table;
+			}
+			Log.e("buscado", query);
+			Cursor c = db.rawQuery(query, null);
 			final String[][] mat = Util.imprimirLista(c);
 			c.close();
-			db.close();
 			ArrayList<String> parentItems = new ArrayList<String>();
 			ArrayList<List> childItems = new ArrayList<List>();
-
 			String ciudades[] = Util.getcolumn(mat, 4);
 			for (int i = 0; i < ciudades.length; i++) {
 				String current = ciudades[i];
@@ -102,13 +112,14 @@ public class InstitucionesActivity extends Activity {
 						instituciones[i]);
 			}
 			MiAdaptadorExpandibleInstituciones adapter = new MiAdaptadorExpandibleInstituciones(
-					parentItems, childItems, mat);
+					parentItems, childItems, mat,mode);
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
 					"Helvetica.ttf");
 			adapter.setInflater(
 					(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),
 					this);
 			lv.setAdapter(adapter);
+			db.close();
 
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
@@ -126,7 +137,7 @@ public class InstitucionesActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				if (query.length() > 3) {
+				if (query.length() > 2) {
 					recargar(query);
 				} else {
 					recargar("");
@@ -136,7 +147,7 @@ public class InstitucionesActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				if (newText.length() > 3) {
+				if (newText.length() > 2) {
 					recargar(newText);
 				} else {
 					recargar("");
@@ -171,14 +182,25 @@ public class InstitucionesActivity extends Activity {
 		cad = cad.replaceAll("e", "_");
 		cad = cad.replaceAll("o", "_");
 		cad = cad.replaceAll("u", "_");
-		String cad2 = "select nombre_edificio,direccion_edificio,latitud,longitud,departamento from colegios"
-				+ " where nombre_edificio like('%" + cad + "%')";
+		cad = cad.replaceAll(" ", "_");
+		String cad2 = "";
+		if (mode) {
+			table = "colegios";
+			cad2 = "select nombre_edificio,direccion_edificio,latitud,longitud,departamento from "
+					+ table + " where nombre_edificio like('%" + cad + "%')";
+		} else {
+			table = "edificios";
+			cad2 = "select nombre_edificio,edificio,latitud,longitud,sede_edificio,"
+					+ "nombre_edificio||edificio as busqueda from "
+					+ table
+					+ " where busqueda like('%" + cad + "%')";
+		}
+		Log.e("busqueda",cad2);
 		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 		Cursor c = db.rawQuery(cad2, null);
 		final String[][] mat = Util.imprimirLista(c);
 		c.close();
-		db.close();
 		ArrayList<String> parentItems = new ArrayList<String>();
 		ArrayList<List> childItems = new ArrayList<List>();
 		String ciudades[] = Util.getcolumn(mat, 4);
@@ -198,7 +220,7 @@ public class InstitucionesActivity extends Activity {
 					instituciones[i]);
 		}
 		MiAdaptadorExpandibleInstituciones adapter = new MiAdaptadorExpandibleInstituciones(
-				parentItems, childItems, mat);
+				parentItems, childItems, mat,mode);
 		adapter.fuente = Typeface.createFromAsset(getAssets(), "Helvetica.ttf");
 		adapter.setInflater(
 				(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),
@@ -209,5 +231,7 @@ public class InstitucionesActivity extends Activity {
 		} catch (Exception e) {
 
 		}
+		db.close();
 	}
+
 }

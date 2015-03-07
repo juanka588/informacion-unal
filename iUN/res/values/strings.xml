@@ -34,5 +34,6 @@
     <string name="main_menu_item2">Admisiones</string>
     <string name="main_menu_item3">Sedes</string>
     <string name="main_menu_item4">Eventos</string>
+    <string name="title_activity_linecnse">Licencia</string>
 
 </resources>

@@ -34,8 +34,8 @@
 
                 <TextView
                     android:id="@+id/SOnlineButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:background="@drawable/selectorfondo"
                     android:clickable="true"
@@ -49,8 +49,8 @@
 
                 <TextView
                     android:id="@+id/sedesButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:background="@drawable/selectorfondo"
                     android:clickable="true"
@@ -66,13 +66,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingTop="4dp" >
 
                 <TextView
                     android:id="@+id/admisionesButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:background="@drawable/selectorfondo"
                     android:clickable="true"
@@ -86,14 +86,14 @@
 
                 <TextView
                     android:id="@+id/eventosButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     android:background="@drawable/selectorfondo"
                     android:clickable="true"
                     android:gravity="center"
                     android:onClick="eventos"
-                    android:padding="2dp"
+                    android:padding="5dp"
                     android:singleLine="true"
                     android:text="@string/main_menu_item4"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -105,6 +105,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal" >
+                 <TextView
+                    android:id="@+id/textLicencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="24dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="licencia"
+                    android:text="Licencia"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/textOpinion"
@@ -136,6 +147,7 @@
             android:layout_gravity="left"
             android:layout_marginRight="19dp"
             android:layout_weight="0"
+            android:background="@drawable/selectorfondocir"
             android:onClick="irSede"
             android:src="@drawable/persona" />
 

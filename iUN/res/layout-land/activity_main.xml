@@ -14,85 +14,34 @@
     android:tileMode="repeat"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="comentar"
-        android:text="Danos tu opinion"
-        android:textColor="@android:color/white" />
-
     <TableRow
-        android:id="@+id/tableRow2"
+        android:id="@+id/tableRow5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="14dp" >
+        android:layout_alignParentBottom="true" >
 
         <TextView
-            android:id="@+id/SOnlineButton"
+            android:id="@+id/textLicencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/selectorfondo"
             android:clickable="true"
             android:gravity="center"
-            android:onClick="servicios"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/main_menu_item1"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:onClick="licencia"
+            android:text="Licencia"
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/eventosButton"
+            android:id="@+id/textOpinion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_weight="1"
-            android:background="@drawable/selectorfondo"
             android:clickable="true"
             android:gravity="center"
-            android:onClick="eventos"
-            android:padding="2dp"
-            android:singleLine="true"
-            android:text="@string/main_menu_item4"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/admisionesButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selectorfondo"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="admisiones"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/main_menu_item2"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/sedesButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selectorfondo"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="directorio"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="@string/main_menu_item3"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:onClick="comentar"
+            android:text="Danos tu opinion"
             android:textColor="@android:color/white" />
     </TableRow>
 
@@ -100,10 +49,11 @@
         android:id="@+id/tableRow11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tableRow2"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="30dp"
-        android:gravity="center" >
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:paddingBottom="10dp" >
 
         <ImageView
             android:id="@+id/imageUNPrincipal"
@@ -112,6 +62,7 @@
             android:layout_gravity="left"
             android:layout_marginRight="19dp"
             android:layout_weight="0"
+            android:background="@drawable/selectorfondocir"
             android:onClick="irSede"
             android:src="@drawable/persona" />
 
@@ -165,6 +116,76 @@
                 android:maxLength="16"
                 android:textColor="@android:color/white" />
         </LinearLayout>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tableRow11"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:paddingBottom="0dp" >
+
+        <TextView
+            android:id="@+id/SOnlineButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selectorfondo"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="servicios"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/main_menu_item1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/eventosButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selectorfondo"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="eventos"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/main_menu_item4"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/admisionesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selectorfondo"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="admisiones"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/main_menu_item2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/sedesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selectorfondo"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="directorio"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="@string/main_menu_item3"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white" />
     </TableRow>
 
 </RelativeLayout>

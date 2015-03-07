@@ -144,6 +144,11 @@
             android:label="@string/title_activity_colegios"
             android:logo="@drawable/homeun" >
         </activity>
+        <activity
+            android:name=".LicenseActivity"
+            android:label="@string/title_activity_linecnse"
+            android:logo="@drawable/homeun" >
+        </activity>
     </application>
 
 </manifest>

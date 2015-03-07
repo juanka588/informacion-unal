@@ -32,7 +32,7 @@ public class MiAdaptadorExpandibleDetalles extends BaseExpandableListAdapter {
 	private LayoutInflater inflater;
 
 	private ArrayList<String> parentItems, child;
-	
+
 	public Typeface fuente;
 
 	public MiAdaptadorExpandibleDetalles(ArrayList<String> parents,
@@ -64,66 +64,72 @@ public class MiAdaptadorExpandibleDetalles extends BaseExpandableListAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.detalles, null);
 		}
-		int type = comprobar(child.get(childPosition));
-		textView = (TextView) convertView.findViewById(R.id.textDetalle);
-		textView.setTypeface(fuente);
-		textView.setText(child.get(childPosition));
-		im = (ImageView) convertView.findViewById(R.id.imageDetalle);
-		int draw = 0;
-		switch (type) {
-		case 0:
-			draw = R.drawable.llamar;
-			break;
-		case 1:
-			draw = R.drawable.llamar;
-			break;
-		case 2:
-			draw = R.drawable.correo;
-			break;
-		case 3:
-			draw = R.drawable.edificio;
-			break;
-		case 4:
-			draw = R.drawable.un;
-			textView.setText("Sitio Web");
-			break;
-
-		default:
-			break;
-		}
-		BitmapDrawable icono = new BitmapDrawable(BitmapFactory.decodeResource(
-				activity.getResources(), draw));
-		im.setImageDrawable(icono);
-		convertView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View view) {
-				int type=comprobar(child.get(childPosition));
+		String text = child.get(childPosition);
+		if (text != null) {
+			if (!text.equals("")) {
+				int type = comprobar(text);
+				textView = (TextView) convertView
+						.findViewById(R.id.textDetalle);
+				textView.setTypeface(fuente);
+				textView.setText(text);
+				im = (ImageView) convertView.findViewById(R.id.imageDetalle);
+				int draw = 0;
 				switch (type) {
 				case 0:
-					llamar(child.get(childPosition));
+					draw = R.drawable.llamar;
 					break;
 				case 1:
-					llamar("3165000;" + child.get(childPosition));
+					draw = R.drawable.llamar;
 					break;
 				case 2:
-					correo(child.get(childPosition));
+					draw = R.drawable.correo;
 					break;
 				case 3:
-					ubicar(child.get(childPosition));
+					draw = R.drawable.edificio;
 					break;
 				case 4:
-					Util.irA(child.get(childPosition),activity);
+					draw = R.drawable.un;
+					textView.setText("Sitio Web");
 					break;
 
 				default:
 					break;
 				}
+				BitmapDrawable icono = new BitmapDrawable(
+						BitmapFactory.decodeResource(activity.getResources(),
+								draw));
+				im.setImageDrawable(icono);
+				convertView.setOnClickListener(new OnClickListener() {
 
+					@Override
+					public void onClick(View view) {
+						int type = comprobar(child.get(childPosition));
+						switch (type) {
+						case 0:
+							llamar(child.get(childPosition));
+							break;
+						case 1:
+							llamar("3165000;" + child.get(childPosition));
+							break;
+						case 2:
+							correo(child.get(childPosition));
+							break;
+						case 3:
+							ubicar(child.get(childPosition));
+							break;
+						case 4:
+							Util.irA(child.get(childPosition), activity);
+							break;
+
+						default:
+							break;
+						}
+
+					}
+
+				});
 			}
-
-		});
-
+		}
 		return convertView;
 
 	}
@@ -148,8 +154,8 @@ public class MiAdaptadorExpandibleDetalles extends BaseExpandableListAdapter {
 		if (m.matches()) {
 			ret = 4;
 		}
-		if(cad.contains("http")){
-			ret=4;
+		if (cad.contains("http")) {
+			ret = 4;
 		}
 		return ret;
 	}
@@ -183,10 +189,8 @@ public class MiAdaptadorExpandibleDetalles extends BaseExpandableListAdapter {
 		if (email.contains("Correo")) {
 			return;
 		}
-		Util.enviar(activity,email.split(" "), null, "", "");
+		Util.enviar(activity, email.split(" "), null, "", "");
 	}
-
-
 
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded,

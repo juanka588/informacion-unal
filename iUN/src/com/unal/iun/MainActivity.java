@@ -105,6 +105,12 @@ public class MainActivity extends Activity {
 		builder.create().show();
 	}
 
+	public void licencia(View v) {
+		Intent ca = new Intent(this, LicenseActivity.class);
+		startActivity(ca);
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	}
+
 	public void comentar(View v) {
 		Util.enviar(
 				this,
@@ -160,6 +166,7 @@ public class MainActivity extends Activity {
 							try {
 								Intent ca = new Intent(act,
 										InstitucionesActivity.class);
+								ca.putExtra("modo", true);
 								startActivity(ca);
 								overridePendingTransition(R.anim.fade_in,
 										R.anim.fade_out);
@@ -227,7 +234,43 @@ public class MainActivity extends Activity {
 	}
 
 	public void irSede(View v) {
-		directorio(true);
+		final String[] items = { "Ir a mi sede", "Busqueda de edificios" };
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		final Activity act = this;
+		builder.setTitle("iUN").setItems(items,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) {
+						if (item == 0) {
+							try {
+								directorio(true);
+							} catch (Exception e) {
+								Toast.makeText(getApplicationContext(),
+										"Disponible proximamente", 1).show();
+							}
+						} else {
+							try {
+								Intent ca = new Intent(act,
+										InstitucionesActivity.class);
+								ca.putExtra("modo", false);
+								startActivity(ca);
+								overridePendingTransition(R.anim.fade_in,
+										R.anim.fade_out);
+							} catch (Exception e) {
+								Toast.makeText(getApplicationContext(),
+										"Disponible proximamente", 1).show();
+							}
+						}
+					}
+				});
+
+		builder.setNegativeButton("Cancelar", new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		builder.show();
+
 	}
 
 	private void directorio(boolean cond) {
