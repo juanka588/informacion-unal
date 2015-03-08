@@ -372,11 +372,14 @@ public class MapaActivity extends FragmentActivity {
 											cambiar();
 										}
 									} catch (Exception e) {
-										acercar(arg0);
-										Toast.makeText(
-												getApplicationContext(),
-												"No hay información disponible",
-												1).show();
+										try {
+											acercar(arg0);
+										} catch (Exception ex2) {
+											Toast.makeText(
+													getApplicationContext(),
+													"No hay información disponible",
+													1).show();
+										}
 									}
 								}
 							}
