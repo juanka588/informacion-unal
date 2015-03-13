@@ -6,15 +6,20 @@ import com.unal.iun.LN.LinnaeusDatabase;
 import com.unal.iun.LN.MiAdaptador;
 import com.unal.iun.LN.Util;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -25,6 +30,8 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,31 +44,216 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 public class DirectorioActivity extends Activity {
-	String seleccion = "";
-	String condicion = "";
-	String tableName = "BaseM";
-	String tableName2 = "Edificios";
-	String tableName3 = "ENLACE";
-	String sql = "";
-	String path = "";
-	String auxCon;
-	ListView lv;
-	MenuItem item;
-	SearchView sv;
-	int current = 2;
-	TableRow tr;
-	int idFondo = R.drawable.fondo,
+	protected String seleccion = "";
+	protected String condicion = "";
+	protected String tableName = "BaseM";
+	protected String tableName2 = "Edificios";
+	protected String tableName3 = "ENLACE";
+	protected String sql = "";
+	protected String path = "";
+	protected String auxCon;
+	protected ListView lv;
+	protected MenuItem item;
+	protected SearchView sv;
+	protected int current = 2;
+	protected TableRow tr;
+	protected int idFondo = R.drawable.fondo,
 			idFondoTras = R.drawable.ciudad_universitaria;
-	double lat[];
-	double lon[];
-	String titulos[], descripciones[];
-	String columnas[] = { "codigo", "NIVEL_ADMINISTRATIVO", "SEDE",
+	protected double lat[];
+	protected double lon[];
+	protected String titulos[], descripciones[];
+	protected String columnas[] = { "codigo", "NIVEL_ADMINISTRATIVO", "SEDE",
 			"DEPENDENCIAS", "DIVISIONES", "DEPARTAMENTOS", "SECCIONES",
 			"CORREO_ELECTRONICO", "EXTENSION", "FAX", "DIRECTO",
 			"LUGAR_GEOGRAFICO", "EDIFICIO", "PISO_OFICINA", "CLASIFICACION" };
-	TableLayout tl;
-	BitmapDrawable background;
-	boolean buscando = false;
+	protected TableLayout tl;
+	protected BitmapDrawable background;
+	protected boolean buscando = false;
+	protected ActionBar barra;
+	private DrawerLayout cajon;
+	protected ActionBarDrawerToggle toggle;
+	protected Activity act;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_directorio);
+		crearBarra();
+		manejarDisplay();
+		Bundle b = getIntent().getExtras();
+		adaptadorInicial(b);
+	}
+
+	private void adaptadorInicial(Bundle b) {
+		try {
+			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
+			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
+					MODE_WORLD_READABLE, null);
+			if (b.getBoolean("salto")) {
+				current = b.getInt("current");
+				String sede = b.getString("sede");
+				condicion = "sede='" + sede + "'";
+				sql = "select  distinct " + columnas[current] + " from "
+						+ tableName + " where " + condicion
+						+ " and NIVEL_ADMINISTRATIVO between 1 and 4";
+				path = sede;
+				animarFondo(sede, false);
+			} else {
+				sql = "select  distinct " + columnas[current] + " from "
+						+ tableName;
+			}
+			Cursor c;
+			if (b.getBoolean("salto")) {
+				c = db.rawQuery(sql, null);
+			} else {
+				c = db.rawQuery(sql
+						+ " natural join edificios order by (orden)", null);
+			}
+			final String[][] mat = Util.imprimirLista(c);
+			c.close();
+			db.close();
+			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
+					Util.getcolumn(mat, 0));
+			adapter.fuente = Typeface.createFromAsset(getAssets(),
+					"Helvetica.ttf");
+			lv.setAdapter(adapter);
+			lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View vista,
+						int posicion, long arg3) {
+					try {
+						seleccion = mat[posicion][0];
+						if (saltar(seleccion)) {
+							irDirecto(seleccion);
+							return;
+						}
+						if (seleccion.contains("Programas")) {
+							irDirecto();
+							return;
+						}
+						if (path == "") {
+							path = seleccion;
+							// item.setTitleCondensed(path.toUpperCase().trim());
+						} else {
+							path = path + ">" + seleccion.toUpperCase().trim();
+							// item.setTitleCondensed(path);
+						}
+						// item.setTitleCondensed(path);
+						current++;
+						if (current == 3) {
+							animarFondo(mat[posicion][0], true);
+						}
+						if (condicion.equals("")) {
+							condicion = columnas[current - 1] + " = '"
+									+ seleccion + "'";
+						} else {
+							condicion += " and " + columnas[current - 1]
+									+ " = '" + seleccion + "'";
+						}
+
+						sql = "select  distinct " + columnas[current] + ", "
+								+ columnas[2] + " from " + tableName
+								+ "  where " + condicion;
+						recargar(sql, false, false, 1);
+
+					} catch (Exception e) {
+						Toast.makeText(getApplication(), e.toString(),
+								Toast.LENGTH_LONG).show();
+					}
+				}
+			});
+			tableName = MainActivity.tbName;
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
+		}
+
+	}
+
+	private void manejarDisplay() {
+		tl = (TableLayout) findViewById(R.id.TableLayoutDirectorio);
+		lv = (ListView) findViewById(R.id.listViewDirectorio);
+		Space sp = (Space) findViewById(R.id.SpaceDirectorio);
+		tr = (TableRow) findViewById(R.id.tableRowDirectorio);
+		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+				.getDefaultDisplay();
+		int screenWidth = display.getWidth();
+		int screenHeight = display.getHeight();
+		double factor = screenHeight / 2000.0 + 0.25;
+		double factor2 = screenHeight / 2000.0 + 0.25;
+		if (factor > 0.35) {
+			factor = 0.35;
+		}
+		if (factor2 > 0.35) {
+			factor2 = 0.35;
+		}
+		sp.setLayoutParams(new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				(int) (screenHeight * (factor))));
+		lv.setLayoutParams(new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				(int) (screenHeight * (factor2))));
+	}
+
+	private void crearBarra() {
+		BitmapDrawable background2 = new BitmapDrawable(
+				BitmapFactory.decodeResource(getResources(),
+						R.drawable.fondoinf));
+		act = this;
+		barra = this.getActionBar();
+		barra.setBackgroundDrawable(background2);
+		String[] valores = getResources().getStringArray(R.array.optionsArray);
+		String[] files = new String[] { "edificio.jpg", "enlacep.jpg",
+				"mapap.jpg" };
+		cajon = (DrawerLayout) findViewById(R.id.drawer_layout);
+		final ListView opciones = (ListView) findViewById(R.id.left_drawer);
+		MiAdaptador adapter = new MiAdaptador(act, valores, files, 2);
+		opciones.setAdapter(adapter);
+		opciones.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				switch (arg2) {
+				case 0:
+					if (!buscando) {
+						ubicar(null);
+					}
+					break;
+				case 1:
+					if (buscando) {
+						String cad = "http://unal.edu.co/resultados-de-la-busqueda/?q="
+								+ sv.getQuery();
+						Util.irA(cad, act);
+						break;
+					}
+					if (current == 2) {
+						Util.irA("http://www.unal.edu.co", act);
+					} else {
+						String baseConsult = "select url from enlace natural join "
+								+ tableName + " where ";
+						ArrayList<String[]> datos = getDatos(baseConsult,
+								condicion, false);
+						Util.irA(datos.get(0)[0], act);
+					}
+					break;
+				case 2:
+					Intent ca = new Intent(act, InstitucionesActivity.class);
+					ca.putExtra("modo", false);
+					startActivity(ca);
+					overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+					break;
+				default:
+					break;
+				}
+				cajon.closeDrawer(opciones);
+			}
+		});
+		toggle = new ActionBarDrawerToggle(this, cajon,
+				android.R.drawable.ic_menu_sort_by_size, R.string.drawer_open,
+				R.string.drawer_close);
+		barra.setDisplayHomeAsUpEnabled(true);
+		barra.setHomeButtonEnabled(true);
+	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -81,6 +273,23 @@ public class DirectorioActivity extends Activity {
 		startActivity(new Intent(getApplicationContext(), MainActivity.class));
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		this.finish();
+	}
+
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		toggle.syncState();
+	}
+
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		toggle.onConfigurationChanged(newConfig);
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (toggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void ubicar(View v) {
@@ -145,32 +354,30 @@ public class DirectorioActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				if (query.length() > 3) {
+				if (query.length() > 2) {
 					recargar(query);
 				} else {
 					/*
-					current = 2;
-					recargar("select  distinct " + columnas[2] + ", "
-							+ columnas[2] + " from " + tableName
-							+ " natural join edificios order by (orden)",
-							false, false);
-					*/
+					 * current = 2; recargar("select  distinct " + columnas[2] +
+					 * ", " + columnas[2] + " from " + tableName +
+					 * " natural join edificios order by (orden)", false,
+					 * false);
+					 */
 				}
 				return false;
 			}
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				if (newText.length() > 3) {
+				if (newText.length() > 2) {
 					recargar(newText);
 				} else {
 					/*
-					current = 2;
-					recargar("select  distinct " + columnas[2] + ", "
-							+ columnas[2] + " from " + tableName
-							+ " natural join edificios order by (orden)",
-							false, false);
-					*/
+					 * current = 2; recargar("select  distinct " + columnas[2] +
+					 * ", " + columnas[2] + " from " + tableName +
+					 * " natural join edificios order by (orden)", false,
+					 * false);
+					 */
 				}
 				return false;
 			}
@@ -179,7 +386,7 @@ public class DirectorioActivity extends Activity {
 		 * c.close(); db.close();
 		 */
 		sv.setOnCloseListener(new OnCloseListener() {
-			
+
 			@Override
 			public boolean onClose() {
 				home();
@@ -187,165 +394,6 @@ public class DirectorioActivity extends Activity {
 			}
 		});
 		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			home();
-			break;
-		case R.id.ItemMapa:
-			if (!buscando) {
-
-				ubicar(null);
-			}
-			break;
-		case R.id.ItemWEB:
-			if (buscando) {
-				String cad = "http://unal.edu.co/resultados-de-la-busqueda/?q="
-						+ sv.getQuery();
-				Util.irA(cad, this);
-				break;
-			}
-			if (current == 2) {
-				Util.irA("http://www.unal.edu.co", this);
-			} else {
-				String baseConsult = "select url from enlace natural join "
-						+ tableName + " where ";
-				ArrayList<String[]> datos = getDatos(baseConsult, condicion,
-						false);
-				Util.irA(datos.get(0)[0], this);
-
-			}
-			break;
-
-		default:
-			break;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_directorio);
-		BitmapDrawable background2 = new BitmapDrawable(
-				BitmapFactory.decodeResource(getResources(),
-						R.drawable.fondoinf));
-		this.getActionBar().setBackgroundDrawable(background2);
-		this.getActionBar().setDisplayHomeAsUpEnabled(true);
-		this.getActionBar().setHomeButtonEnabled(true);
-		tl = (TableLayout) findViewById(R.id.TableLayoutDirectorio);
-		lv = (ListView) findViewById(R.id.listViewDirectorio);
-		Space sp = (Space) findViewById(R.id.SpaceDirectorio);
-		tr = (TableRow) findViewById(R.id.tableRowDirectorio);
-		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
-				.getDefaultDisplay();
-		int screenWidth = display.getWidth();
-		int screenHeight = display.getHeight();
-		double factor = screenHeight / 2000.0 + 0.25;
-		double factor2 = screenHeight / 2000.0 + 0.25;
-		if (factor > 0.35) {
-			factor = 0.35;
-		}
-		if (factor2 > 0.35) {
-			factor2 = 0.35;
-		}
-		sp.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				(int) (screenHeight * (factor))));
-		lv.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
-				(int) (screenHeight * (factor2))));
-
-		Bundle b = getIntent().getExtras();
-		try {
-			LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-			SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
-					MODE_WORLD_READABLE, null);
-			if (b.getBoolean("salto")) {
-				current = b.getInt("current");
-				String sede = b.getString("sede");
-				condicion = "sede='" + sede + "'";
-				sql = "select  distinct " + columnas[current] + " from "
-						+ tableName + " where " + condicion
-						+ " and NIVEL_ADMINISTRATIVO between 1 and 4";
-				path = sede;
-				animarFondo(sede, false);
-			} else {
-				sql = "select  distinct " + columnas[current] + " from "
-						+ tableName;
-			}
-			Cursor c;
-			if (b.getBoolean("salto")) {
-				c = db.rawQuery(sql, null);
-			} else {
-				c = db.rawQuery(sql
-						+ " natural join edificios order by (orden)", null);
-			}
-			final String[][] mat = Util.imprimirLista(c);
-			c.close();
-			db.close();
-			MiAdaptador.tipo = 1;
-			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
-					Util.getcolumn(mat, 0));
-			adapter.fuente = Typeface.createFromAsset(getAssets(),
-					"Helvetica.ttf");
-			lv.setAdapter(adapter);
-			lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View vista,
-						int posicion, long arg3) {
-					try {
-						seleccion = mat[posicion][0];
-						if (saltar(seleccion)) {
-							irDirecto(seleccion);
-							return;
-						}
-						if (seleccion.contains("Programas")) {
-							irDirecto();
-							return;
-						}
-						if (path == "") {
-							path = seleccion;
-							// item.setTitleCondensed(path.toUpperCase().trim());
-						} else {
-							path = path + ">" + seleccion.toUpperCase().trim();
-							// item.setTitleCondensed(path);
-						}
-						// item.setTitleCondensed(path);
-						current++;
-						if (current == 3) {
-							animarFondo(mat[posicion][0], true);
-						}
-						if (condicion.equals("")) {
-							condicion = columnas[current - 1] + " = '"
-									+ seleccion + "'";
-						} else {
-							condicion += " and " + columnas[current - 1]
-									+ " = '" + seleccion + "'";
-						}
-
-						sql = "select  distinct " + columnas[current] + ", "
-								+ columnas[2] + " from " + tableName
-								+ "  where " + condicion;
-						recargar(sql, false, false,1);
-
-					} catch (Exception e) {
-						Toast.makeText(getApplication(), e.toString(),
-								Toast.LENGTH_LONG).show();
-					}
-
-				}
-			});
-			tableName = MainActivity.tbName;
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString(), 1).show();
-		}
-
 	}
 
 	public void animarFondo(String cad, boolean cond) {
@@ -449,7 +497,7 @@ public class DirectorioActivity extends Activity {
 			super.onBackPressed();
 		}
 		erase(condicion, true);
-		recargar(sql, false, false,1);
+		recargar(sql, false, false, 1);
 	}
 
 	private void erase(String condicion2, boolean cond) {
@@ -504,14 +552,14 @@ public class DirectorioActivity extends Activity {
 		cad = cad.replaceAll("o", "_");
 		cad = cad.replaceAll("u", "_");
 		Log.e("cadena", cad);
-		sql = "select secciones, " + columnas[5] 
-				+ ", secciones||extension||departamentos as consulta from " + tableName
-				+ " where consulta like('%" + cad
+		sql = "select secciones, " + columnas[5]
+				+ ", secciones||extension||departamentos as consulta from "
+				+ tableName + " where consulta like('%" + cad
 				+ "%') order by NIVEL_ADMINISTRATIVO ASC";
 		Log.e("buscado", sql);
 		current = 1;
 		tr.setVisibility(View.INVISIBLE);
-		recargar(sql, true, true,3);
+		recargar(sql, true, true, 3);
 		buscando = true;
 		// animarFondo("", false);
 	}
@@ -540,7 +588,7 @@ public class DirectorioActivity extends Activity {
 				condicion = savedInstanceState.getString("condicion");
 				// Log.e("al restaurar", sql);
 				animarFondo(path, false);
-				recargar(sql, current == 5, false,1);
+				recargar(sql, current == 5, false, 1);
 				// item.setTitleCondensed(path);
 			}
 		} catch (Exception e) {
@@ -549,7 +597,8 @@ public class DirectorioActivity extends Activity {
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
-	public void recargar(String query, final boolean cond, final boolean cond2,int tipo) {
+	public void recargar(String query, final boolean cond, final boolean cond2,
+			int tipo) {
 
 		try {
 
@@ -568,9 +617,8 @@ public class DirectorioActivity extends Activity {
 			final String[][] mat = Util.imprimirLista(c);
 			c.close();
 			db.close();
-			MiAdaptador.tipo = tipo;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
-					Util.getcolumn(mat, 1));
+					Util.getcolumn(mat, 1), tipo);
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
 					"Helvetica.ttf");
 			lv.setAdapter(adapter);
@@ -630,7 +678,7 @@ public class DirectorioActivity extends Activity {
 							+ condicion;
 					// Toast.makeText(getApplication(), sql, Toast.LENGTH_LONG)
 					// .show();
-					recargar(sql, current == 5, false,1);
+					recargar(sql, current == 5, false, 1);
 					boolean cont = path.contains("FACULTAD DE");
 					if (cont) {
 						tr.setVisibility(View.VISIBLE);
@@ -790,9 +838,8 @@ public class DirectorioActivity extends Activity {
 			c.close();
 			db.close();
 			lv.setAdapter(null);
-			MiAdaptador.tipo = 1;
 			MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
-					Util.getcolumn(mat, 1));
+					Util.getcolumn(mat, 1),1);
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
 					"Helvetica.ttf");
 			lv.setAdapter(adapter);

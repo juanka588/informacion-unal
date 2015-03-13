@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unal.iun"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="4"
+    android:versionName="1.3" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -71,8 +71,7 @@
         <activity
             android:name=".DirectorioActivity"
             android:label="@string/title_activity_directorio"
-            android:launchMode="singleInstance"
-            android:logo="@drawable/homeun"
+            android:logo="@drawable/logo"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -92,15 +91,12 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details"
-            android:logo="@drawable/homeun"
-            android:screenOrientation="portrait" >
+            android:logo="@drawable/homeun">
         </activity>
         <activity
             android:name=".MapaActivity"
             android:label="@string/title_activity_mapa"
-            android:launchMode="singleInstance"
-            android:logo="@drawable/logo"
-            android:screenOrientation="portrait" >
+            android:logo="@drawable/logo">
         </activity>
         <activity
             android:name=".EventosActivity"
@@ -146,7 +142,7 @@
         </activity>
         <activity
             android:name=".LicenseActivity"
-            android:label="@string/title_activity_linecnse"
+            android:label="@string/title_activity_license"
             android:logo="@drawable/homeun" >
         </activity>
     </application>

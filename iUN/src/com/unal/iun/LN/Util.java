@@ -234,13 +234,16 @@ public class Util {
 	public static CharSequence toCammelCase(String lowerCase) {
 		String cad = "";
 		String[] palabras = lowerCase.split(" ");
-		for (int i = 0; i < palabras.length; i++) {
+		palabras[0] = (palabras[0].charAt(0) + "").toUpperCase()
+				+ palabras[0].substring(1, palabras[0].length());
+		cad += palabras[0] + " ";
+		for (int i = 1; i < palabras.length; i++) {
 			if (palabras[i].length() > 3) {
 				palabras[i] = (palabras[i].charAt(0) + "").toUpperCase()
 						+ palabras[i].substring(1, palabras[i].length());
 			}
-			if(palabras[i].contains("un")){
-				palabras[i]="UN";
+			if (palabras[i].contains("un")) {
+				palabras[i] = "UN";
 			}
 			cad += palabras[i] + " ";
 		}
@@ -263,9 +266,9 @@ public class Util {
 	}
 
 	public static ArrayList<String[]> toArray(ArrayList<String> datosLinea) {
-		ArrayList<String[]> salida=new ArrayList<String[]>();
+		ArrayList<String[]> salida = new ArrayList<String[]>();
 		for (String string : datosLinea) {
-			String arr[]=string.split(";");
+			String arr[] = string.split(";");
 			salida.add(arr);
 		}
 		return salida;

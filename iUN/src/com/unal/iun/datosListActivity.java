@@ -154,35 +154,6 @@ public class datosListActivity extends Activity implements
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			home();
-			break;
-		case R.id.ItemMapa:
-			ubicar();
-			break;
-		case R.id.ItemWEB:
-			if (current == 2) {
-				Util.irA("http://www.unal.edu.co", this);
-			} else {
-				String baseConsult = "select url from enlace natural join "
-						+ tableName + " where ";
-				ArrayList<String[]> datos = getDatos(baseConsult, condicion,
-						false);
-				Util.irA(datos.get(0)[0], this);
-
-			}
-			break;
-
-		default:
-			break;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
 	public void home() {
 		startActivity(new Intent(getApplicationContext(), MainActivity.class));
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

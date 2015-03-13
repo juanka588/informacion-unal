@@ -10,6 +10,7 @@ import com.unal.iun.LN.MiAdaptadorExpandibleInstituciones;
 import com.unal.iun.LN.MiLocationListener;
 import com.unal.iun.LN.Util;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,7 @@ public class InstitucionesActivity extends Activity {
 	private SearchView sv;
 	private boolean mode;
 	private String table = "colegios";
+	private ActionBar barra;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,10 @@ public class InstitucionesActivity extends Activity {
 		BitmapDrawable background2 = new BitmapDrawable(
 				BitmapFactory.decodeResource(getResources(),
 						R.drawable.fondoinf));
-		this.getActionBar().setBackgroundDrawable(background2);
-		this.getActionBar().setDisplayHomeAsUpEnabled(true);
-		this.getActionBar().setHomeButtonEnabled(true);
+		barra=this.getActionBar();
+		barra.setBackgroundDrawable(background2);
+		barra.setDisplayHomeAsUpEnabled(true);
+		barra.setHomeButtonEnabled(true);
 		lv = (ExpandableListView) findViewById(R.id.listViewInstituciones);
 		Space sp = (Space) findViewById(R.id.SpaceColegios);
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
@@ -88,6 +91,7 @@ public class InstitucionesActivity extends Activity {
 				table = "edificios";
 				query = "select distinct nombre_edificio,edificio,latitud,longitud,sede_edificio from "
 						+ table;
+				barra.setTitle("Edificios");
 			}
 			Log.e("buscado", query);
 			Cursor c = db.rawQuery(query, null);
@@ -112,7 +116,7 @@ public class InstitucionesActivity extends Activity {
 						instituciones[i]);
 			}
 			MiAdaptadorExpandibleInstituciones adapter = new MiAdaptadorExpandibleInstituciones(
-					parentItems, childItems, mat,mode);
+					parentItems, childItems, mat, mode);
 			adapter.fuente = Typeface.createFromAsset(getAssets(),
 					"Helvetica.ttf");
 			adapter.setInflater(
@@ -137,7 +141,7 @@ public class InstitucionesActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				if (query.length() > 2) {
+				if (query.length() > 0) {
 					recargar(query);
 				} else {
 					recargar("");
@@ -147,7 +151,7 @@ public class InstitucionesActivity extends Activity {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				if (newText.length() > 2) {
+				if (newText.length() > 0) {
 					recargar(newText);
 				} else {
 					recargar("");
@@ -195,7 +199,7 @@ public class InstitucionesActivity extends Activity {
 					+ table
 					+ " where busqueda like('%" + cad + "%')";
 		}
-		Log.e("busqueda",cad2);
+		Log.e("busqueda", cad2);
 		SQLiteDatabase db = openOrCreateDatabase(MainActivity.dataBaseName,
 				MODE_WORLD_READABLE, null);
 		Cursor c = db.rawQuery(cad2, null);
@@ -220,7 +224,7 @@ public class InstitucionesActivity extends Activity {
 					instituciones[i]);
 		}
 		MiAdaptadorExpandibleInstituciones adapter = new MiAdaptadorExpandibleInstituciones(
-				parentItems, childItems, mat,mode);
+				parentItems, childItems, mat, mode);
 		adapter.fuente = Typeface.createFromAsset(getAssets(), "Helvetica.ttf");
 		adapter.setInflater(
 				(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),

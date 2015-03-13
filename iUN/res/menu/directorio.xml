@@ -8,19 +8,4 @@
         android:icon="@android:drawable/ic_menu_search"
         android:showAsAction="always"
         android:title="@string/buscar"/>
-    <item
-        android:id="@+id/ItemMapa"
-        android:icon="@drawable/edificio"
-        android:showAsAction="always"
-        android:title="@string/menu_mapa"
-        android:visible="true">
-    </item>
-    <item
-        android:id="@+id/ItemWEB"
-        android:icon="@drawable/enlacep"
-        android:showAsAction="always"
-        android:title="@string/menu_irweb"
-        android:visible="true">
-    </item>
-
 </menu>

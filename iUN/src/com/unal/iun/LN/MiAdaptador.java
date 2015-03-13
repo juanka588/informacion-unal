@@ -26,16 +26,17 @@ public class MiAdaptador extends BaseAdapter {
 	public Typeface fuente;
 	// 0 con todo 1 sin imagen ni subtitulo 2 con imagen y sin subtitulo
 	// 3 con titulo y subtitulo sin imagen
-	public static int tipo = 0;
+	public int tipo = 0;
 
 	public MiAdaptador(Activity actividad, ArrayList<String> titulos,
-			ArrayList<String> subtitulos) {
+			ArrayList<String> subtitulos, int tipo) {
 		super();
 		this.actividad = actividad;
 		lista = new String[titulos.size()];
 		titulos.toArray(lista);
 		lista2 = new String[subtitulos.size()];
 		subtitulos.toArray(lista2);
+		this.tipo = tipo;
 	}
 
 	public MiAdaptador(Activity actividad, String[] titulos, String[] subtitulos) {
@@ -43,6 +44,16 @@ public class MiAdaptador extends BaseAdapter {
 		this.actividad = actividad;
 		this.lista = titulos;
 		this.lista2 = subtitulos;
+		this.tipo = 1;
+	}
+
+	public MiAdaptador(Activity actividad, String[] titulos,
+			String[] subtitulos, int tipo) {
+		super();
+		this.actividad = actividad;
+		this.lista = titulos;
+		this.lista2 = subtitulos;
+		this.tipo = tipo;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {

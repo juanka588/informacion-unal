@@ -42,7 +42,7 @@ public class ServiciosActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		lv = (ListView) findViewById(R.id.listaServicios);
 		browser = (WebView) findViewById(R.id.navegadorWebServicios);
-	    browser.getSettings().setJavaScriptEnabled(true);
+		browser.getSettings().setJavaScriptEnabled(true);
 		browser.getSettings().setBuiltInZoomControls(true);
 		browser.setWebViewClient(new WebViewClient() {
 			// evita que los enlaces se abran fuera nuestra app en el navegador
@@ -69,9 +69,8 @@ public class ServiciosActivity extends Activity {
 		c.close();
 		db.close();
 		lv.setAdapter(null);
-		MiAdaptador.tipo = 2;
 		MiAdaptador adapter = new MiAdaptador(this, Util.getcolumn(mat, 0),
-				Util.getcolumn(mat, 1));
+				Util.getcolumn(mat, 1), 2);
 		adapter.fuente = Typeface.createFromAsset(getAssets(), "Helvetica.ttf");
 		lv.setAdapter(adapter);
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -79,7 +78,7 @@ public class ServiciosActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				//Log.e("Url Cargada", mat[position][2]);
+				// Log.e("Url Cargada", mat[position][2]);
 				if (mat[position][2].equals("") || mat[position][2] == null) {
 					Intent radio = new Intent(act, RadioActivity.class);
 					act.startActivity(radio);

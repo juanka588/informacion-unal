@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
 				.createFromAsset(getAssets(), "Helvetica.ttf");
 		int ids[] = { R.id.SOnlineButton, R.id.admisionesButton,
 				R.id.sedesButton, R.id.textLatitud, R.id.textLongitud,
-				R.id.textLugar };
+				R.id.textLugar, R.id.eventosButton };
 		for (int i = 0; i < ids.length; i++) {
 			TextView prueba = (TextView) findViewById(ids[i]);
 			prueba.setTypeface(fuente);
@@ -234,43 +234,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void irSede(View v) {
-		final String[] items = { "Ir a mi sede", "Busqueda de edificios" };
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		final Activity act = this;
-		builder.setTitle("iUN").setItems(items,
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int item) {
-						if (item == 0) {
-							try {
-								directorio(true);
-							} catch (Exception e) {
-								Toast.makeText(getApplicationContext(),
-										"Disponible proximamente", 1).show();
-							}
-						} else {
-							try {
-								Intent ca = new Intent(act,
-										InstitucionesActivity.class);
-								ca.putExtra("modo", false);
-								startActivity(ca);
-								overridePendingTransition(R.anim.fade_in,
-										R.anim.fade_out);
-							} catch (Exception e) {
-								Toast.makeText(getApplicationContext(),
-										"Disponible proximamente", 1).show();
-							}
-						}
-					}
-				});
-
-		builder.setNegativeButton("Cancelar", new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-
-			}
-		});
-		builder.show();
-
+		directorio(true);
 	}
 
 	private void directorio(boolean cond) {
