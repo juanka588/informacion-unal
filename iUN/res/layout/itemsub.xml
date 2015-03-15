@@ -8,6 +8,7 @@
         android:id="@+id/textItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
         android:gravity="left"
         android:text="item"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -17,9 +18,9 @@
         android:id="@+id/textItemSub"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
+        android:layout_marginLeft="50dp"
+        android:gravity="left"
         android:text="subItem"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/white" />
+        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
 </LinearLayout>

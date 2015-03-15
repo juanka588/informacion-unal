@@ -71,8 +71,8 @@
         <activity
             android:name=".DirectorioActivity"
             android:label="@string/title_activity_directorio"
-            android:logo="@drawable/logo"
-            android:screenOrientation="portrait" >
+            android:logo="@drawable/logo" >
+           <!--android:screenOrientation="portrait"-->
         </activity>
         <activity
             android:name=".MenuWEBActivity"
@@ -91,12 +91,12 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details"
-            android:logo="@drawable/homeun">
+            android:logo="@drawable/homeun" >
         </activity>
         <activity
             android:name=".MapaActivity"
             android:label="@string/title_activity_mapa"
-            android:logo="@drawable/logo">
+            android:logo="@drawable/homeun" >
         </activity>
         <activity
             android:name=".EventosActivity"

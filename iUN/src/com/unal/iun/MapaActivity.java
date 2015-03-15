@@ -2,6 +2,7 @@ package com.unal.iun;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -57,6 +58,7 @@ public class MapaActivity extends FragmentActivity {
 	MenuItem item;
 	static String cond = "";
 	int idFondoTras = R.drawable.ciudad_universitaria;
+	private ActionBar bar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,11 @@ public class MapaActivity extends FragmentActivity {
 			BitmapDrawable background2 = new BitmapDrawable(
 					BitmapFactory.decodeResource(getResources(),
 							R.drawable.fondoinf));
-			this.getActionBar().setBackgroundDrawable(background2);
+			bar = this.getActionBar();
+			bar.setBackgroundDrawable(background2);
+			bar.setDisplayHomeAsUpEnabled(true);
+			bar.setHomeButtonEnabled(true);
+			bar.setTitle("Cobertura Nacional");
 			Bundle b = getIntent().getExtras();
 			lat = b.getDoubleArray("lat");
 			lon = b.getDoubleArray("lon");
@@ -173,25 +179,39 @@ public class MapaActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.mapa, menu);
-		item = menu.getItem(0);
-		item.setTitle("Cobertura Nacional");
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
+		outState.putDoubleArray("lat", lat);
+		outState.putDoubleArray("lon", lon);
+		outState.putStringArray("titulos", titulos);
+		outState.putStringArray("descripciones", descripciones);
+		outState.putInt("zoom", zoom);
+		outState.putInt("tipo", tipo);
+		outState.putInt("nivel", nivel);
 		super.onSaveInstanceState(outState);
 	}
 
 	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+	protected void onRestoreInstanceState(Bundle b) {
+		lat = b.getDoubleArray("lat");
+		lon = b.getDoubleArray("lon");
+		titulos = b.getStringArray("titulos");
+		descripciones = b.getStringArray("descripciones");
+		zoom = b.getInt("zoom");
+		tipo = b.getInt("tipo");
+		nivel = b.getInt("nivel");
+		super.onRestoreInstanceState(b);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			home();
+			break;
 		case R.id.menu_tipo_mapa:
 			cambiar();
 			return true;
@@ -205,8 +225,14 @@ public class MapaActivity extends FragmentActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
-
 		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	public void home() {
+		startActivity(new Intent(getApplicationContext(), MainActivity.class));
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+		this.finish();
 	}
 
 	private void cambiar() {
@@ -364,6 +390,10 @@ public class MapaActivity extends FragmentActivity {
 														+ arg0.getTitle() + "'");
 										if (datos.isEmpty() || nivel < 3) {
 											acercar(arg0);
+											Toast.makeText(
+													getApplicationContext(),
+													"No hay información disponible",
+													1).show();
 										} else {
 											deta.putExtra("datos", datos);
 											animarFondo(cond);
@@ -400,8 +430,8 @@ public class MapaActivity extends FragmentActivity {
 		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(Marker marker) {
 				int len = marker.getTitle().length();
-				item.setTitle(marker.getTitle().substring(0,
-						len > 20 ? 20 : len));
+				bar.setTitle(marker.getTitle()
+						.substring(0, len > 20 ? 20 : len));
 				return false;
 			}
 		});

@@ -23,8 +23,8 @@ public class LicenseActivity extends Activity {
 		this.getActionBar().setHomeButtonEnabled(true);
 		TextView tx1 = (TextView) findViewById(R.id.textDevelop);
 		TextView tx2 = (TextView) findViewById(R.id.textLicense);
-		tx1.setText("DESAROLLADORES:\n\nmahiguerag\nafgranadosc\nmechaconc\n"
-				+ "jcrodriguezd\ngromerop\nmrinconl\naframosp\n"
+		tx1.setText("DESAROLLADORES iUNDev:\n\nmahiguerag\nafgranadosc\njcrodriguezd\n"
+				+ "mechaconc\ngromerop\nmrinconl\naframosp\n"
 				+ "gmcabanah\njajaramilloa" + "\nmjangaritar"
 				+ "\n\n @unal.edu.co");
 		tx2.setText("LICENCIA DE USO"

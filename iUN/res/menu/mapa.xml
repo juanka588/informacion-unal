@@ -3,10 +3,6 @@
     tools:context="com.unal.iun.MapaActivity" >
 
     <item
-        android:id="@+id/menu_mapa_lugar"
-        android:showAsAction="always"
-        android:title="@string/tipo_mapa"/>
-    <item
         android:id="@+id/menu_tipo_mapa"
         android:icon="@drawable/ic_tipomapa"
         android:showAsAction="always"

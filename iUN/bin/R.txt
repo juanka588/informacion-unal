@@ -210,9 +210,9 @@ int drawable uriel 0x7f020080
 int drawable webddocente 0x7f020081
 int drawable webdocente 0x7f020082
 int id ButonsLayout 0x7f0900b2
-int id ItemForward 0x7f0900e4
-int id ItemRefresh 0x7f0900e3
-int id ItemVolver 0x7f0900e2
+int id ItemForward 0x7f0900e3
+int id ItemRefresh 0x7f0900e2
+int id ItemVolver 0x7f0900e1
 int id LinearLayout1 0x7f090024
 int id LinearLayout2 0x7f0900b7
 int id RelativeLayout1 0x7f09002e
@@ -278,7 +278,7 @@ int id imageView5 0x7f0900cc
 int id imageView6 0x7f0900cf
 int id imageView7 0x7f0900d2
 int id imageWD 0x7f0900aa
-int id itemURL 0x7f0900e5
+int id itemURL 0x7f0900e4
 int id left_drawer 0x7f090023
 int id linearLayoutDatosDetalles 0x7f0900d4
 int id linearLayoutDetalles 0x7f090016
@@ -289,9 +289,8 @@ int id listaServicios 0x7f0900b8
 int id lugarEvento 0x7f0900c7
 int id map 0x7f09003e
 int id match_parent 0x7f09000c
-int id menu_mapa_lugar 0x7f0900df
-int id menu_tipo_mapa 0x7f0900e0
-int id menu_trafico 0x7f0900e1
+int id menu_tipo_mapa 0x7f0900df
+int id menu_trafico 0x7f0900e0
 int id monochrome 0x7f090013
 int id navegadorWebServicios 0x7f0900b9
 int id none 0x7f090000

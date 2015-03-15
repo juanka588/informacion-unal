@@ -2,6 +2,7 @@ package com.unal.iun.LN;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +19,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -107,7 +109,6 @@ public class MiAdaptadorExpandibleInstituciones extends
 			}
 
 		});
-
 		return convertView;
 
 	}
@@ -116,9 +117,11 @@ public class MiAdaptadorExpandibleInstituciones extends
 		try {
 			Intent mapa = new Intent(activity, MapaActivity.class);
 			String query;
-			LinnaeusDatabase lb = new LinnaeusDatabase(activity.getApplicationContext());
-			SQLiteDatabase db = activity.openOrCreateDatabase(MainActivity.dataBaseName,
-					activity.MODE_WORLD_READABLE, null);
+			LinnaeusDatabase lb = new LinnaeusDatabase(
+					activity.getApplicationContext());
+			SQLiteDatabase db = activity.openOrCreateDatabase(
+					MainActivity.dataBaseName, activity.MODE_WORLD_READABLE,
+					null);
 			String condicion = "latitud between " + (lt - 0.0001) + " and "
 					+ (lt + 0.0001) + " and longitud between" + (lg - 0.0001)
 					+ " and " + (lg + 0.0001);
@@ -153,7 +156,8 @@ public class MiAdaptadorExpandibleInstituciones extends
 			activity.startActivity(mapa);
 			activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		} catch (Exception ex) {
-			Toast.makeText(activity.getApplicationContext(), ex.toString(), 1).show();
+			Toast.makeText(activity.getApplicationContext(), ex.toString(), 1)
+					.show();
 		}
 	}
 
@@ -162,15 +166,13 @@ public class MiAdaptadorExpandibleInstituciones extends
 			View convertView, ViewGroup parent) {
 
 		if (convertView == null) {
-
 			convertView = inflater.inflate(R.layout.grupo, null);
 		}
-
-		((CheckedTextView) convertView).setText("\t\t"
-				+ parentItems.get(groupPosition).toUpperCase() + "\n");
-
-		((CheckedTextView) convertView).setChecked(isExpanded);
-
+		String cad = parentItems.get(groupPosition).toUpperCase(
+				Locale.getDefault());
+		CheckedTextView ctv = ((CheckedTextView) convertView);
+		ctv.setText("\t\t" + cad + "\n");
+		ctv.setChecked(isExpanded);
 		return convertView;
 
 	}

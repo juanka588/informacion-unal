@@ -10,7 +10,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="lib/appcompat_v7.jar"/>
-	<classpathentry kind="lib" path="lib/google-play-services_lib.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

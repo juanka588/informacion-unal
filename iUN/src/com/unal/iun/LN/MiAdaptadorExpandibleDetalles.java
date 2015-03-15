@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -204,6 +205,7 @@ public class MiAdaptadorExpandibleDetalles extends BaseExpandableListAdapter {
 		((CheckedTextView) convertView).setText(parentItems.get(groupPosition));
 
 		((CheckedTextView) convertView).setChecked(isExpanded);
+		((CheckedTextView) convertView).setGravity(Gravity.CENTER);
 
 		return convertView;
 
